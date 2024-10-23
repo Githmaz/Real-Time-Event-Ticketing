@@ -12,4 +12,15 @@ import org.springframework.stereotype.Service;
 public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository userRepository;
+
+
+    @Override
+    public boolean checkUserEmail(String email) {
+        return !userRepository.existsByEmail(email);
+    }
+
+    @Override
+    public boolean checkUsername(String username) {
+        return !userRepository.existsByUsername(username);
+    }
 }

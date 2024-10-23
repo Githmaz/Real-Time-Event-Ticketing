@@ -14,13 +14,15 @@ public class CustomerServiceImpl implements CustomerService {
     CustomerRepository customerRepository;
 
     @Override
-    public CustomerEntity SaveCustomer(Customer customer) {
-        CustomerEntity customerEntity = new CustomerEntity();
-        customerEntity.setName(customer.getName());
-        customerEntity.setEmail(customer.getEmail());
-        customerEntity.setPassword(customer.getPassword());
-        customerEntity.setUsername(customer.getUsername());
+    public CustomerEntity createCustomer(Customer customer) {
+        CustomerEntity customerEntity = CustomerEntity.builder()
+                .name(customer.getName())
+                .email(customer.getEmail())
+                .password(customer.getPassword())
+                .username(customer.getUsername())
+                .build();
         customerEntity.generateUserId();
+
         return customerRepository.save(customerEntity);
     }
 
@@ -49,8 +51,5 @@ public class CustomerServiceImpl implements CustomerService {
         return customerRepository.findByUsernameAndPassword(username, password);
     }
 
-    @Override
-    public CustomerEntity CheckCustomerEmail(String email) {
-        return null;
-    }
+
 }
