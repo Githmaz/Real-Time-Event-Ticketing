@@ -1,6 +1,7 @@
 package edu.iit.ticketingservice.controllers;
 
 import edu.iit.ticketingservice.dao.CustomerEntity;
+import edu.iit.ticketingservice.dto.ApiResponse;
 import edu.iit.ticketingservice.dto.Customer;
 import edu.iit.ticketingservice.service.CustomerService;
 import jakarta.validation.Valid;
@@ -22,54 +23,36 @@ public class CustomerController {
 
    // Save customer and return appropriate response
     @PostMapping("/save")
-    public ResponseEntity<Map<String, Object>> saveCustomer(@Valid @RequestBody Customer customer) {
+    public ResponseEntity<ApiResponse<CustomerEntity>> saveCustomer(@Valid @RequestBody Customer customer) {
         CustomerEntity savedCustomer = customerService.createCustomer(customer);
-        return ResponseEntity.status(HttpStatus.CREATED).body(Map.of(
-                "success", true,
-                "message", "Customer created successfully.",
-                "customerId", savedCustomer.getId(),
-                "customerObject", savedCustomer
-        ));
+        ApiResponse<CustomerEntity> response = new ApiResponse<>(true, "Customer created successfully.", savedCustomer);
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
 
     }
 
     // Login by email and password
     @PostMapping("/login-by-email")
-    public ResponseEntity<Map<String, Object>> getCustomerByEmailAndPassword(@RequestBody Customer customer) {
+    public ResponseEntity<ApiResponse<CustomerEntity>> getCustomerByEmailAndPassword(@RequestBody Customer customer) {
         CustomerEntity customerEntity = customerService.GetCustomerByEmailAndPassword(customer.getEmail(), customer.getPassword());
         if (customerEntity != null) {
-            return ResponseEntity.status(HttpStatus.OK).body(Map.of(
-                    "success", true,
-                    "message", "Login successful.",
-                    "customer", customerEntity.getId(),
-                    "status", HttpStatus.OK
-            ));
+            ApiResponse<CustomerEntity> response = new ApiResponse<>(true, "Login successful.", customerEntity);
+            return new ResponseEntity<>(response, HttpStatus.OK);
         } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of(
-                    "success", false,
-                    "message", "Invalid email or password.",
-                    "status", HttpStatus.UNAUTHORIZED
-            ));
+            ApiResponse<CustomerEntity> response = new ApiResponse<>(false, "Invalid email or password.");
+            return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
         }
     }
 
     // Login by username and password
     @PostMapping("/login-by-username")
-    public ResponseEntity<Map<String, Object>> getCustomerByUsernameAndPassword(@RequestBody Customer customer) {
+    public ResponseEntity<ApiResponse<CustomerEntity>> getCustomerByUsernameAndPassword(@RequestBody Customer customer) {
         CustomerEntity customerEntity = customerService.GetCustomerByUsernameAndPassword(customer.getUsername(), customer.getPassword());
         if (customerEntity != null) {
-            return ResponseEntity.status(HttpStatus.OK).body(Map.of(
-                    "success", true,
-                    "message", "Login successful.",
-                    "customerId", customerEntity.getId(),
-                    "status", HttpStatus.OK
-            ));
+            ApiResponse<CustomerEntity> response = new ApiResponse<>(true, "Login successful.", customerEntity);
+            return new ResponseEntity<>(response, HttpStatus.OK);
         } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of(
-                    "success", false,
-                    "message", "Invalid username or password.",
-                    "status", HttpStatus.UNAUTHORIZED
-            ));
+            ApiResponse<CustomerEntity> response = new ApiResponse<>(false, "Invalid email or password.");
+            return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
         }
     }
 

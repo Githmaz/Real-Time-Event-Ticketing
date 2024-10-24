@@ -1,6 +1,7 @@
 package edu.iit.ticketingservice.controllers;
 
 import edu.iit.ticketingservice.dao.VendorEntity;
+import edu.iit.ticketingservice.dto.ApiResponse;
 import edu.iit.ticketingservice.dto.Vendor;
 import edu.iit.ticketingservice.service.VendorService;
 import jakarta.validation.Valid;
@@ -17,59 +18,43 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/vendor")
-public class VendorController{
+public class VendorController {
 
     @Autowired
     VendorService vendorService;
 
     // Save vendor and return appropriate response
     @PostMapping("/save")
-    public ResponseEntity<Map<String, Object>> saveVendor(@Valid @RequestBody Vendor vendor) {
+    public ResponseEntity<ApiResponse<VendorEntity>> saveVendor(@Valid @RequestBody Vendor vendor) {
         VendorEntity savedVendor = vendorService.createVendor(vendor);
-        return ResponseEntity.status(HttpStatus.CREATED).body(Map.of(
-                "success", true,
-                "message", "Vendor created successfully.",
-                "vendorId", savedVendor.getId(),
-                "vendorObject", savedVendor
-        ));
-
+        ApiResponse<VendorEntity> response = new ApiResponse<>(true, "Vendor created successfully.", savedVendor);
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
 
     }
 
     // Login by email and password
     @PostMapping("/login-by-email")
-    public ResponseEntity<Map<String, Object>> getVendorByEmailAndPassword(@RequestBody Vendor vendor) {
+    public ResponseEntity<ApiResponse<VendorEntity>> getVendorByEmailAndPassword(@RequestBody Vendor vendor) {
         VendorEntity vendorEntity = vendorService.getVendorByEmailAndPassword(vendor.getEmail(), vendor.getPassword());
         if (vendorEntity != null) {
-            return ResponseEntity.status(HttpStatus.OK).body(Map.of(
-                    "success", true,
-                    "message", "Login successful.",
-                    "vendorId", vendorEntity.getId(),
-                    "vendorObject", vendorEntity
-            ));
+            ApiResponse<VendorEntity> response = new ApiResponse<>(true, "Login successful.", vendorEntity);
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        } else {
+            ApiResponse<VendorEntity> response = new ApiResponse<>(false, "Invalid email or password.");
+            return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
         }
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of(
-                "success", false,
-                "message", "Invalid email or password."
-        ));
     }
 
     // Login by username and password
     @PostMapping("/login-by-username")
-    public ResponseEntity<Map<String, Object>> getVendorByUsernameAndPassword(@RequestBody Vendor vendor) {
+    public ResponseEntity<ApiResponse<VendorEntity>> getVendorByUsernameAndPassword(@RequestBody Vendor vendor) {
         VendorEntity vendorEntity = vendorService.getVendorByUsernameAndPassword(vendor.getUsername(), vendor.getPassword());
         if (vendorEntity != null) {
-            return ResponseEntity.status(HttpStatus.OK).body(Map.of(
-                    "success", true,
-                    "message", "Login successful.",
-                    "vendorId", vendorEntity.getId(),
-                    "vendorObject", vendorEntity
-            ));
+            ApiResponse<VendorEntity> response = new ApiResponse<>(true, "Login successful.", vendorEntity);
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        } else {
+            ApiResponse<VendorEntity> response = new ApiResponse<>(false, "Invalid username or password.");
+            return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
         }
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of(
-                "success", false,
-                "message", "Invalid username or password."
-        ));
     }
-
 }
