@@ -3,6 +3,7 @@ package edu.iit.ticketingservice.controllers;
 import edu.iit.ticketingservice.dao.VendorEntity;
 import edu.iit.ticketingservice.dto.Vendor;
 import edu.iit.ticketingservice.service.VendorService;
+import jakarta.validation.Valid;
 import lombok.experimental.SuperBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,20 +24,16 @@ public class VendorController{
 
     // Save vendor and return appropriate response
     @PostMapping("/save")
-    public ResponseEntity<Map<String, Object>> saveVendor(@RequestBody Vendor vendor) {
+    public ResponseEntity<Map<String, Object>> saveVendor(@Valid @RequestBody Vendor vendor) {
         VendorEntity savedVendor = vendorService.createVendor(vendor);
-        if (savedVendor != null) {
-            return ResponseEntity.status(HttpStatus.CREATED).body(Map.of(
-                    "success", true,
-                    "message", "Vendor created successfully.",
-                    "vendorId", savedVendor.getId(),
-                    "vendorObject", savedVendor
-            ));
-        }
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of(
-                "success", false,
-                "message", "Failed to create vendor."
+        return ResponseEntity.status(HttpStatus.CREATED).body(Map.of(
+                "success", true,
+                "message", "Vendor created successfully.",
+                "vendorId", savedVendor.getId(),
+                "vendorObject", savedVendor
         ));
+
+
     }
 
     // Login by email and password

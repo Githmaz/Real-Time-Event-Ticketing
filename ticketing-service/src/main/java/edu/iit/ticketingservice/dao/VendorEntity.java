@@ -20,7 +20,7 @@ public class VendorEntity  extends UserEntity{
     @PostPersist
     @Override
     public void generateUserId() {
-        this.setUserId("V-" + getUserId());
+        this.setUserId("V-" + this.getId());
     }
     //    private List<Tickts> ticketsForSale;
 }

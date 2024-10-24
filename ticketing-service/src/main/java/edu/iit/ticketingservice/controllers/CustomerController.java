@@ -3,6 +3,7 @@ package edu.iit.ticketingservice.controllers;
 import edu.iit.ticketingservice.dao.CustomerEntity;
 import edu.iit.ticketingservice.dto.Customer;
 import edu.iit.ticketingservice.service.CustomerService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,20 +22,13 @@ public class CustomerController {
 
    // Save customer and return appropriate response
     @PostMapping("/save")
-    public ResponseEntity<Map<String, Object>> saveCustomer(@RequestBody Customer customer) {
+    public ResponseEntity<Map<String, Object>> saveCustomer(@Valid @RequestBody Customer customer) {
         CustomerEntity savedCustomer = customerService.createCustomer(customer);
-        if (savedCustomer != null) {
-            return ResponseEntity.status(HttpStatus.CREATED).body(Map.of(
-                    "success", true,
-                    "message", "Customer created successfully.",
-                    "customerId", savedCustomer.getId(),
-                    "customerObject", savedCustomer,
-                    "status", HttpStatus.CREATED
-            ));
-        }
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of(
-                    "success", false,
-                    "message", "Failed to create customer."
+        return ResponseEntity.status(HttpStatus.CREATED).body(Map.of(
+                "success", true,
+                "message", "Customer created successfully.",
+                "customerId", savedCustomer.getId(),
+                "customerObject", savedCustomer
         ));
 
     }
@@ -47,7 +41,7 @@ public class CustomerController {
             return ResponseEntity.status(HttpStatus.OK).body(Map.of(
                     "success", true,
                     "message", "Login successful.",
-                    "customerId", customerEntity.getId(),
+                    "customer", customerEntity.getId(),
                     "status", HttpStatus.OK
             ));
         } else {
