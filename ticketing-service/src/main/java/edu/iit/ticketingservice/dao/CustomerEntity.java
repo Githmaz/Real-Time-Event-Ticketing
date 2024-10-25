@@ -16,7 +16,6 @@ import java.util.UUID;
 @Table(name = "customer")
 public class CustomerEntity extends UserEntity {
 
-
     public CustomerEntity() {
         super();
     }

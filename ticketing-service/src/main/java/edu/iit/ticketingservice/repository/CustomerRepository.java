@@ -6,7 +6,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface CustomerRepository extends CrudRepository<CustomerEntity, Integer> {
+public interface CustomerRepository extends CrudRepository<CustomerEntity, Long> {
     // Query method to find a customer by email and password
     CustomerEntity findByEmailAndPassword(String email, String password);
 

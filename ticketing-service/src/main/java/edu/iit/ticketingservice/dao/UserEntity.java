@@ -15,23 +15,23 @@ import java.util.UUID;
 public class UserEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)  // Auto-generated primary key
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;  // Database-generated ID
 
-    @Column(unique = true)  // Ensure that the customUserId is unique
-    private String userId;
+    @Column(unique = true, nullable = false)
+    private String userId;  // Custom user identifier (e.g., C-, V-, A-)
 
-    @Column(unique = true, nullable = false)  // Username must be unique and not null
-    private String username;
+    @Column(unique = true, nullable = false)
+    private String username;  // Unique username
 
-    @Column(nullable = false)  // Password is mandatory
-    private String password;
+    @Column(unique = true, nullable = false)
+    private String email;  // Unique email
 
-    @Column(unique = true, nullable = false)  // Email must be unique and not null
-    private String email;
+    @Column(nullable = false)
+    private String password;  // User password
 
-    @Column(nullable = false)  // Name is mandatory, can be personal or company name
-    private String name;
+    @Column(nullable = false)
+    private String name;  // User's full name or company name
 
     public void setId(Long id) {
         this.id = id;

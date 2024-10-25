@@ -6,7 +6,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface VendorRepository extends CrudRepository<VendorEntity, Integer> {
+public interface VendorRepository extends CrudRepository<VendorEntity, Long> {
     // Query method to find a Vendor by email and password
     VendorEntity findByEmailAndPassword(String email, String password);
 
