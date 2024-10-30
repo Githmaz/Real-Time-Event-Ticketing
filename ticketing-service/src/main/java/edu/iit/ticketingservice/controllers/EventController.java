@@ -26,10 +26,11 @@ public class EventController {
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
+
     // Get an event by ID
     @GetMapping("/{id}")
-    public ResponseEntity<ApiResponse<Event>> getEventByEventId(@PathVariable("id") String eventid) {
-        Event event = eventService.getEventByEventId(eventid);
+    public ResponseEntity<ApiResponse<Event>> getEventByEventId(@PathVariable("id") String eventId) {
+        Event event = eventService.getEventByEventId(eventId);
         if (event != null) {
             ApiResponse<Event> response = new ApiResponse<>(true, "Event found", event);
             return new ResponseEntity<>(response, HttpStatus.OK);
@@ -39,24 +40,5 @@ public class EventController {
         }
     }
 
-    // Delete an event by ID
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<ApiResponse<Void>> deleteEvent(@PathVariable Long id) {
-        try {
-            eventService.deleteEvent(id);
-            ApiResponse<Void> response = new ApiResponse<>(true, "Event deleted successfully");
-            return new ResponseEntity<>(response, HttpStatus.NO_CONTENT);
-        } catch (RuntimeException ex) {
-            ApiResponse<Void> response = new ApiResponse<>(false, ex.getMessage());
-            return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
-        }
-    }
 
-    // Retrieve all events
-    @GetMapping("/all")
-    public ResponseEntity<ApiResponse<List<Event>>> getAllEvents() {
-        List<Event> events = eventService.getAllEvents();
-        ApiResponse<List<Event>> response = new ApiResponse<>(true, "Events retrieved successfully", events);
-        return new ResponseEntity<>(response, HttpStatus.OK);
-    }
 }

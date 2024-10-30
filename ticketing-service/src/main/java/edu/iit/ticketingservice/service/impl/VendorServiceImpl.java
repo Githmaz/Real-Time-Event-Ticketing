@@ -59,7 +59,7 @@ public class VendorServiceImpl implements VendorService {
         if (vendorEntity != null && passwordEncoder.matches(password, vendorEntity.getPassword())) {
             return convertToDto(vendorEntity);
         }
-        return null;
+        throw new BusinessException(ErrorType.INVALID_CREDENTIALS);
     }
 
     @Override
@@ -68,7 +68,7 @@ public class VendorServiceImpl implements VendorService {
         if (vendorEntity != null && passwordEncoder.matches(password, vendorEntity.getPassword())) {
             return convertToDto(vendorEntity);
         }
-        return null;
+        throw new BusinessException(ErrorType.INVALID_CREDENTIALS);
     }
     // Conversion method to map VendorEntity to Vendor DTO
     private Vendor convertToDto(VendorEntity vendorEntity) {

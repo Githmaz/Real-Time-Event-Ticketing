@@ -3,14 +3,18 @@ package edu.iit.ticketingservice.dto;
 import edu.iit.ticketingservice.dao.TicketPackageEntity;
 import edu.iit.ticketingservice.dao.VendorEntity;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 import java.util.Date;
 import java.util.List;
 
 public class Event {
     private String eventId;
+    @NotBlank(message = "Event Name cannot be blank")
     private String eventName;
     private Date eventDate;
+    @NotBlank(message= "VendorId cannot be blank")
     private String vendorId; // Vendor offering this ticket package
     private List<TicketPackageEntity> ticketPackages;   // List of ticket packages for this event
 

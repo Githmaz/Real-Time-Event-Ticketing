@@ -8,7 +8,8 @@ public enum ErrorType {
     VENDOR_NOT_FOUND("Vendor not found"),
     PACKAGE_NOT_FOUND("Package not found"),
     CUSTOMER_NOT_FOUND("Customer not found"),
-    TICKETS_SOLD_OUT("Tickets sold out"),;
+    TICKETS_SOLD_OUT("Tickets sold out"),
+    INVALID_CREDENTIALS("Invalid username or password");
     private final String message;
 
     ErrorType(String message) {

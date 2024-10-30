@@ -35,26 +35,18 @@ public class VendorController {
     @PostMapping("/login-by-email")
     public ResponseEntity<ApiResponse<Vendor>> getVendorByEmailAndPassword(@RequestBody Vendor vendor) {
         Vendor authenticatedVendor = vendorService.getVendorByEmailAndPassword(vendor.getEmail(), vendor.getPassword());
-        if (authenticatedVendor != null) {
-            ApiResponse<Vendor> response = new ApiResponse<>(true, "Login successful.", authenticatedVendor);
-            return new ResponseEntity<>(response, HttpStatus.OK);
-        } else {
-            ApiResponse<Vendor> response = new ApiResponse<>(false, "Invalid email or password.");
-            return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
-        }
+        ApiResponse<Vendor> response = new ApiResponse<>(true, "Login successful.", authenticatedVendor);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+
     }
 
     // Login by username and password
     @PostMapping("/login-by-username")
     public ResponseEntity<ApiResponse<Vendor>> getVendorByUsernameAndPassword(@RequestBody Vendor vendor) {
         Vendor authenticatedVendor = vendorService.getVendorByUsernameAndPassword(vendor.getUsername(), vendor.getPassword());
-        if (authenticatedVendor != null) {
-            ApiResponse<Vendor> response = new ApiResponse<>(true, "Login successful.", authenticatedVendor);
-            return new ResponseEntity<>(response, HttpStatus.OK);
-        } else {
-            ApiResponse<Vendor> response = new ApiResponse<>(false, "Invalid username or password.");
-            return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
-        }
+        ApiResponse<Vendor> response = new ApiResponse<>(true, "Login successful.", authenticatedVendor);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+
     }
 }
 

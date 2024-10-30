@@ -21,6 +21,7 @@
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-web</artifactId>
+
       <version>3.3.4</version>
     </dependency>
 
@@ -65,14 +66,6 @@
     </dependency>
 
 
-<!--    &lt;!&ndash; https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-log4j2 &ndash;&gt;-->
-<!--    <dependency>-->
-<!--      <groupId>org.springframework.boot</groupId>-->
-<!--      <artifactId>spring-boot-starter-log4j2</artifactId>-->
-<!--      <version>3.3.4</version>-->
-<!--    </dependency>-->
-
-
     <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-security -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
@@ -86,6 +79,8 @@
       <artifactId>modelmapper</artifactId>
       <version>3.2.1</version>
     </dependency>
+
+
 
   </dependencies>
 </project>
