@@ -1,6 +1,7 @@
 package edu.iit.ticketingservice.service.impl;
 
 
+import edu.iit.ticketingservice.config.EncryptionConfig;
 import edu.iit.ticketingservice.dao.CustomerEntity;
 import edu.iit.ticketingservice.dto.Customer;
 import edu.iit.ticketingservice.exception.BusinessException;
@@ -9,10 +10,13 @@ import edu.iit.ticketingservice.repository.CustomerRepository;
 import edu.iit.ticketingservice.service.CustomerService;
 import edu.iit.ticketingservice.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 public class CustomerServiceImpl implements CustomerService {
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
     CustomerRepository customerRepository;
@@ -21,7 +25,7 @@ public class CustomerServiceImpl implements CustomerService {
     UserService userService;
 
     @Override
-    public CustomerEntity createCustomer(Customer customer) {
+    public Customer createCustomer(Customer customer) {
 
         // Check if email is already in use
         if (!userService.checkUserEmail(customer.getEmail())) {
@@ -32,41 +36,47 @@ public class CustomerServiceImpl implements CustomerService {
         if (!userService.checkUsername(customer.getUsername())) {
             throw new BusinessException(ErrorType.USERNAME_ALREADY_EXISTS);
         }
-        CustomerEntity customerEntity = CustomerEntity.builder()
-                .name(customer.getName())
-                .email(customer.getEmail())
-                .password(customer.getPassword())
-                .username(customer.getUsername())
-                .build();
+
+
+        CustomerEntity customerEntity = new CustomerEntity();
+        customerEntity.setName(customer.getName());
+        customerEntity.setEmail(customer.getEmail());
+
+        // Hash the password before setting it
+        String hashedPassword = passwordEncoder.encode(customer.getPassword());
+        customerEntity.setPassword(hashedPassword);
+        customerEntity.setUsername(customer.getUsername());
         customerEntity.generateUserId();
-
-        return customerRepository.save(customerEntity);
+        return convertToDto(customerRepository.save(customerEntity));
     }
 
+
     @Override
-    public CustomerEntity GetCustomerByEmail(String email) {
+    public Customer GetCustomerByEmailAndPassword(String email, String password) {
+        CustomerEntity customerEntity = customerRepository.findByEmail(email);
+        if (customerEntity != null && passwordEncoder.matches(password, customerEntity.getPassword())) {
+            return convertToDto(customerEntity);
+        }
         return null;
     }
 
     @Override
-    public CustomerEntity GetCustomerByUsername(String username) {
+    public Customer GetCustomerByUsernameAndPassword(String username, String password) {
+        CustomerEntity customerEntity = customerRepository.findByUsername(username);
+        if (customerEntity != null && passwordEncoder.matches(password, customerEntity.getPassword())) {
+            return convertToDto(customerEntity);
+        }
         return null;
     }
 
-    @Override
-    public CustomerEntity GetCustomerByUserId(String userId) {
-        return null;
+    // Conversion method to map CustomerEntity to Customer DTO
+    private Customer convertToDto(CustomerEntity customerEntity) {
+        Customer customer = new Customer();
+        customer.setName(customerEntity.getName());
+        customer.setEmail(customerEntity.getEmail());
+        customer.setUsername(customerEntity.getUsername());
+        customer.setUserId(customerEntity.getUserId());
+        return customer;
     }
-
-    @Override
-    public CustomerEntity GetCustomerByEmailAndPassword(String email, String password) {
-        return customerRepository.findByEmailAndPassword(email, password);
-    }
-
-    @Override
-    public CustomerEntity GetCustomerByUsernameAndPassword(String username, String password) {
-        return customerRepository.findByUsernameAndPassword(username, password);
-    }
-
 
 }

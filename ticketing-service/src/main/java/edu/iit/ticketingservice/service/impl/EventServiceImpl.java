@@ -24,13 +24,14 @@ public class EventServiceImpl implements EventService {
     @Override
     public Event createEvent(Event event) {
         EventEntity eventEntity = convertToEntity(event);
+        eventEntity.generateEventId();
         EventEntity savedEvent = eventRepository.save(eventEntity);
         return convertToDto(savedEvent);
     }
 
     @Override
-    public Event getEventById(Long eventId) {
-        Optional<EventEntity> eventEntity = eventRepository.findById(eventId);
+    public Event getEventByEventId(String eventId) {
+        Optional<EventEntity> eventEntity = eventRepository.findByEventId(eventId);
         return eventEntity.map(this::convertToDto).orElse(null);
     }
 
@@ -45,12 +46,20 @@ public class EventServiceImpl implements EventService {
         }
     }
 
+    @Override
+    public List<Event> getAllEvents() {
+        List<EventEntity> eventEntities = (List<EventEntity>) eventRepository.findAll();  // Fetch all events
+        return eventEntities.stream()
+                .map(this::convertToDto)  // Convert each EventEntity to Event DTO
+                .collect(Collectors.toList());
+    }
     private EventEntity convertToEntity(Event event) {
         EventEntity eventEntity = new EventEntity();
+        eventEntity.setEventId(event.getEventId());
         eventEntity.setEventName(event.getEventName());
         eventEntity.setEventDate(event.getEventDate());
         // Retrieve VendorEntity using vendorId
-        Optional<VendorEntity> vendorEntityOpt = vendorRepository.findById((Long)event.getVendorId());
+        Optional<VendorEntity> vendorEntityOpt = (vendorRepository.findByUserId(event.getVendorId()));
         if (vendorEntityOpt.isPresent()) {
             eventEntity.setVendor(vendorEntityOpt.get());
         } else {
@@ -64,7 +73,8 @@ public class EventServiceImpl implements EventService {
         event.setEventId(eventEntity.getEventId());
         event.setEventName(eventEntity.getEventName());
         event.setEventDate(eventEntity.getEventDate());
-        event.setVendorId(eventEntity.getVendor().getId());
+        event.setVendorId(eventEntity.getVendor().getUserId());
+        event.setTicketPackages(eventEntity.getTicketPackages());
         return event;
     }
 }

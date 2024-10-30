@@ -1,10 +1,8 @@
 package edu.iit.ticketingservice.dao;
 
 import jakarta.persistence.*;
-import lombok.experimental.SuperBuilder;
 
 @Entity
-@SuperBuilder
 @Table(name = "vendor")
 public class VendorEntity  extends UserEntity{
 

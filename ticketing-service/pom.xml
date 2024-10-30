@@ -16,6 +16,7 @@
 
   <dependencies>
 
+    <!-- Web Starter: For building web applications with RESTful APIs. -->
     <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-web -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
@@ -23,6 +24,7 @@
       <version>3.3.4</version>
     </dependency>
 
+    <!-- JPA Starter: For ORM and database interactions using JPA. -->
     <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-jpa -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
@@ -30,6 +32,7 @@
       <version>3.3.4</version>
     </dependency>
 
+    <!-- AOP Starter: For handling cross-cutting concerns via AOP. -->
     <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-aop -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
@@ -37,14 +40,8 @@
       <version>3.3.4</version>
     </dependency>
 
-    <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
-    <dependency>
-      <groupId>org.projectlombok</groupId>
-      <artifactId>lombok</artifactId>
-      <version>1.18.34</version>
-      <scope>provided</scope>
-    </dependency>
 
+    <!-- MySQL Connector: For MySQL database connectivity. -->
     <!-- https://mvnrepository.com/artifact/com.mysql/mysql-connector-j -->
     <dependency>
       <groupId>com.mysql</groupId>
@@ -52,17 +49,42 @@
       <version>9.1.0</version>
     </dependency>
 
-    <dependency>
-      <groupId>commons-io</groupId>
-      <artifactId>commons-io</artifactId>
-      <version>2.11.0</version> <!-- You can check for the latest version on the Apache Commons IO website -->
+    <!-- Commons IO: For handling file and IO operations. -->
+        <dependency>
+          <groupId>commons-io</groupId>
+          <artifactId>commons-io</artifactId>
+          <version>2.11.0</version> <!-- You can check for the latest version on the Apache Commons IO website -->
     </dependency>
 
+    <!-- Validation Starter: For validating user input and models. -->
     <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-validation -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-validation</artifactId>
       <version>3.3.4</version>
+    </dependency>
+
+
+<!--    &lt;!&ndash; https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-log4j2 &ndash;&gt;-->
+<!--    <dependency>-->
+<!--      <groupId>org.springframework.boot</groupId>-->
+<!--      <artifactId>spring-boot-starter-log4j2</artifactId>-->
+<!--      <version>3.3.4</version>-->
+<!--    </dependency>-->
+
+
+    <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-security -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-security</artifactId>
+      <version>3.3.4</version>
+    </dependency>
+
+    <!-- https://mvnrepository.com/artifact/org.modelmapper/modelmapper -->
+    <dependency>
+      <groupId>org.modelmapper</groupId>
+      <artifactId>modelmapper</artifactId>
+      <version>3.2.1</version>
     </dependency>
 
   </dependencies>

@@ -28,8 +28,8 @@ public class EventController {
 
     // Get an event by ID
     @GetMapping("/{id}")
-    public ResponseEntity<ApiResponse<Event>> getEventById(@PathVariable Long id) {
-        Event event = eventService.getEventById(id);
+    public ResponseEntity<ApiResponse<Event>> getEventByEventId(@PathVariable("id") String eventid) {
+        Event event = eventService.getEventByEventId(eventid);
         if (event != null) {
             ApiResponse<Event> response = new ApiResponse<>(true, "Event found", event);
             return new ResponseEntity<>(response, HttpStatus.OK);
@@ -52,11 +52,11 @@ public class EventController {
         }
     }
 
-//    // Retrieve all events
-//    @GetMapping("/all")
-//    public ResponseEntity<ApiResponse<List<Event>>> getAllEvents() {
-//        List<Event> events = eventService.getAllEvents();
-//        ApiResponse<List<Event>> response = new ApiResponse<>(true, "Events retrieved successfully", events);
-//        return new ResponseEntity<>(response, HttpStatus.OK);
-//    }
+    // Retrieve all events
+    @GetMapping("/all")
+    public ResponseEntity<ApiResponse<List<Event>>> getAllEvents() {
+        List<Event> events = eventService.getAllEvents();
+        ApiResponse<List<Event>> response = new ApiResponse<>(true, "Events retrieved successfully", events);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
 }

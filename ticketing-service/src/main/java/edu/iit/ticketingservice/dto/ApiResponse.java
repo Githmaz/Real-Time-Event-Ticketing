@@ -1,8 +1,6 @@
 package edu.iit.ticketingservice.dto;
 
-import lombok.Data;
 
-@Data
 public class ApiResponse<T> {
     private boolean success;
     private String message;
@@ -20,5 +18,29 @@ public class ApiResponse<T> {
         this.success = success;
         this.message = message;
         this.data = null;
+    }
+
+    public void setSuccess(boolean success) {
+        this.success = success;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public void setData(T data) {
+        this.data = data;
+    }
+
+    public boolean isSuccess() {
+        return success;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public T getData() {
+        return data;
     }
 }

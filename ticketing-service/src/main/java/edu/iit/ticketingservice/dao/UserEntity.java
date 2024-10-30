@@ -1,14 +1,10 @@
 package edu.iit.ticketingservice.dao;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.*;
-import lombok.experimental.SuperBuilder;
-
-import java.util.UUID;
 
 
-@Data
-@SuperBuilder
+
 @Entity
 @Table(name = "users")
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -16,6 +12,7 @@ public class UserEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonIgnore
     private Long id;  // Database-generated ID
 
     @Column(unique = true, nullable = false)
@@ -28,6 +25,7 @@ public class UserEntity {
     private String email;  // Unique email
 
     @Column(nullable = false)
+    @JsonIgnore
     private String password;  // User password
 
     @Column(nullable = false)

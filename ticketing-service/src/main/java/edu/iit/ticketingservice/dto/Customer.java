@@ -1,14 +1,7 @@
 package edu.iit.ticketingservice.dto;
 
-import jakarta.persistence.Access;
-import jakarta.persistence.Table;
-import lombok.*;
-import lombok.experimental.SuperBuilder;
 
-import java.util.List;
-@Getter
-@Setter
-@SuperBuilder
+
 public class Customer extends User {
 
     public Customer() {

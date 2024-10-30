@@ -8,6 +8,7 @@ import java.util.List;
 @Service
 public interface EventService {
     Event createEvent(Event event);
-    Event getEventById(Long eventId);
+    Event getEventByEventId(String eventId);
     void deleteEvent(Long eventId);
+    List<Event> getAllEvents();
 }

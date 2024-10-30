@@ -8,6 +8,7 @@ import edu.iit.ticketingservice.repository.VendorRepository;
 import edu.iit.ticketingservice.service.UserService;
 import edu.iit.ticketingservice.service.VendorService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -18,8 +19,11 @@ public class VendorServiceImpl implements VendorService {
     @Autowired
     UserService userService;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @Override
-    public VendorEntity createVendor(Vendor vendor) {
+    public Vendor createVendor(Vendor vendor) {
         // Check if email is already in use
         if (!userService.checkUserEmail(vendor.getEmail())) {
             throw new BusinessException(ErrorType.EMAIL_ALREADY_EXISTS);
@@ -30,39 +34,49 @@ public class VendorServiceImpl implements VendorService {
             throw new BusinessException(ErrorType.USERNAME_ALREADY_EXISTS);
         }
 
-        VendorEntity vendorEntity = VendorEntity.builder()
-                .username(vendor.getUsername())  // Map the username
-                .password(vendor.getPassword())  // Map the password
-                .email(vendor.getEmail())        // Map the email
-                .name(vendor.getName())          // Map the name
-                .build();
+        // Map fields and hash password
+        VendorEntity vendorEntity = new VendorEntity();
+        vendorEntity.setName(vendor.getName());
+        vendorEntity.setEmail(vendor.getEmail());
+        vendorEntity.setUsername(vendor.getUsername());
+        vendorEntity.setPassword(passwordEncoder.encode(vendor.getPassword()));
         vendorEntity.generateUserId();
-        return  vendorRepository.save(vendorEntity) ;
+
+        // Generate custom user ID after setting other fields
+        vendorEntity.generateUserId();
+        return  convertToDto(vendorRepository.save(vendorEntity)) ;
 
     }
 
     @Override
-    public VendorEntity getVendorByEmail(String email) {
+    public Vendor getVendorByUserId(Vendor vendor) {
         return null;
     }
 
     @Override
-    public VendorEntity getVendorById(Integer id) {
+    public Vendor getVendorByEmailAndPassword(String email, String password) {
+        VendorEntity vendorEntity = vendorRepository.findByEmail(email);
+        if (vendorEntity != null && passwordEncoder.matches(password, vendorEntity.getPassword())) {
+            return convertToDto(vendorEntity);
+        }
         return null;
     }
 
     @Override
-    public VendorEntity getVendorByUserId(Vendor vendor) {
+    public Vendor getVendorByUsernameAndPassword(String username, String password) {
+        VendorEntity vendorEntity = vendorRepository.findByUsername(username);
+        if (vendorEntity != null && passwordEncoder.matches(password, vendorEntity.getPassword())) {
+            return convertToDto(vendorEntity);
+        }
         return null;
     }
-
-    @Override
-    public VendorEntity getVendorByEmailAndPassword(String email, String password) {
-        return null;
-    }
-
-    @Override
-    public VendorEntity getVendorByUsernameAndPassword(String username, String password) {
-        return null;
+    // Conversion method to map VendorEntity to Vendor DTO
+    private Vendor convertToDto(VendorEntity vendorEntity) {
+        Vendor vendor = new Vendor();
+        vendor.setName(vendorEntity.getName());
+        vendor.setEmail(vendorEntity.getEmail());
+        vendor.setUsername(vendorEntity.getUsername());
+        vendor.setUserId(vendorEntity.getUserId());
+        return vendor;
     }
 }

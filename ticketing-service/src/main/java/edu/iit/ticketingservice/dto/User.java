@@ -1,14 +1,10 @@
 package edu.iit.ticketingservice.dto;
 
 import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import jakarta.validation.constraints.NotBlank;
-import lombok.experimental.SuperBuilder;
 
-@SuperBuilder
 public class User {
-    private Long id;
 
     private String userId;
 
@@ -26,9 +22,6 @@ public class User {
     @NotBlank(message = "Name cannot be blank")
     private String name;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public void setUserId(String userId) {
         this.userId = userId;
@@ -48,10 +41,6 @@ public class User {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public Long getId() {
-        return id;
     }
 
     public String getUserId() {
@@ -75,7 +64,6 @@ public class User {
     }
 
     public User(Long id, String userId, String username, String password, String email, String name) {
-        this.id = id;
         this.userId = userId;
         this.username = username;
         this.password = password;
