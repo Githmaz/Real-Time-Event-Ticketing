@@ -24,23 +24,7 @@ public class VendorServiceImpl implements VendorService {
     private BCryptPasswordEncoder passwordEncoder  = new BCryptPasswordEncoder();
 
 
-    @Override
-    public Vendor getVendorByEmailAndPassword(String email, String password) {
-        VendorEntity vendorEntity = vendorRepository.findByEmail(email);
-        if (vendorEntity != null && passwordEncoder.matches(password, vendorEntity.getPassword())) {
-            return convertToDto(vendorEntity);
-        }
-        throw new BusinessException(ErrorType.INVALID_CREDENTIALS);
-    }
 
-    @Override
-    public Vendor getVendorByUsernameAndPassword(String username, String password) {
-        VendorEntity vendorEntity = vendorRepository.findByUsername(username);
-        if (vendorEntity != null && passwordEncoder.matches(password, vendorEntity.getPassword())) {
-            return convertToDto(vendorEntity);
-        }
-        throw new BusinessException(ErrorType.INVALID_CREDENTIALS);
-    }
     // Conversion method to map VendorEntity to Vendor DTO
     private Vendor convertToDto(VendorEntity vendorEntity) {
         Vendor vendor = new Vendor();

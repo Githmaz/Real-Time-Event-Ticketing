@@ -32,4 +32,6 @@ public class UserController {
         return new ResponseEntity<>(new ApiResponse<>(true, "User registered successfully", registeredUserDto), HttpStatus.CREATED);
     }
 
+
+
 }

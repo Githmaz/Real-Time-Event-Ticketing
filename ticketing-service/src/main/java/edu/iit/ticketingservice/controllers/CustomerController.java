@@ -24,33 +24,4 @@ public class CustomerController {
     @Autowired
     CustomerService customerService;
 
-    // Save customer and return appropriate response
-    @PostMapping("/save")
-    public ResponseEntity<ApiResponse<Customer>> saveCustomer(@Valid @RequestBody Customer customer) {
-        logger.info("Received request to save a new customer with email: {}", customer.getEmail());
-        Customer savedCustomer = customerService.createCustomer(customer);
-        logger.info("Customer created successfully with user ID: {}", savedCustomer.getUserId());
-        ApiResponse<Customer> response = new ApiResponse<>(true, "Customer created successfully.", savedCustomer);
-        return new ResponseEntity<>(response, HttpStatus.CREATED);
-    }
-
-    // Login by email and password
-    @PostMapping("/login-by-email")
-    public ResponseEntity<ApiResponse<Customer>> getCustomerByEmailAndPassword(@RequestBody Customer customer) {
-        logger.info("Login attempt by email: {}", customer.getEmail());
-        Customer authenticatedCustomer = customerService.GetCustomerByEmailAndPassword(customer.getEmail(), customer.getPassword());
-        ApiResponse<Customer> response = new ApiResponse<>(true, "Login successful.", authenticatedCustomer);
-        logger.info("Login successful for user ID: {}", authenticatedCustomer.getUserId());
-        return new ResponseEntity<>(response, HttpStatus.OK);
-    }
-
-    // Login by username and password
-    @PostMapping("/login-by-username")
-    public ResponseEntity<ApiResponse<Customer>> getCustomerByUsernameAndPassword(@RequestBody Customer customer) {
-        logger.info("Login attempt by username: {}", customer.getUsername());
-        Customer authenticatedCustomer = customerService.GetCustomerByUsernameAndPassword(customer.getUsername(), customer.getPassword());
-        ApiResponse<Customer> response = new ApiResponse<>(true, "Login successful.", authenticatedCustomer);
-        logger.info("Login successful for user ID: {}", authenticatedCustomer.getUserId());
-        return new ResponseEntity<>(response, HttpStatus.OK);
-    }
 }

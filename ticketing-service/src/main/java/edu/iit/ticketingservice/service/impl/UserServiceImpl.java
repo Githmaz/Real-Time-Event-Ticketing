@@ -1,6 +1,7 @@
 package edu.iit.ticketingservice.service.impl;
 
 import edu.iit.ticketingservice.dao.CustomerEntity;
+import edu.iit.ticketingservice.dao.UsersEntity;
 import edu.iit.ticketingservice.dao.VendorEntity;
 import edu.iit.ticketingservice.dto.Customer;
 import edu.iit.ticketingservice.dto.UserRole;
@@ -17,6 +18,9 @@ import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -37,6 +41,7 @@ public class UserServiceImpl implements UserService {
 
 //    @Autowired
 //    private AdminRepository adminRepository;
+
 
     private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
@@ -112,7 +117,7 @@ public class UserServiceImpl implements UserService {
 //    }
 
     // Generic conversion method using ModelMapper
-    private <D> D convertToDto(Object entity, Class<D> dtoClass) {
+    private <D> D convertToDto(UsersEntity entity, Class<D> dtoClass) {
         return modelMapper.map(entity, dtoClass);
     }
     @Override
@@ -124,4 +129,6 @@ public class UserServiceImpl implements UserService {
     public boolean checkUsername(String username) {
         return !userRepository.existsByUsername(username);
     }
+
+
 }

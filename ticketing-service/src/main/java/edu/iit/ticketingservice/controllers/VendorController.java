@@ -22,23 +22,5 @@ public class VendorController {
     @Autowired
     VendorService vendorService;
 
-
-    // Login by email and password
-    @PostMapping("/login-by-email")
-    public ResponseEntity<ApiResponse<Vendor>> getVendorByEmailAndPassword(@RequestBody Vendor vendor) {
-        Vendor authenticatedVendor = vendorService.getVendorByEmailAndPassword(vendor.getEmail(), vendor.getPassword());
-        ApiResponse<Vendor> response = new ApiResponse<>(true, "Login successful.", authenticatedVendor);
-        return new ResponseEntity<>(response, HttpStatus.OK);
-
-    }
-
-    // Login by username and password
-    @PostMapping("/login-by-username")
-    public ResponseEntity<ApiResponse<Vendor>> getVendorByUsernameAndPassword(@RequestBody Vendor vendor) {
-        Vendor authenticatedVendor = vendorService.getVendorByUsernameAndPassword(vendor.getUsername(), vendor.getPassword());
-        ApiResponse<Vendor> response = new ApiResponse<>(true, "Login successful.", authenticatedVendor);
-        return new ResponseEntity<>(response, HttpStatus.OK);
-
-    }
 }
 
