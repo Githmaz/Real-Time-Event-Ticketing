@@ -8,50 +8,21 @@ import edu.iit.ticketingservice.repository.VendorRepository;
 import edu.iit.ticketingservice.service.UserService;
 import edu.iit.ticketingservice.service.VendorService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 public class VendorServiceImpl implements VendorService {
+
     @Autowired
     VendorRepository vendorRepository;
 
     @Autowired
     UserService userService;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    private BCryptPasswordEncoder passwordEncoder  = new BCryptPasswordEncoder();
 
-    @Override
-    public Vendor createVendor(Vendor vendor) {
-        // Check if email is already in use
-        if (!userService.checkUserEmail(vendor.getEmail())) {
-            throw new BusinessException(ErrorType.EMAIL_ALREADY_EXISTS);
-        }
-
-        // Check if username is already in use
-        if (!userService.checkUsername(vendor.getUsername())) {
-            throw new BusinessException(ErrorType.USERNAME_ALREADY_EXISTS);
-        }
-
-        // Map fields and hash password
-        VendorEntity vendorEntity = new VendorEntity();
-        vendorEntity.setName(vendor.getName());
-        vendorEntity.setEmail(vendor.getEmail());
-        vendorEntity.setUsername(vendor.getUsername());
-        vendorEntity.setPassword(passwordEncoder.encode(vendor.getPassword()));
-        vendorEntity.generateUserId();
-
-        // Generate custom user ID after setting other fields
-        vendorEntity.generateUserId();
-        return  convertToDto(vendorRepository.save(vendorEntity)) ;
-
-    }
-
-    @Override
-    public Vendor getVendorByUserId(Vendor vendor) {
-        return null;
-    }
 
     @Override
     public Vendor getVendorByEmailAndPassword(String email, String password) {

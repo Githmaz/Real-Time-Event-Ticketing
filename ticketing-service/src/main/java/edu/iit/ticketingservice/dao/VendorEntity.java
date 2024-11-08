@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "vendor")
-public class VendorEntity  extends UserEntity{
+public class VendorEntity  extends UsersEntity {
 
 
 

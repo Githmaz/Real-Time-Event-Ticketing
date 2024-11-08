@@ -1,7 +1,6 @@
 package edu.iit.ticketingservice.service.impl;
 
 
-import edu.iit.ticketingservice.config.EncryptionConfig;
 import edu.iit.ticketingservice.dao.CustomerEntity;
 import edu.iit.ticketingservice.dto.Customer;
 import edu.iit.ticketingservice.exception.BusinessException;
@@ -12,6 +11,7 @@ import edu.iit.ticketingservice.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -20,8 +20,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     private static final Logger logger = LoggerFactory.getLogger(CustomerServiceImpl.class);
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    private BCryptPasswordEncoder passwordEncoder  = new BCryptPasswordEncoder();
 
     @Autowired
     CustomerRepository customerRepository;

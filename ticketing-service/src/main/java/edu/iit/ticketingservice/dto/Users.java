@@ -1,10 +1,9 @@
 package edu.iit.ticketingservice.dto;
 
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.Size;
-import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.*;
+import org.hibernate.usertype.UserType;
 
-public class User {
+public class Users {
 
     private String userId;
 
@@ -22,6 +21,17 @@ public class User {
     @NotBlank(message = "Name cannot be blank")
     private String name;
 
+    @NotNull(message = "User type cannot be blank")
+    private UserRole userRole;
+
+
+    public @NotNull(message = "User type cannot be blank") UserRole getUserRole() {
+        return userRole;
+    }
+
+    public void setUserRole(@NotNull(message = "User type cannot be blank") UserRole userRole) {
+        this.userRole = userRole;
+    }
 
     public void setUserId(String userId) {
         this.userId = userId;
@@ -63,7 +73,7 @@ public class User {
         return name;
     }
 
-    public User(Long id, String userId, String username, String password, String email, String name) {
+    public Users(Long id, String userId, String username, String password, String email, String name) {
         this.userId = userId;
         this.username = username;
         this.password = password;
@@ -71,6 +81,6 @@ public class User {
         this.name = name;
     }
 
-    public User() {
+    public Users() {
      }
 }

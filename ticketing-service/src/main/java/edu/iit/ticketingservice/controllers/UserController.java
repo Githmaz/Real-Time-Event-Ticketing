@@ -1,34 +1,35 @@
 package edu.iit.ticketingservice.controllers;
 
 import edu.iit.ticketingservice.dto.ApiResponse;
+import edu.iit.ticketingservice.dto.Customer;
+import edu.iit.ticketingservice.dto.Users;
 import edu.iit.ticketingservice.service.UserService;
+import edu.iit.ticketingservice.service.impl.UserServiceImpl;
+import jakarta.validation.Valid;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 @RestController
 @RequestMapping("/user")
 public class UserController {
 
+    private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
+
     @Autowired
     UserService userService;
 
-    @GetMapping("/check-email")
-    public ResponseEntity<ApiResponse<Boolean>> checkUserEmail(@RequestParam String email) {
-        boolean isValid = userService.checkUserEmail(email);
-        ApiResponse<Boolean> response = new ApiResponse<>(isValid, isValid ? "Email is available." : "Email already exists.");
-        return new ResponseEntity<>(response, isValid ? HttpStatus.OK : HttpStatus.CONFLICT);
+    // Single endpoint to handle registration based on user role
+    @PostMapping("/register")
+    public ResponseEntity<ApiResponse<?>> registerUser(@Valid @RequestBody Users user) {
+        logger.info("Registering new user with username: {} and role: {}", user.getUsername(), user.getUserRole());
+        Users registeredUserDto = userService.registerUser(user);
+        logger.info("User created successfully with user ID: {}", registeredUserDto.getUserId());
+        return new ResponseEntity<>(new ApiResponse<>(true, "User registered successfully", registeredUserDto), HttpStatus.CREATED);
     }
 
-    @GetMapping("/check-username")
-    public ResponseEntity<ApiResponse<Boolean>> checkUsername(@RequestParam String username) {
-        boolean isValid = userService.checkUsername(username);
-        ApiResponse<Boolean> response = new ApiResponse<>(isValid, isValid ? "Username is available." : "Username already exists.");
-        return new ResponseEntity<>(response, isValid ? HttpStatus.OK : HttpStatus.CONFLICT);
-    }
 }

@@ -22,14 +22,6 @@ public class VendorController {
     @Autowired
     VendorService vendorService;
 
-    // Save vendor and return appropriate response
-    @PostMapping("/save")
-    public ResponseEntity<ApiResponse<Vendor>> saveVendor(@Valid @RequestBody Vendor vendor) {
-        Vendor savedVendor = vendorService.createVendor(vendor);
-        ApiResponse<Vendor> response = new ApiResponse<>(true, "Vendor created successfully.", savedVendor);
-        return new ResponseEntity<>(response, HttpStatus.CREATED);
-
-    }
 
     // Login by email and password
     @PostMapping("/login-by-email")

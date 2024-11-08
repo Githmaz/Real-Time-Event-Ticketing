@@ -2,7 +2,7 @@ package edu.iit.ticketingservice.dto;
 
 
 
-public class Customer extends User {
+public class Customer extends Users {
 
     public Customer() {
         super();

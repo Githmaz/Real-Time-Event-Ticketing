@@ -1,14 +1,14 @@
 package edu.iit.ticketingservice.dao;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import edu.iit.ticketingservice.dto.UserRole;
 import jakarta.persistence.*;
-
 
 
 @Entity
 @Table(name = "users")
 @Inheritance(strategy = InheritanceType.JOINED)
-public class UserEntity {
+public class UsersEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,6 +30,18 @@ public class UserEntity {
 
     @Column(nullable = false)
     private String name;  // User's full name or company name
+
+    @Enumerated(EnumType.STRING) // Store enum as a string in the database
+    @Column(nullable = false)
+    private UserRole userRole;
+
+    public UserRole getUserRole() {
+        return userRole;
+    }
+
+    public void setUserRole(UserRole userRole) {
+        this.userRole = userRole;
+    }
 
     public void setId(Long id) {
         this.id = id;
@@ -79,7 +91,7 @@ public class UserEntity {
         return name;
     }
 
-    public UserEntity(Long id, String userId, String username, String password, String email, String name) {
+    public UsersEntity(Long id, String userId, String username, String password, String email, String name) {
         this.id = id;
         this.userId = userId;
         this.username = username;
@@ -88,7 +100,7 @@ public class UserEntity {
         this.name = name;
     }
 
-    public UserEntity() {
+    public UsersEntity() {
     }
 
     public void generateUserId() {

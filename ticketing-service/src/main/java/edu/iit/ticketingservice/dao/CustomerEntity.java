@@ -7,7 +7,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "customer")
-public class CustomerEntity extends UserEntity {
+public class CustomerEntity extends UsersEntity {
 
     public CustomerEntity() {
         super();
