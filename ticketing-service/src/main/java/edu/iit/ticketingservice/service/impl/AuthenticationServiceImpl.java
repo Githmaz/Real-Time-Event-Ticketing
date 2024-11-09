@@ -20,20 +20,17 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public String login(Users user) {
-        try {
-            // Attempt to authenticate the user with the provided credentials
-            Authentication authentication = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword())
-            );
-            // Check if authentication was successful
-            if (authentication.isAuthenticated()) {
-                return jwtUtil.generateToken(user.getUsername());
-            } else {
-                throw new BusinessException(ErrorType.INVALID_CREDENTIALS);
-            }
-        } catch (Exception e) {
+        // Attempt to authenticate the user with the provided credentials
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword())
+        );
+        // Check if authentication was successful
+        if (authentication.isAuthenticated()) {
+            return jwtUtil.generateToken(user.getUsername(),user.getUserId());
+        } else {
             throw new BusinessException(ErrorType.INVALID_CREDENTIALS);
         }
+
     }
 
     @Override
