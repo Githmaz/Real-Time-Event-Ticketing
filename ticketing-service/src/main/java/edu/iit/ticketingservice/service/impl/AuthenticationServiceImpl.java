@@ -1,8 +1,10 @@
 package edu.iit.ticketingservice.service.impl;
 
+import edu.iit.ticketingservice.dao.UsersEntity;
 import edu.iit.ticketingservice.dto.Users;
 import edu.iit.ticketingservice.exception.BusinessException;
 import edu.iit.ticketingservice.exception.ErrorType;
+import edu.iit.ticketingservice.repository.UserRepository;
 import edu.iit.ticketingservice.service.AuthenticationService;
 import edu.iit.ticketingservice.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,9 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @Autowired
     AuthenticationManager authenticationManager;
     @Autowired
+    UserRepository userRepository;
+
+    @Autowired
     JwtUtil jwtUtil;
 
     @Override
@@ -26,12 +31,14 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         );
         // Check if authentication was successful
         if (authentication.isAuthenticated()) {
-            return jwtUtil.generateToken(user.getUsername(),user.getUserId());
+            UsersEntity authenticatedUser = userRepository.findByUsername(user.getUsername());
+            return jwtUtil.generateToken(user.getUsername(),authenticatedUser.getUserId());
         } else {
             throw new BusinessException(ErrorType.INVALID_CREDENTIALS);
         }
 
     }
+
 
     @Override
     public void logout() {

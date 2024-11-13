@@ -34,6 +34,7 @@ public class TicketEntity {
     @Column(nullable = true)
     private LocalDateTime soldDate;
 
+
     public void setTicketId(String ticketId) {
         this.ticketId = ticketId;
     }

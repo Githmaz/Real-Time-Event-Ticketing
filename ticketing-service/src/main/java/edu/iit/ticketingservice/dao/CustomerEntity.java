@@ -1,13 +1,17 @@
 package edu.iit.ticketingservice.dao;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.PostPersist;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+
+import java.util.List;
 
 
 @Entity
 @Table(name = "customer")
 public class CustomerEntity extends UsersEntity {
+
+
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
+    private List<TicketEntity> tickets;  // List of tickets bought by the customer
 
     public CustomerEntity() {
         super();
