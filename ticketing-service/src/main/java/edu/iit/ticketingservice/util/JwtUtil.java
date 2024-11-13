@@ -75,7 +75,8 @@ public class JwtUtil {
         return null; // Or handle this case as needed
     }
 
-    public String extractUserId(String token) {
+    public String extractUserId(HttpServletRequest httpServletRequest) {
+         String token = getTokenFromRequest(httpServletRequest);
          return extractClaim(token, claims -> claims.get("userId", String.class));
     }
 

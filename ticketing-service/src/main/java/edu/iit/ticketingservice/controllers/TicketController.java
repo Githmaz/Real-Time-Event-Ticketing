@@ -1,12 +1,10 @@
 package edu.iit.ticketingservice.controllers;
 
-import edu.iit.ticketingservice.dao.TicketEntity;
 import edu.iit.ticketingservice.dto.ApiResponse;
-import edu.iit.ticketingservice.dto.TicketRequest;
-import edu.iit.ticketingservice.dto.TicketResponse;
+import edu.iit.ticketingservice.dto.ticket.TicketRequest;
+import edu.iit.ticketingservice.dto.ticket.TicketResponse;
 import edu.iit.ticketingservice.service.TicketService;
 import edu.iit.ticketingservice.util.JwtUtil;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

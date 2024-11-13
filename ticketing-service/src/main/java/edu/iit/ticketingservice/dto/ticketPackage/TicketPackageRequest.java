@@ -1,11 +1,20 @@
-package edu.iit.ticketingservice.dto;
+package edu.iit.ticketingservice.dto.ticketPackage;
 
-public class TicketPackageResponse {
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Positive;
+
+public class TicketPackageRequest {
     private String packageId;
+    @NotBlank(message = "Package type cannot be blank")
     private String packageType;
+    @Positive(message = "Price must be greater than 0")
     private double price;
+    @Min(value = 1, message = "Ticket count must be at least 1")
     private int ticketCount;
+    @NotBlank(message = "Vendor ID cannot be blank")
     private String vendorId;
+    @NotBlank(message = "Event ID cannot be blank")
     private String eventId;
 
 

@@ -1,10 +1,7 @@
-package edu.iit.ticketingservice.dto;
+package edu.iit.ticketingservice.dto.event;
 
 import edu.iit.ticketingservice.dao.TicketPackageEntity;
-import edu.iit.ticketingservice.dao.VendorEntity;
-import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 
 import java.util.Date;
 import java.util.List;

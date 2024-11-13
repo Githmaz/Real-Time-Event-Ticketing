@@ -1,7 +1,7 @@
 package edu.iit.ticketingservice.controllers;
 
 import edu.iit.ticketingservice.dto.ApiResponse;
-import edu.iit.ticketingservice.dto.Users;
+import edu.iit.ticketingservice.dto.users.Users;
 import edu.iit.ticketingservice.service.AuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

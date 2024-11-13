@@ -2,7 +2,7 @@ package edu.iit.ticketingservice.service.impl;
 
 import edu.iit.ticketingservice.dao.EventEntity;
 import edu.iit.ticketingservice.dao.VendorEntity;
-import edu.iit.ticketingservice.dto.Event;
+import edu.iit.ticketingservice.dto.event.Event;
 import edu.iit.ticketingservice.repository.EventRepository;
 import edu.iit.ticketingservice.repository.VendorRepository;
 import edu.iit.ticketingservice.service.EventService;

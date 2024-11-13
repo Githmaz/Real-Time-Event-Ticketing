@@ -1,6 +1,6 @@
 package edu.iit.ticketingservice.service;
 
-import edu.iit.ticketingservice.dto.Users;
+import edu.iit.ticketingservice.dto.users.Users;
 import org.springframework.stereotype.Service;
 
 @Service

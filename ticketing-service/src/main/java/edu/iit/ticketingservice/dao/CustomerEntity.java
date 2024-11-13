@@ -26,4 +26,11 @@ public class CustomerEntity extends UsersEntity {
         this.setUserId("C-" +this.getId());
     }
 
+    public List<TicketEntity> getTickets() {
+        return tickets;
+    }
+
+    public void setTickets(List<TicketEntity> tickets) {
+        this.tickets = tickets;
+    }
 }

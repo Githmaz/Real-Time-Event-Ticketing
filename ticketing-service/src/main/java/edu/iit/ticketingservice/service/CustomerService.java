@@ -1,9 +1,10 @@
 package edu.iit.ticketingservice.service;
 
-import edu.iit.ticketingservice.dto.Customer;
+
+import edu.iit.ticketingservice.dto.ticket.TicketResponse;
+
+import java.util.List;
 
 public interface CustomerService {
-    Customer createCustomer(Customer customer);
-    Customer GetCustomerByEmailAndPassword(String email, String password);
-    Customer GetCustomerByUsernameAndPassword(String username, String password);
+    List<TicketResponse> getBookedTicketsForCustomer();
 }

@@ -1,7 +1,7 @@
 package edu.iit.ticketingservice.service;
 
-import edu.iit.ticketingservice.dto.TicketPackage;
-import edu.iit.ticketingservice.dto.TicketPackageRequest;
+import edu.iit.ticketingservice.dto.ticketPackage.TicketPackage;
+import edu.iit.ticketingservice.dto.ticketPackage.TicketPackageRequest;
 import org.springframework.stereotype.Service;
 
 @Service
