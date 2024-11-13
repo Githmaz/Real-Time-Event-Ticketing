@@ -5,11 +5,16 @@ import edu.iit.ticketingservice.dto.ApiResponse;
 import edu.iit.ticketingservice.dto.TicketRequest;
 import edu.iit.ticketingservice.dto.TicketResponse;
 import edu.iit.ticketingservice.service.TicketService;
+import edu.iit.ticketingservice.util.JwtUtil;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/tickets")
@@ -17,12 +22,17 @@ public class TicketController {
 
     @Autowired
     private TicketService ticketService;
+    @Autowired
+    private JwtUtil jwtUtil;
 
-    // Create a ticket (Booking a ticket)
-    @PostMapping("/create")
-    public ResponseEntity<ApiResponse<TicketResponse>> createTicket(@Valid @RequestBody TicketRequest request) {
-        TicketResponse createdTicket = ticketService.createTicket(request);
-        ApiResponse<TicketResponse> response = new ApiResponse<>(true, "Ticket successfully booked", createdTicket);
+
+
+    // Book a ticket - restricted to CUSTOMER role
+    @PreAuthorize("hasRole('CUSTOMER')")
+    @PostMapping("/book")
+    public ResponseEntity<ApiResponse<List<TicketResponse>>> bookTicket(@Valid @RequestBody TicketRequest request) {
+        List<TicketResponse> bookedTicket = ticketService.bookTicket(request);
+        ApiResponse<List<TicketResponse>> response = new ApiResponse<>(true, "Ticket successfully booked", bookedTicket);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 

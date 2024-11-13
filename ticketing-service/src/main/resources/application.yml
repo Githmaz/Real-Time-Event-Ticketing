@@ -6,6 +6,7 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
+
 ticketing:
   total-tickets: 22
   ticket-release-rate: 33

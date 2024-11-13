@@ -11,7 +11,9 @@ import edu.iit.ticketingservice.repository.CustomerRepository;
 import edu.iit.ticketingservice.repository.TicketPackageRepository;
 import edu.iit.ticketingservice.repository.TicketRepository;
 import edu.iit.ticketingservice.service.TicketService;
+import edu.iit.ticketingservice.util.JwtUtil;
 import jakarta.annotation.PostConstruct;
+import jakarta.servlet.http.HttpServletRequest;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,68 +35,74 @@ public class TicketServiceImpl implements TicketService {
     @Autowired
     private CustomerRepository customerRepository;
 
+
+    @Autowired
+    private HttpServletRequest httpServletRequest;
+
+    @Autowired
+    private JwtUtil jwtUtil;
+
     @Autowired
     private ModelMapper modelMapper;  // Inject ModelMapper
 
 
-
-
     @Override
-    public TicketResponse createTicket(TicketRequest request) {
-        // Fetch associated package
+    public List<TicketResponse> bookTicket(TicketRequest request) {
+        // Fetch ticket package
         TicketPackageEntity ticketPackage = ticketPackageRepository.findByPackageId(request.getPackageId())
                 .orElseThrow(() -> new BusinessException(ErrorType.PACKAGE_NOT_FOUND));
 
-        // Fetch associated customer
-        CustomerEntity customer = customerRepository.findByUserId(request.getCustomerId())
+        // Get token from Http Request
+        String token = jwtUtil.getTokenFromRequest(this.httpServletRequest);
+
+        // Extract userId from the token
+        String userId = jwtUtil.extractUserId(token);
+
+        // Fetch customer making the booking
+        CustomerEntity customer = customerRepository.findByUserId(userId)
                 .orElseThrow(() -> new BusinessException(ErrorType.CUSTOMER_NOT_FOUND));
 
-        // Ensure tickets are available
-        if (ticketPackage.getAvailableTickets() <= 0) {
-            throw new BusinessException(ErrorType.TICKETS_SOLD_OUT);
+        // Check ticket availability
+        if (ticketPackage.getAvailableTickets() < request.getTicketCount()) {
+            throw new BusinessException("Only " + ticketPackage.getAvailableTickets() + " tickets left for this package.");
         }
 
-        // Create and populate new TicketEntity
+
+        List<TicketResponse> ticketResponses = new ArrayList<>();
+        for (int i = 0; i < request.getTicketCount(); i++) {
+            TicketEntity ticket = createTicketEntity(ticketPackage, customer);
+            TicketEntity savedTicket = ticketRepository.save(ticket);
+            ticketPackage.setAvailableTickets(ticketPackage.getAvailableTickets() - 1);
+            ticketResponses.add(convertToResponse(savedTicket));
+        }
+
+        ticketPackageRepository.save(ticketPackage);
+        return ticketResponses;
+    }
+
+
+    private TicketEntity createTicketEntity(TicketPackageEntity ticketPackage, CustomerEntity customer) {
         TicketEntity ticket = new TicketEntity();
         ticket.setTicketType(ticketPackage.getPackageType());
-        ticket.setAvailable(false);  // Ticket is now booked
+        ticket.setAvailable(false);
         ticket.setTicketPackage(ticketPackage);
         ticket.setEvent(ticketPackage.getEvent());
         ticket.setCustomer(customer);
         ticket.setSoldDate(LocalDateTime.now());
         ticket.generateEventId();
-
-        // Save ticket and update available ticket count
-        TicketEntity savedTicket = ticketRepository.save(ticket);
-        ticketPackage.setAvailableTickets(ticketPackage.getAvailableTickets() - 1);
-        ticketPackageRepository.save(ticketPackage);
-
-        TicketResponse ticketResponse = new TicketResponse();
-        ticketResponse.setTicketId(savedTicket.getTicketId());
-        ticketResponse.setEventId(savedTicket.getEvent().getEventId());
-        ticketResponse.setTicketType(savedTicket.getTicketType());
-        ticketResponse.setCustomer(savedTicket.getCustomer());
-        ticketResponse.setSoldDate(savedTicket.getSoldDate());
-        ticketResponse.setTicketPackageId(savedTicket.getTicketPackage().getPackageId());
-
-        // Convert TicketEntity to Ticket DTO
-        return ticketResponse;
+        return ticket;
     }
 
 
-//    // Persist buffered tickets without clearing them
-//    @Scheduled(fixedRate = 60000) // Save every 60 seconds
-//    public void persistBufferedTickets() {
-//        ticketRepository.saveAll(ticketBuffer);
-//        // Do not clear the buffer to keep all tickets in memory
-//    }
-
-    public List<TicketEntity> convertIterableToList(Iterable<TicketEntity> iterable) {
-        List<TicketEntity> list = new ArrayList<>();
-        for (TicketEntity ticket : iterable) {
-            list.add(ticket);
-        }
-        return list;
+    private TicketResponse convertToResponse(TicketEntity ticket) {
+        TicketResponse response = new TicketResponse();
+        response.setTicketId(ticket.getTicketId());
+        response.setEventId(ticket.getEvent().getEventId());
+        response.setTicketType(ticket.getTicketType());
+        response.setCustomer(ticket.getCustomer());
+        response.setSoldDate(ticket.getSoldDate());
+        response.setTicketPackageId(ticket.getTicketPackage().getPackageId());
+        return response;
     }
 }
 

@@ -1,13 +1,22 @@
 package edu.iit.ticketingservice.dto;
 
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 
 public class TicketRequest {
     @NotNull
     private String packageId;
 
-    @NotNull
-    private String customerId;
+    @Min(1)
+    private int ticketCount;
+
+    public int getTicketCount() {
+        return ticketCount;
+    }
+
+    public void setTicketCount( int ticketCount) {
+        this.ticketCount = ticketCount;
+    }
 
     public @NotNull String getPackageId() {
         return packageId;
@@ -17,11 +26,4 @@ public class TicketRequest {
         this.packageId = packageId;
     }
 
-    public @NotNull String getCustomerId() {
-        return customerId;
-    }
-
-    public void setCustomerId(@NotNull String customerId) {
-        this.customerId = customerId;
-    }
 }
