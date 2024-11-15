@@ -23,8 +23,6 @@ public class TicketController {
     @Autowired
     private JwtUtil jwtUtil;
 
-
-
     // Book a ticket - restricted to CUSTOMER role
     @PreAuthorize("hasRole('CUSTOMER')")
     @PostMapping("/book")

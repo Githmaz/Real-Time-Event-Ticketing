@@ -6,6 +6,7 @@ import edu.iit.ticketingservice.dto.event.Event;
 import edu.iit.ticketingservice.repository.EventRepository;
 import edu.iit.ticketingservice.repository.VendorRepository;
 import edu.iit.ticketingservice.service.EventService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +21,8 @@ public class EventServiceImpl implements EventService {
     private EventRepository eventRepository;
     @Autowired
     private VendorRepository vendorRepository;
+    @Autowired
+    private ModelMapper modelMapper;
 
     @Override
     public Event createEvent(Event event) {
@@ -48,11 +51,12 @@ public class EventServiceImpl implements EventService {
 
     @Override
     public List<Event> getAllEvents() {
-        List<EventEntity> eventEntities = (List<EventEntity>) eventRepository.findAll();  // Fetch all events
+        List<EventEntity> eventEntities = eventRepository.findAll();
         return eventEntities.stream()
-                .map(this::convertToDto)  // Convert each EventEntity to Event DTO
+                .map(entity -> modelMapper.map(entity, Event.class))
                 .collect(Collectors.toList());
     }
+
     private EventEntity convertToEntity(Event event) {
         EventEntity eventEntity = new EventEntity();
         eventEntity.setEventId(event.getEventId());

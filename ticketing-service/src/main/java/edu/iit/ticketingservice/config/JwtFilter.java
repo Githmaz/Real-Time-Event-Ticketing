@@ -53,7 +53,7 @@ public class JwtFilter extends OncePerRequestFilter {
             } catch (ExpiredJwtException e) {
                 logger.error("JWT token has expired");
                 response.sendError(HttpStatus.UNAUTHORIZED.value(), "JWT token has expired");
-                return; // Stop further processing
+                return;
             } catch (io.jsonwebtoken.SignatureException e) {
                 logger.error("Invalid JWT signature");
                 response.sendError(HttpStatus.UNAUTHORIZED.value(), "Invalid JWT signature");
