@@ -18,7 +18,8 @@ public class ModelMapperConfig {
         ModelMapper modelMapper = new ModelMapper();
 
         // Map CustomerEntity to Customer DTO (skip password)
-        modelMapper.typeMap(CustomerEntity.class, Customer.class).addMappings(mapper -> mapper.skip(Customer::setPassword));
+        modelMapper.typeMap(CustomerEntity.class, Customer.class).addMappings(mapper -> {mapper.skip(Customer::setPassword);
+                    mapper.skip(Customer::setPurchasedTickets);});
 
         // Map VendorEntity to Vendor DTO (skip password)
         modelMapper.typeMap(VendorEntity.class, Vendor.class).addMappings(mapper -> mapper.skip(Vendor::setPassword));

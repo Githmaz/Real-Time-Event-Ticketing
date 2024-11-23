@@ -50,24 +50,18 @@ public class CustomerServiceImpl implements CustomerService {
                 .map(ticket -> modelMapper.map(ticket, TicketResponse.class))
                 .collect(Collectors.toList());
     }
-
+    @Override
     public Customer getAuthenticatedCustomer() {
         // Extract customer ID from the token in the HTTP request
         String customerId = jwtUtil.extractUserId(this.httpServletRequest);
 
-        // Fetch the CustomerEntity from the repository
-        return  convertToDto(customerRepository.findByUserId(customerId)
-                .orElseThrow(() -> new BusinessException(ErrorType.CUSTOMER_NOT_FOUND)));
+        // Fetch the CustomerEntity from the repository and map it to a Customer DTO
+        CustomerEntity customerEntity = customerRepository.findByUserId(customerId)
+                .orElseThrow(() -> new BusinessException(ErrorType.CUSTOMER_NOT_FOUND));
+
+        // Use ModelMapper to map the entity to a Customer DTO
+        return modelMapper.map(customerEntity, Customer.class);
     }
-    // Conversion method to map CustomerEntity to Customer DTO
-    private Customer convertToDto(CustomerEntity customerEntity) {
-        Customer customer = new Customer();
-        customer.setName(customerEntity.getName());
-        customer.setEmail(customerEntity.getEmail());
-        customer.setUsername(customerEntity.getUsername());
-        customer.setUserId(customerEntity.getUserId());
-        customer.getPurchasedTickets().addAll(customerEntity.getPurchasedTickets());
-        return customer;
-    }
+
 
 }
