@@ -1,7 +1,7 @@
 package edu.iit.ticketingservice.service.impl;
 
 import edu.iit.ticketingservice.dao.UsersEntity;
-import edu.iit.ticketingservice.dto.Users;
+import edu.iit.ticketingservice.dto.users.Users;
 import edu.iit.ticketingservice.exception.BusinessException;
 import edu.iit.ticketingservice.exception.ErrorType;
 import edu.iit.ticketingservice.repository.UserRepository;

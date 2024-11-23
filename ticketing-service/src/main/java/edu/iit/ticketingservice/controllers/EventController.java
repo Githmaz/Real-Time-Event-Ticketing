@@ -1,7 +1,7 @@
 package edu.iit.ticketingservice.controllers;
 
 import edu.iit.ticketingservice.dto.ApiResponse;
-import edu.iit.ticketingservice.dto.Event;
+import edu.iit.ticketingservice.dto.event.Event;
 import edu.iit.ticketingservice.service.EventService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;

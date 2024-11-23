@@ -1,6 +1,6 @@
 package edu.iit.ticketingservice.service;
 
-import edu.iit.ticketingservice.dto.Event;
+import edu.iit.ticketingservice.dto.event.Event;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

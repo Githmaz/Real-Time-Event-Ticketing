@@ -45,15 +45,13 @@ public class JwtFilter extends OncePerRequestFilter {
 
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
             token = authHeader.substring(7);
-            logger.info("Extracted Token: {}", token);
-
             try {
                 username = jwtUtil.extractUserName(token);
                 logger.info("Extracted Username: {}", username);
             } catch (ExpiredJwtException e) {
                 logger.error("JWT token has expired");
                 response.sendError(HttpStatus.UNAUTHORIZED.value(), "JWT token has expired");
-                return; // Stop further processing
+                return;
             } catch (io.jsonwebtoken.SignatureException e) {
                 logger.error("Invalid JWT signature");
                 response.sendError(HttpStatus.UNAUTHORIZED.value(), "Invalid JWT signature");

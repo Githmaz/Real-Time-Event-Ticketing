@@ -3,8 +3,10 @@ package edu.iit.ticketingservice.service.impl;
 import edu.iit.ticketingservice.dao.CustomerEntity;
 import edu.iit.ticketingservice.dao.TicketEntity;
 import edu.iit.ticketingservice.dao.TicketPackageEntity;
-import edu.iit.ticketingservice.dto.TicketRequest;
-import edu.iit.ticketingservice.dto.TicketResponse;
+import edu.iit.ticketingservice.dto.event.Event;
+import edu.iit.ticketingservice.dto.ticket.TicketRequest;
+import edu.iit.ticketingservice.dto.ticket.TicketResponse;
+import edu.iit.ticketingservice.dto.users.Customer;
 import edu.iit.ticketingservice.exception.BusinessException;
 import edu.iit.ticketingservice.exception.ErrorType;
 import edu.iit.ticketingservice.repository.CustomerRepository;
@@ -12,7 +14,6 @@ import edu.iit.ticketingservice.repository.TicketPackageRepository;
 import edu.iit.ticketingservice.repository.TicketRepository;
 import edu.iit.ticketingservice.service.TicketService;
 import edu.iit.ticketingservice.util.JwtUtil;
-import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.HttpServletRequest;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,6 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 @Service
 public class TicketServiceImpl implements TicketService {
@@ -52,11 +52,9 @@ public class TicketServiceImpl implements TicketService {
         TicketPackageEntity ticketPackage = ticketPackageRepository.findByPackageId(request.getPackageId())
                 .orElseThrow(() -> new BusinessException(ErrorType.PACKAGE_NOT_FOUND));
 
-        // Get token from Http Request
-        String token = jwtUtil.getTokenFromRequest(this.httpServletRequest);
 
         // Extract userId from the token
-        String userId = jwtUtil.extractUserId(token);
+        String userId = jwtUtil.extractUserId(this.httpServletRequest);
 
         // Fetch customer making the booking
         CustomerEntity customer = customerRepository.findByUserId(userId)
@@ -98,8 +96,9 @@ public class TicketServiceImpl implements TicketService {
         TicketResponse response = new TicketResponse();
         response.setTicketId(ticket.getTicketId());
         response.setEventId(ticket.getEvent().getEventId());
+        response.setEventName(ticket.getEvent().getEventName());
         response.setTicketType(ticket.getTicketType());
-        response.setCustomer(ticket.getCustomer());
+        response.setCustomerId(ticket.getCustomer().getUserId());
         response.setSoldDate(ticket.getSoldDate());
         response.setTicketPackageId(ticket.getTicketPackage().getPackageId());
         return response;

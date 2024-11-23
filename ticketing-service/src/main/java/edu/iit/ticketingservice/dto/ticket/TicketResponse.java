@@ -1,29 +1,18 @@
-package edu.iit.ticketingservice.dto;
+package edu.iit.ticketingservice.dto.ticket;
 
-import edu.iit.ticketingservice.dao.CustomerEntity;
-import edu.iit.ticketingservice.dao.EventEntity;
-import edu.iit.ticketingservice.dao.TicketPackageEntity;
-import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDateTime;
 
 public class TicketResponse {
-    private Long id;
     private String ticketId;
     private String ticketType;
     private boolean available;
+    private String eventName;
     private String eventId;
-    private CustomerEntity customer;
+    private String customerId;
     private String ticketPackageId;
     private LocalDateTime soldDate;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getTicketId() {
         return ticketId;
@@ -49,6 +38,14 @@ public class TicketResponse {
         this.available = available;
     }
 
+    public String getEventName() {
+        return eventName;
+    }
+
+    public void setEventName(String eventName) {
+        this.eventName = eventName;
+    }
+
     public String getEventId() {
         return eventId;
     }
@@ -57,12 +54,12 @@ public class TicketResponse {
         this.eventId = eventId;
     }
 
-    public CustomerEntity getCustomer() {
-        return customer;
+    public String getCustomerId() {
+        return customerId;
     }
 
-    public void setCustomer(CustomerEntity customer) {
-        this.customer = customer;
+    public void setCustomerId(String customerId) {
+        this.customerId = customerId;
     }
 
     public String getTicketPackageId() {

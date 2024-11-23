@@ -3,26 +3,23 @@ package edu.iit.ticketingservice.service.impl;
 import edu.iit.ticketingservice.dao.CustomerEntity;
 import edu.iit.ticketingservice.dao.UsersEntity;
 import edu.iit.ticketingservice.dao.VendorEntity;
-import edu.iit.ticketingservice.dto.Customer;
+import edu.iit.ticketingservice.dto.users.Customer;
 import edu.iit.ticketingservice.dto.UserRole;
-import edu.iit.ticketingservice.dto.Users;
-import edu.iit.ticketingservice.dto.Vendor;
+import edu.iit.ticketingservice.dto.users.Users;
+import edu.iit.ticketingservice.dto.users.Vendor;
 import edu.iit.ticketingservice.exception.BusinessException;
 import edu.iit.ticketingservice.exception.ErrorType;
 import edu.iit.ticketingservice.repository.CustomerRepository;
 import edu.iit.ticketingservice.repository.UserRepository;
 import edu.iit.ticketingservice.repository.VendorRepository;
 import edu.iit.ticketingservice.service.UserService;
-import org.apache.catalina.User;
+import edu.iit.ticketingservice.util.JwtUtil;
+import jakarta.servlet.http.HttpServletRequest;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -39,15 +36,17 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private VendorRepository vendorRepository;
 
-//    @Autowired
-//    private AdminRepository adminRepository;
+    @Autowired
+    private HttpServletRequest httpServletRequest;
 
+    @Autowired
+    private JwtUtil jwtUtil;
 
     private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     @Autowired
     private ModelMapper modelMapper;
-
+    @Override
     public Users registerUser(Users user) {
         // Validate that username and email are unique across roles
         checkUserExistence(user);
@@ -59,13 +58,27 @@ public class UserServiceImpl implements UserService {
             case VENDOR:
                 return registerVendor(user);
 
-//            case ADMIN:
-//                return registerAdmin(user);
-
             default:
                 throw new BusinessException(ErrorType.INVALID_USER_ROLE);
         }
     }
+
+    @Override
+    public String getAuthenticatedUserId() {
+        return jwtUtil.extractUserId(this.httpServletRequest);
+    }
+
+
+    @Override
+    public boolean checkUserEmail(String email) {
+        return !userRepository.existsByEmail(email);
+    }
+
+    @Override
+    public boolean checkUsername(String username) {
+        return !userRepository.existsByUsername(username);
+    }
+
 
     private void checkUserExistence(Users user) {
         if (userRepository.existsByEmail(user.getEmail())) {
@@ -103,31 +116,10 @@ public class UserServiceImpl implements UserService {
         VendorEntity savedVendor = vendorRepository.save(vendorEntity);
         return convertToDto(savedVendor, Vendor.class);
     }
-//
-//    private Admin registerAdmin(Users user) {
-//        AdminEntity adminEntity = new AdminEntity();
-//        adminEntity.setUsername(user.getUsername());
-//        adminEntity.setPassword(passwordEncoder.encode(user.getPassword()));
-//        adminEntity.setEmail(user.getEmail());
-//        adminEntity.setName(user.getName());
-//        adminEntity.setUserRole(UserRole.ADMIN);
-//
-//        AdminEntity savedAdmin = adminRepository.save(adminEntity);
-//        return convertToDto(savedAdmin, Admin.class);
-//    }
 
     // Generic conversion method using ModelMapper
     private <D> D convertToDto(UsersEntity entity, Class<D> dtoClass) {
         return modelMapper.map(entity, dtoClass);
-    }
-    @Override
-    public boolean checkUserEmail(String email) {
-        return !userRepository.existsByEmail(email);
-    }
-
-    @Override
-    public boolean checkUsername(String username) {
-        return !userRepository.existsByUsername(username);
     }
 
 

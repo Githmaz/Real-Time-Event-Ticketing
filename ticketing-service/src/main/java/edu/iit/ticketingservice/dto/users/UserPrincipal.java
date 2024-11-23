@@ -1,12 +1,12 @@
-package edu.iit.ticketingservice.dto;
+package edu.iit.ticketingservice.dto.users;
 
+import edu.iit.ticketingservice.dto.UserRole;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 public class UserPrincipal implements UserDetails {
     private final Users user;

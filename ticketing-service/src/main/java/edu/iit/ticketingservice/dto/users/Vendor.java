@@ -1,5 +1,4 @@
-package edu.iit.ticketingservice.dto;
-
+package edu.iit.ticketingservice.dto.users;
 
 
 public class Vendor extends Users {

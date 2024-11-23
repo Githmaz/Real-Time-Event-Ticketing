@@ -1,9 +1,8 @@
-package edu.iit.ticketingservice.dto;
+package edu.iit.ticketingservice.dto.ticketPackage;
 
 import edu.iit.ticketingservice.dao.EventEntity;
 import edu.iit.ticketingservice.dao.TicketEntity;
 import edu.iit.ticketingservice.dao.VendorEntity;
-import jakarta.persistence.*;
 
 import java.util.List;
 

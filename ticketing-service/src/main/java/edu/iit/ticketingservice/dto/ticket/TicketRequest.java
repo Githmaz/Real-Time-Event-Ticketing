@@ -1,4 +1,4 @@
-package edu.iit.ticketingservice.dto;
+package edu.iit.ticketingservice.dto.ticket;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;

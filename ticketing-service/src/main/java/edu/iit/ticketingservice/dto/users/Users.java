@@ -1,7 +1,7 @@
-package edu.iit.ticketingservice.dto;
+package edu.iit.ticketingservice.dto.users;
 
+import edu.iit.ticketingservice.dto.UserRole;
 import jakarta.validation.constraints.*;
-import org.hibernate.usertype.UserType;
 
 public class Users {
 

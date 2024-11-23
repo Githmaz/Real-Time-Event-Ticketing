@@ -1,8 +1,8 @@
 package edu.iit.ticketingservice.service.impl;
 
 import edu.iit.ticketingservice.dao.UsersEntity;
-import edu.iit.ticketingservice.dto.UserPrincipal;
-import edu.iit.ticketingservice.dto.Users;
+import edu.iit.ticketingservice.dto.users.UserPrincipal;
+import edu.iit.ticketingservice.dto.users.Users;
 import edu.iit.ticketingservice.repository.UserRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;

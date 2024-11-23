@@ -1,4 +1,4 @@
-package edu.iit.ticketingservice.dto;
+package edu.iit.ticketingservice.dto.ticket;
 
 import edu.iit.ticketingservice.dao.CustomerEntity;
 import edu.iit.ticketingservice.dao.EventEntity;

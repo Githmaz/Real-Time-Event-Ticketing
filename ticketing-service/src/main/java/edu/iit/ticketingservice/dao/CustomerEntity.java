@@ -11,7 +11,7 @@ public class CustomerEntity extends UsersEntity {
 
 
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
-    private List<TicketEntity> tickets;  // List of tickets bought by the customer
+    private List<TicketEntity> purchasedTickets;  // List of tickets bought by the customer
 
     public CustomerEntity() {
         super();
@@ -26,4 +26,11 @@ public class CustomerEntity extends UsersEntity {
         this.setUserId("C-" +this.getId());
     }
 
+    public List<TicketEntity> getPurchasedTickets() {
+        return purchasedTickets;
+    }
+
+    public void setPurchasedTickets(List<TicketEntity> tickets) {
+        this.purchasedTickets = tickets;
+    }
 }

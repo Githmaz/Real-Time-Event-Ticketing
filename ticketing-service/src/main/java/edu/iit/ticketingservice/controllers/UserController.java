@@ -1,8 +1,7 @@
 package edu.iit.ticketingservice.controllers;
 
 import edu.iit.ticketingservice.dto.ApiResponse;
-import edu.iit.ticketingservice.dto.Customer;
-import edu.iit.ticketingservice.dto.Users;
+import edu.iit.ticketingservice.dto.users.Users;
 import edu.iit.ticketingservice.service.UserService;
 import edu.iit.ticketingservice.service.impl.UserServiceImpl;
 import jakarta.validation.Valid;
