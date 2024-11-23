@@ -6,4 +6,5 @@ public interface UserService {
     boolean checkUserEmail(String email);
     boolean checkUsername(String name);
     Users registerUser(Users user);
+    String getAuthenticatedUserId();
 }

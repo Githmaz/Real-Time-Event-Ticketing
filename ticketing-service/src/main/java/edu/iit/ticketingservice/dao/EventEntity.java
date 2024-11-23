@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -23,7 +24,13 @@ public class EventEntity {
     private String eventName;
 
     @Column(nullable = false)
-    private Date eventDate;
+    private LocalDateTime eventDateTime; // Scheduled event date and time
+
+    @Column(nullable = false, updatable = false)
+    private LocalDateTime eventCreatedDate; // Automatically set when the event is created
+
+    @Column(nullable = false)
+    private String location;
 
     @ManyToOne
     @JoinColumn(name = "vendor_id", nullable = false)
@@ -43,10 +50,6 @@ public class EventEntity {
 
     public void setEventName(String eventName) {
         this.eventName = eventName;
-    }
-
-    public void setEventDate(Date eventDate) {
-        this.eventDate = eventDate;
     }
 
     public void setVendor(VendorEntity vendor) {
@@ -69,12 +72,32 @@ public class EventEntity {
         return eventName;
     }
 
-    public Date getEventDate() {
-        return eventDate;
-    }
-
     public VendorEntity getVendor() {
         return vendor;
+    }
+
+    public LocalDateTime getEventDateTime() {
+        return eventDateTime;
+    }
+
+    public void setEventDateTime(LocalDateTime eventDateTime) {
+        this.eventDateTime = eventDateTime;
+    }
+
+    public LocalDateTime getEventCreatedDate() {
+        return eventCreatedDate;
+    }
+
+    public void setEventCreatedDate(LocalDateTime eventCreatedDate) {
+        this.eventCreatedDate = eventCreatedDate;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
     }
 
     public List<TicketPackageEntity> getTicketPackages() {
@@ -84,5 +107,10 @@ public class EventEntity {
     @PostPersist
     public void generateEventId() {
         this.setEventId("E" + this.id);
+    }
+
+    @PrePersist
+    public void prePersist() {
+        this.eventCreatedDate = LocalDateTime.now(); // Set creation date at the time of persistence
     }
 }

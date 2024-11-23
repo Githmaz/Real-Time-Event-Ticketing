@@ -1,10 +1,15 @@
 package edu.iit.ticketingservice.service.impl;
 
+import edu.iit.ticketingservice.dao.CustomerEntity;
 import edu.iit.ticketingservice.dao.VendorEntity;
+import edu.iit.ticketingservice.dto.users.Customer;
 import edu.iit.ticketingservice.dto.users.Vendor;
+import edu.iit.ticketingservice.exception.BusinessException;
+import edu.iit.ticketingservice.exception.ErrorType;
 import edu.iit.ticketingservice.repository.VendorRepository;
 import edu.iit.ticketingservice.service.UserService;
 import edu.iit.ticketingservice.service.VendorService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -18,17 +23,17 @@ public class VendorServiceImpl implements VendorService {
     @Autowired
     UserService userService;
 
-    private BCryptPasswordEncoder passwordEncoder  = new BCryptPasswordEncoder();
+    @Autowired
+    private ModelMapper modelMapper;
 
+    @Override
+    public Vendor getAuthenticatedVendor() {
+        String vendorId = userService.getAuthenticatedUserId();
 
+        VendorEntity vendorEntity = vendorRepository.findByUserId(vendorId)
+                .orElseThrow(() -> new BusinessException(ErrorType.VENDOR_NOT_FOUND));
 
-    // Conversion method to map VendorEntity to Vendor DTO
-    private Vendor convertToDto(VendorEntity vendorEntity) {
-        Vendor vendor = new Vendor();
-        vendor.setName(vendorEntity.getName());
-        vendor.setEmail(vendorEntity.getEmail());
-        vendor.setUsername(vendorEntity.getUsername());
-        vendor.setUserId(vendorEntity.getUserId());
-        return vendor;
+        return modelMapper.map(vendorEntity, Vendor.class);
     }
+
 }

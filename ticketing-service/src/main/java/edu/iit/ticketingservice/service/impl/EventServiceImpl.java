@@ -3,9 +3,12 @@ package edu.iit.ticketingservice.service.impl;
 import edu.iit.ticketingservice.dao.EventEntity;
 import edu.iit.ticketingservice.dao.VendorEntity;
 import edu.iit.ticketingservice.dto.event.Event;
+import edu.iit.ticketingservice.dto.users.Vendor;
 import edu.iit.ticketingservice.repository.EventRepository;
 import edu.iit.ticketingservice.repository.VendorRepository;
 import edu.iit.ticketingservice.service.EventService;
+import edu.iit.ticketingservice.service.VendorService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,10 +25,16 @@ public class EventServiceImpl implements EventService {
     @Autowired
     private VendorRepository vendorRepository;
     @Autowired
+    private VendorService vendorService;
+    @Autowired
     private ModelMapper modelMapper;
+    @Autowired
+    private HttpServletRequest httpServletRequest;
 
     @Override
     public Event createEvent(Event event) {
+        Vendor vendor = vendorService.getAuthenticatedVendor();
+        event.setVendorId(vendor.getUserId());
         EventEntity eventEntity = convertToEntity(event);
         eventEntity.generateEventId();
         EventEntity savedEvent = eventRepository.save(eventEntity);
@@ -61,7 +70,10 @@ public class EventServiceImpl implements EventService {
         EventEntity eventEntity = new EventEntity();
         eventEntity.setEventId(event.getEventId());
         eventEntity.setEventName(event.getEventName());
-        eventEntity.setEventDate(event.getEventDate());
+        eventEntity.setEventDateTime(event.getEventDateTime());
+        eventEntity.setEventCreatedDate(event.getEventCreatedDate());
+        eventEntity.setLocation(event.getLocation());
+
         // Retrieve VendorEntity using vendorId
         Optional<VendorEntity> vendorEntityOpt = (vendorRepository.findByUserId(event.getVendorId()));
         if (vendorEntityOpt.isPresent()) {
@@ -76,8 +88,10 @@ public class EventServiceImpl implements EventService {
         Event event = new Event();
         event.setEventId(eventEntity.getEventId());
         event.setEventName(eventEntity.getEventName());
-        event.setEventDate(eventEntity.getEventDate());
+        event.setEventCreatedDate(eventEntity.getEventCreatedDate());
+        event.setEventDateTime(eventEntity.getEventDateTime());
         event.setVendorId(eventEntity.getVendor().getUserId());
+        event.setLocation(eventEntity.getLocation());
         event.setTicketPackages(eventEntity.getTicketPackages());
         return event;
     }

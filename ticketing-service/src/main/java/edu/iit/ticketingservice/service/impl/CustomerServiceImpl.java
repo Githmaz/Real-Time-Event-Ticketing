@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -35,31 +36,30 @@ public class CustomerServiceImpl implements CustomerService {
     private UserService userService;
 
     @Autowired
-    private HttpServletRequest httpServletRequest;
-
-    @Autowired
-    private JwtUtil jwtUtil;
-
-    @Autowired
     private ModelMapper modelMapper;
 
     @Override
     public List<TicketResponse> getBookedTicketsForCustomer() {
+        // Get the authenticated customer
+        Customer customer = getAuthenticatedCustomer();
+
+        // Check if purchasedTickets is null and return an empty list if it is
+        if (customer.getPurchasedTickets() == null) {
+            return Collections.emptyList();
+        }
+
         // Map the tickets to TicketResponse DTOs
-        return getAuthenticatedCustomer().getPurchasedTickets().stream()
+        return customer.getPurchasedTickets().stream()
                 .map(ticket -> modelMapper.map(ticket, TicketResponse.class))
                 .collect(Collectors.toList());
     }
     @Override
     public Customer getAuthenticatedCustomer() {
-        // Extract customer ID from the token in the HTTP request
-        String customerId = jwtUtil.extractUserId(this.httpServletRequest);
+        String customerId = userService.getAuthenticatedUserId();
 
-        // Fetch the CustomerEntity from the repository and map it to a Customer DTO
         CustomerEntity customerEntity = customerRepository.findByUserId(customerId)
                 .orElseThrow(() -> new BusinessException(ErrorType.CUSTOMER_NOT_FOUND));
 
-        // Use ModelMapper to map the entity to a Customer DTO
         return modelMapper.map(customerEntity, Customer.class);
     }
 
