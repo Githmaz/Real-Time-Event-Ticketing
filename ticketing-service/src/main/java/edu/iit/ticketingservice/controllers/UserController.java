@@ -1,6 +1,7 @@
 package edu.iit.ticketingservice.controllers;
 
 import edu.iit.ticketingservice.dto.ApiResponse;
+import edu.iit.ticketingservice.dto.users.Customer;
 import edu.iit.ticketingservice.dto.users.Users;
 import edu.iit.ticketingservice.service.UserService;
 import edu.iit.ticketingservice.service.impl.UserServiceImpl;
@@ -24,7 +25,7 @@ public class UserController {
 
     // Single endpoint to handle registration based on user role
     @PostMapping("/register")
-    public ResponseEntity<ApiResponse<?>> registerUser(@Valid @RequestBody Users user) {
+    public ResponseEntity<ApiResponse<Users>> registerUser(@Valid @RequestBody Users user) {
         logger.info("Registering new user with username: {} and role: {}", user.getUsername(), user.getUserRole());
         Users registeredUserDto = userService.registerUser(user);
         logger.info("User created successfully with user ID: {}", registeredUserDto.getUserId());

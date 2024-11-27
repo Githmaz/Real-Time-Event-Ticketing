@@ -1,6 +1,7 @@
 package edu.iit.ticketingservice.service.impl;
 
 import edu.iit.ticketingservice.dao.CustomerEntity;
+import edu.iit.ticketingservice.dao.CustomerPlanEntity;
 import edu.iit.ticketingservice.dao.UsersEntity;
 import edu.iit.ticketingservice.dao.VendorEntity;
 import edu.iit.ticketingservice.dto.users.Customer;
@@ -9,6 +10,7 @@ import edu.iit.ticketingservice.dto.users.Users;
 import edu.iit.ticketingservice.dto.users.Vendor;
 import edu.iit.ticketingservice.exception.BusinessException;
 import edu.iit.ticketingservice.exception.ErrorType;
+import edu.iit.ticketingservice.repository.CustomerPlanRepository;
 import edu.iit.ticketingservice.repository.CustomerRepository;
 import edu.iit.ticketingservice.repository.UserRepository;
 import edu.iit.ticketingservice.repository.VendorRepository;
@@ -38,6 +40,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private HttpServletRequest httpServletRequest;
+
+    @Autowired
+    private CustomerPlanRepository customerPlanRepository;
 
     @Autowired
     private JwtUtil jwtUtil;
@@ -100,8 +105,12 @@ public class UserServiceImpl implements UserService {
         customerEntity.setUserRole(UserRole.CUSTOMER);
         customerEntity.generateUserId();
 
+        // Try to fetch the default plan, set to null if not found
+        CustomerPlanEntity defaultPlan = customerPlanRepository.findByPlanName("Standard").orElse(null);
+        customerEntity.setCustomerPlan(defaultPlan);
+
         CustomerEntity savedCustomer = customerRepository.save(customerEntity);
-        return convertToDto(savedCustomer, Customer.class);
+        return modelMapper.map(savedCustomer,Customer.class);
     }
 
     private Vendor registerVendor(Users user) {
@@ -114,13 +123,9 @@ public class UserServiceImpl implements UserService {
         vendorEntity.generateUserId();
 
         VendorEntity savedVendor = vendorRepository.save(vendorEntity);
-        return convertToDto(savedVendor, Vendor.class);
+        return modelMapper.map(savedVendor,Vendor.class);
     }
 
-    // Generic conversion method using ModelMapper
-    private <D> D convertToDto(UsersEntity entity, Class<D> dtoClass) {
-        return modelMapper.map(entity, dtoClass);
-    }
 
 
 }
