@@ -13,6 +13,18 @@ public class CustomerEntity extends UsersEntity {
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
     private List<TicketEntity> purchasedTickets;  // List of tickets bought by the customer
 
+    @ManyToOne
+    @JoinColumn(name = "customer_plan_id")
+    private CustomerPlanEntity customerPlan;
+
+    public CustomerPlanEntity getCustomerPlan() {
+        return customerPlan;
+    }
+
+    public void setCustomerPlan(CustomerPlanEntity customerPlan) {
+        this.customerPlan = customerPlan;
+    }
+
     public CustomerEntity() {
         super();
     }

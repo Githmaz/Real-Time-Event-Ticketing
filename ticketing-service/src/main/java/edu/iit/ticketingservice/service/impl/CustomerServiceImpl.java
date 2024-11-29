@@ -2,12 +2,16 @@ package edu.iit.ticketingservice.service.impl;
 
 
 import edu.iit.ticketingservice.dao.CustomerEntity;
+import edu.iit.ticketingservice.dao.CustomerPlanEntity;
 import edu.iit.ticketingservice.dto.ticket.TicketResponse;
 import edu.iit.ticketingservice.dto.users.Customer;
+import edu.iit.ticketingservice.dto.users.CustomerPlan;
 import edu.iit.ticketingservice.exception.BusinessException;
 import edu.iit.ticketingservice.exception.ErrorType;
+import edu.iit.ticketingservice.repository.CustomerPlanRepository;
 import edu.iit.ticketingservice.repository.CustomerRepository;
 import edu.iit.ticketingservice.service.CustomerService;
+import edu.iit.ticketingservice.service.TicketService;
 import edu.iit.ticketingservice.service.UserService;
 import edu.iit.ticketingservice.util.JwtUtil;
 import jakarta.servlet.http.HttpServletRequest;
@@ -34,6 +38,9 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private CustomerPlanRepository customerPlanRepository;
 
     @Autowired
     private ModelMapper modelMapper;
@@ -63,5 +70,55 @@ public class CustomerServiceImpl implements CustomerService {
         return modelMapper.map(customerEntity, Customer.class);
     }
 
+    @Override
+    public CustomerPlan getCustomerPlan() {
+        // Get the authenticated customer
+        Customer customer = getAuthenticatedCustomer();
+        return customer.getCustomerPlan();
+    }
+
+    @Override
+    public List<CustomerPlan> getAllCustomerPlans() {
+        // Fetch all customer plans from the database
+        return customerPlanRepository.findAll().stream()
+                .map(planEntity -> modelMapper.map(planEntity, CustomerPlan.class))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public Customer setCustomerPlan(CustomerPlan customerPlan) {
+        // Get the authenticated customer
+        CustomerEntity customerEntity = customerRepository.findByUserId(userService.getAuthenticatedUserId())
+                .orElseThrow(() -> new BusinessException(ErrorType.CUSTOMER_NOT_FOUND));
+
+        // Determine the new plan entity
+        CustomerPlanEntity newPlanEntity = customerEntity.getCustomerPlan(); // Start with current plan
+
+        // Update based on the provided plan details
+        if (customerPlan != null) {
+            // If plan name is provided, fetch by name
+            if (customerPlan.getPlanName() != null) {
+                newPlanEntity = customerPlanRepository.findByPlanName(customerPlan.getPlanName())
+                        .orElseThrow(() -> new BusinessException(ErrorType.PLAN_NOT_FOUND));
+            }
+            // If plan ID is provided, fetch by ID
+            if(customerPlan.getPlanId() != null) {
+                newPlanEntity = customerPlanRepository.findByPlanId(customerPlan.getPlanId())
+                        .orElseThrow(() -> new BusinessException(ErrorType.PLAN_NOT_FOUND));
+            }
+        }
+
+        // If no new plan is provided or found, throw an exception
+        if (newPlanEntity == null) {
+            throw new BusinessException("No valid plan details provided");
+        }
+
+        // Update the customer's plan
+        customerEntity.setCustomerPlan(newPlanEntity);
+        customerRepository.save(customerEntity);
+
+        // Return the updated customer as a DTO
+        return modelMapper.map(customerEntity, Customer.class);
+    }
 
 }

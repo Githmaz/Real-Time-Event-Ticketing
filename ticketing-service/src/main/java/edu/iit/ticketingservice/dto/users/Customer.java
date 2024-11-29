@@ -8,7 +8,7 @@ import java.util.List;
 public class Customer extends Users {
 
     private List<TicketEntity> purchasedTickets;
-
+    private CustomerPlan customerPlan;
     public Customer() {
         super();
     }
@@ -23,5 +23,13 @@ public class Customer extends Users {
 
     public void setPurchasedTickets(List<TicketEntity> purchasedTickets) {
         this.purchasedTickets = purchasedTickets;
+    }
+
+    public CustomerPlan getCustomerPlan() {
+        return customerPlan;
+    }
+
+    public void setCustomerPlan(CustomerPlan customerPlan) {
+        this.customerPlan = customerPlan;
     }
 }
