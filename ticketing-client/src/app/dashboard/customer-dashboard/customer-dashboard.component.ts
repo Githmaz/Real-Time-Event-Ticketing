@@ -5,11 +5,12 @@ import { CustomerDashboardData } from '../models/customer-dashboard-data.model';
 import { DashboardService } from '../service/dashboard.service';
 import { CardGridComponent } from '../components/card-grid/card-grid.component';
 import { Events } from '../../models/event.model';
+import { NotFoundBannerComponent } from "../../shared/components/not-found-banner/not-found-banner.component";
 
 @Component({
   selector: 'app-customer-dashboard',
   standalone: true,
-  imports: [CardGridComponent, BannerComponent, SearchBarComponent],
+  imports: [CardGridComponent, BannerComponent, SearchBarComponent, NotFoundBannerComponent],
   templateUrl: './customer-dashboard.component.html',
   styleUrls: ['./customer-dashboard.component.css']
 })
@@ -36,7 +37,6 @@ export class CustomerDashboardComponent {
       error: (err) => {
         console.error('Error fetching dashboard data:', err);
         this.loading = false;
-
         if (err.status === 404) {
           this.error = '404 - Data Not Found';
         } else {
