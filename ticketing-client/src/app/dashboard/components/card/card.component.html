@@ -1,0 +1,12 @@
+<div class="bg-white dark:bg-gray-800 rounded-2xl pt-3 pb-5  cursor-pointer hover:-translate-y-2 transition-all relative">
+  <div class="w-[100%]  overflow-hidden mx-auto  aspect-w-16 aspect-h-8">
+    <img [src]="event.eventImage" [alt]="'Product ' + event.eventName" class="h-full w-full object-contain" />
+  </div>
+  <div class="mt-4 ml-4 ">
+    <h6 class="text-lg font-extrabold text-gray-800 dark:text-gray-200">{{ event.eventName }}</h6>
+    <p class="text-gray-600 dark:text-gray-400 text-sm ">{{ event.eventDateTime | date: 'MMM d, yyyy' }}</p>
+    <p class="text-gray-600 dark:text-gray-400 text-sm ">{{ event.eventDateTime | date: 'hh:mm a' }}</p>
+    <p class="text-gray-600 dark:text-gray-400 text-sm ">{{ event.location }}</p>
+    <p class="text-gray-600 dark:text-gray-400 text-sm "> creater : {{ event.vendorId }}</p>
+  </div>
+</div>

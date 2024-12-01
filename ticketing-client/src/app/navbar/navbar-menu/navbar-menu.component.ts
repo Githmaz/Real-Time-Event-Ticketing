@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ThemeToggleComponent } from "../../components/theme-toggle/theme-toggle.component";
+import { ThemeToggleComponent } from "../../shared/components/theme-toggle/theme-toggle.component";
 
 @Component({
   selector: 'app-navbar-menu',

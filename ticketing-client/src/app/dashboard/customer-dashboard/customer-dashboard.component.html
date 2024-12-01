@@ -1,7 +1,14 @@
 <div class="font-[sans-serif] bg-gray-100 dark:bg-gray-900">
-    <app-banner></app-banner>
-    <div class="p-4 mx-auto lg:max-w-[70%] sm:max-w-full">
-      <h2 class="text-4xl font-extrabold text-gray-800 dark:text-gray-200 mb-3 mt-5">Events</h2>
-      <app-card-grid [cards]="cards"></app-card-grid>
+  <app-banner></app-banner>
+  <div class="p-4 mx-auto lg:max-w-[80%] sm:max-w-full">
+    <h2 class="text-4xl font-extrabold text-gray-800 dark:text-gray-200 mt-3">Events</h2>
+    <div class="mb-3">
+      <app-search-bar (search)="filterEvents($event)"></app-search-bar>
     </div>
+    @if (filteredEvents.length > 0) {
+      <app-card-grid [events]="filteredEvents"></app-card-grid>
+    } @else {
+      <p class="text-gray-600 dark:text-gray-400 text-sm">No events found matching your search.</p>
+    }
   </div>
+</div>

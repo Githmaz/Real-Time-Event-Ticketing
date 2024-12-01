@@ -1,5 +1,5 @@
 import { Component,Output,Renderer2} from '@angular/core';
-import { ThemeToggleComponent } from "../../components/theme-toggle/theme-toggle.component";
+import { ThemeToggleComponent } from "../../shared/components/theme-toggle/theme-toggle.component";
 import { DarkModeService } from '../../services/dark-mode.service';
 
 @Component({

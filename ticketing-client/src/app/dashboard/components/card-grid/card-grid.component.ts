@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { CardComponent } from "../card/card.component";
+import { Events } from '../../../models/event.model';
 
 @Component({
   selector: 'app-card-grid',
@@ -9,5 +10,6 @@ import { CardComponent } from "../card/card.component";
   styleUrl: './card-grid.component.css'
 })
 export class CardGridComponent {
-  @Input() cards!: { id: number; name: string; description: string; price: number; imageUrl: string }[];
+  @Input() events!: Events[];
+ 
 }
