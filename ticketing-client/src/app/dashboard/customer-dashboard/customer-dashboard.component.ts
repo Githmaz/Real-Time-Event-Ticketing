@@ -6,6 +6,7 @@ import { DashboardService } from '../service/dashboard.service';
 import { CardGridComponent } from '../components/card-grid/card-grid.component';
 import { Events } from '../../models/event.model';
 import { NotFoundBannerComponent } from "../../shared/components/not-found-banner/not-found-banner.component";
+import { TokenService } from '../../services/token.service';
 
 @Component({
   selector: 'app-customer-dashboard',
@@ -20,7 +21,7 @@ export class CustomerDashboardComponent {
   loading: boolean = true;
   error: string | null = null; 
 
-  constructor(private dashboardService: DashboardService) {}
+  constructor(private dashboardService: DashboardService,private tokenService: TokenService) {}
 
   ngOnInit() {
     this.loadDashboardData();
@@ -30,7 +31,7 @@ export class CustomerDashboardComponent {
     this.dashboardService.getCustomerDashboardData().subscribe({
       next: (data) => {
         this.dashboardData = data;
-        this.filteredEvents = data.eventList; // Initialize with all events
+        this.filteredEvents = data.eventList; 
         this.loading = false;
         this.error = null; 
       },

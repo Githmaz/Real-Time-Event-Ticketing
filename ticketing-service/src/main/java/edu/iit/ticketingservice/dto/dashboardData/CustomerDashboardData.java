@@ -9,7 +9,7 @@ import java.util.List;
 
 public class CustomerDashboardData {
     private Customer customer;
-    private List<Event> eventlist;
+    private List<Event> eventList;
 
     public Users getUser() {
         return customer;
@@ -17,18 +17,18 @@ public class CustomerDashboardData {
 
     public CustomerDashboardData(Customer customer, List<Event> eventlist) {
         this.customer = customer;
-        this.eventlist = eventlist;
+        this.eventList = eventlist;
     }
 
     public void setUser(Customer customer) {
         this.customer = customer;
     }
 
-    public List<Event> getEventlist() {
-        return eventlist;
+    public List<Event> getEventList() {
+        return eventList;
     }
 
     public void setEventlist(List<Event> eventlist) {
-        this.eventlist = eventlist;
+        this.eventList = eventlist;
     }
 }
