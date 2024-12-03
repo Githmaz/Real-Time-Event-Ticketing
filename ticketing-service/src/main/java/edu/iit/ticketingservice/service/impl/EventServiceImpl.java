@@ -86,6 +86,7 @@ public class EventServiceImpl implements EventService {
 
     private Event convertToDto(EventEntity eventEntity) {
         Event event = new Event();
+        event.setId(eventEntity.getId());
         event.setEventId(eventEntity.getEventId());
         event.setEventName(eventEntity.getEventName());
         event.setEventCreatedDate(eventEntity.getEventCreatedDate());

@@ -8,20 +8,23 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
+import java.util.Base64;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.function.Function;
 
 @Component
 public class JwtUtil {
-
-
     private static final String AUTH_HEADER = "Authorization";
     private static final String TOKEN_PREFIX = "Bearer ";
-    private final SecretKey SECRET_KEY = Keys.secretKeyFor(SignatureAlgorithm.HS512); // Automatically generates a secure 512-bit key
+    private static final String BASE64_SECRET_KEY = "khM6aydGJA7GDTm/tj8mZIgrOYnwnHvzI3RQQlSrJkxHana3zTIIu2CyC1QXH3H2stilCl7JdMyk5FRrMXNf5Q==";
+    private final SecretKey SECRET_KEY;
 
+    public JwtUtil() {
+        byte[] keyBytes = Base64.getDecoder().decode(BASE64_SECRET_KEY);
+        this.SECRET_KEY = Keys.hmacShaKeyFor(keyBytes);
+    }
     public String generateToken(String username,String userId) {
+
 
         return Jwts.builder()
                 .issuedAt(new Date())

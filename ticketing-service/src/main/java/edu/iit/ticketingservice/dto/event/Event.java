@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.List;
 
 public class Event {
+    private Long id;
     private String eventId;
 
     @NotBlank(message = "Event Name cannot be blank")
@@ -40,6 +41,14 @@ public class Event {
 
     public void setTicketPackages(List<TicketPackageEntity> ticketPackages) {
         this.ticketPackages = ticketPackages;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public @NotNull(message = "Event Date and Time cannot be null") LocalDateTime getEventDateTime() {

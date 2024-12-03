@@ -6,12 +6,10 @@ import edu.iit.ticketingservice.service.AuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/auth")
 public class AuthController {
 
@@ -20,9 +18,14 @@ public class AuthController {
 
     // Login endpoint
     @PostMapping("/login")
-    public String login(@RequestBody Users user) {
-            String response = authenticationService.login(user);
-                return response;
+    public ResponseEntity<ApiResponse<String>> login(@RequestBody Users user) {
+        try {
+            String token = authenticationService.login(user);
+            return new ResponseEntity<>(new ApiResponse<>(true, "Login successful", token), HttpStatus.OK);
+        } catch (Exception e) {
+            // Handle exceptions (e.g., invalid credentials)
+            return new ResponseEntity<>(new ApiResponse<>(false, e.getMessage(), null), HttpStatus.UNAUTHORIZED);
+        }
     }
 
     // Logout endpoint
