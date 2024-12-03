@@ -7,11 +7,12 @@ import { CardGridComponent } from '../components/card-grid/card-grid.component';
 import { Events } from '../../models/event.model';
 import { NotFoundBannerComponent } from "../../shared/components/not-found-banner/not-found-banner.component";
 import { TokenService } from '../../services/token.service';
+import { AlertMessageComponent } from "../../shared/components/alert-message/alert-message.component";
 
 @Component({
   selector: 'app-customer-dashboard',
   standalone: true,
-  imports: [CardGridComponent, BannerComponent, SearchBarComponent, NotFoundBannerComponent],
+  imports: [CardGridComponent, BannerComponent, SearchBarComponent, NotFoundBannerComponent, AlertMessageComponent],
   templateUrl: './customer-dashboard.component.html',
   styleUrls: ['./customer-dashboard.component.css']
 })

@@ -1,12 +1,15 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-banner',
   standalone: true,
-  imports: [],
   templateUrl: './banner.component.html',
-  styleUrl: './banner.component.css'
+  styleUrls: ['./banner.component.css']
 })
 export class BannerComponent {
-
+  @Input() imageSrc: string = ''; // Image source
+  @Input() title: string = ''; // Title text
+  @Input() description: string = ''; // Description text
+  @Input() buttonText: string = ''; // Button text
+  @Input() buttonLink: string = '#'; // Button link
 }
