@@ -1,4 +1,4 @@
-package edu.iit.ticketingservice.applicationCLI;
+package edu.iit.TicketingSimulation.applicationCLI;
 
 import org.yaml.snakeyaml.DumperOptions;
 import org.yaml.snakeyaml.Yaml;
@@ -8,63 +8,51 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
+/**
+ * DatabaseConfigurator is responsible for managing and updating database configurations.
+ * This class interacts with the `application.yml` file to configure database connection settings,
+ * such as the URL, username, and password.
+ * Main Features:
+ * - Update all database settings interactively.
+ * - Save the updated configurations to the `application.yml` file.
+ */
 public class DatabaseConfigurator {
+
+    private static final Logger logger = Logger.getLogger(DatabaseConfigurator.class.getName());
+    private static final String CONFIG_PATH = "src/main/resources/application.yml";
 
     public static void configureDatabase() {
         while (true) {
             ConsoleUIManager.displayTitle("Database Configuration");
             ConsoleUIManager.displayDatabaseConfigMenu();
-            int option = InputUtils.getOptionFromMenu(1, 5);
+            int option = InputUtils.getOptionFromMenu(1, 2);
             switch (option) {
                 case 1:
-                    updateAllSettings();
+                    updateDatabaseSettings();
                     break;
                 case 2:
-                    updateDatabaseUrl();
-                    break;
-                case 3:
-                    updateUsername();
-                    break;
-                case 4:
-                    updatePassword();
-                    break;
-                case 5:
-                    System.out.println("Returning to Main Menu...");
+                    logger.info("Returning to Main Menu...");
                     return;
                 default:
-                    System.out.println("Invalid option. Please try again.");
+                    logger.warning("Invalid option selected. Please try again.");
             }
         }
     }
 
-    private static void updateAllSettings() {
-        String url = InputUtils.getStringInput("Enter new Database URL: ");
-        String username = InputUtils.getStringInput("Enter new Username: ");
-        String password = InputUtils.getStringInput("Enter new Password: ");
+    private static void updateDatabaseSettings() {
+        // Use optional input to allow skipping certain fields
+        String url = InputUtils.getOptionalStringInput("Enter new Database URL");
+        String username = InputUtils.getOptionalStringInput("Enter new Username");
+        String password = InputUtils.getOptionalStringInput("Enter new Password");
         saveDatabaseConfig(url, username, password);
+        logger.info("Database settings updated successfully.");
     }
-
-    private static void updateDatabaseUrl() {
-        String url = InputUtils.getStringInput("Enter new Database URL: ");
-        saveDatabaseConfig(url, null, null);
-    }
-
-    private static void updateUsername() {
-        String username = InputUtils.getStringInput("Enter new Username: ");
-        saveDatabaseConfig(null, username, null);
-    }
-
-    private static void updatePassword() {
-        String password = InputUtils.getStringInput("Enter new Password: ");
-        saveDatabaseConfig(null, null, password);
-    }
-
 
     private static void saveDatabaseConfig(String url, String username, String password) {
-        String path = "src/main/resources/application.yml";  // Make sure this path is correct
-
-        try (FileInputStream fileInputStream = new FileInputStream(path)) {
+        try (FileInputStream fileInputStream = new FileInputStream(CONFIG_PATH)) {
             // Load existing YAML data
             Yaml yaml = new Yaml();
             Map<String, Object> data = yaml.load(fileInputStream);
@@ -94,17 +82,14 @@ public class DatabaseConfigurator {
             options.setPrettyFlow(true);
 
             // Write updated YAML data back to file
-            try (FileWriter fileWriter = new FileWriter(path)) {
+            try (FileWriter fileWriter = new FileWriter(CONFIG_PATH)) {
                 Yaml yamlWriter = new Yaml(options);
                 yamlWriter.dump(data, fileWriter);
-                System.out.println("Database configuration saved successfully.");
+                logger.info("Database configuration saved successfully.");
             }
 
         } catch (IOException e) {
-            System.err.println("Failed to save the configuration: " + e.getMessage());
-            e.printStackTrace();
+            logger.log(Level.SEVERE, e, () -> "Failed to save the database configuration: " + e.getMessage());
         }
     }
-
-
 }

@@ -1,115 +1,105 @@
-package edu.iit.ticketingservice.applicationCLI;
+package edu.iit.TicketingSimulation.applicationCLI;
 
-import org.yaml.snakeyaml.DumperOptions;
-import org.yaml.snakeyaml.Yaml;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonSyntaxException;
+import edu.iit.TicketingSimulation.config.TicketConfig;
 
-import java.io.FileInputStream;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
+/**
+ * TicketConfigurator manages the ticketing configurations of the application.
+ * Main Features:
+ * - Update all ticket configurations interactively (Total Tickets, Ticket Release Rate, etc.).
+ * - Save and load configurations from a JSON file.
+ * - Provide interactive menu-driven configuration options.
+ */
 public class TicketConfigurator {
+
+    private static final Logger logger = Logger.getLogger(TicketConfigurator.class.getName());
+    private static final String JSON_FILE_PATH = "src/main/java/edu/iit/TicketingSimulation/config/config.json";
 
     public static void configureTicketing() {
         while (true) {
             ConsoleUIManager.displayTitle("Ticketing Configuration");
+            displayCurrentConfiguration();
             ConsoleUIManager.displayTicketConfigMenu();
-            int option = InputUtils.getOptionFromMenu(1, 6);
+            int option = InputUtils.getOptionFromMenu(1, 2);
             switch (option) {
                 case 1:
-                    updateAllConfigurations();
+                    updateConfigurations();
                     break;
                 case 2:
-                    updateTotalTickets();
-                    break;
-                case 3:
-                    updateTicketReleaseRate();
-                    break;
-                case 4:
-                    updateCustomerRetrievalRate();
-                    break;
-                case 5:
-                    updateMaxTicketCapacity();
-                    break;
-                case 6:
-                    System.out.println("Returning to Main Menu...");
+                    logger.info("Returning to Main Menu...");
                     return;
                 default:
-                    System.out.println("Invalid option. Please try again.");
+                    logger.warning("Invalid option selected.");
             }
         }
     }
 
-    private static void updateAllConfigurations() {
-        int totalTickets = InputUtils.getIntInput("Enter new Total Tickets: ");
-        int ticketReleaseRate = InputUtils.getIntInput("Enter new Ticket Release Rate: ");
-        int customerRetrievalRate = InputUtils.getIntInput("Enter new Customer Retrieval Rate: ");
-        int maxTicketCapacity = InputUtils.getIntInput("Enter new Max Ticket Capacity: ");
-        saveTicketConfig(totalTickets, ticketReleaseRate, customerRetrievalRate, maxTicketCapacity);
+    private static void updateConfigurations() {
+        TicketConfig config = getOrCreateConfig();
+
+        // Use optional input to update only provided fields
+        Integer totalTickets = InputUtils.getOptionalIntInput("Enter new Total Tickets");
+        Integer ticketReleaseRate = InputUtils.getOptionalIntInput("Enter new Ticket Release Rate");
+        Integer customerRetrievalRate = InputUtils.getOptionalIntInput("Enter new Customer Retrieval Rate");
+        Integer maxTicketCapacity = InputUtils.getOptionalIntInput("Enter new Max Ticket Capacity");
+
+        if (totalTickets != null) config.setTotalTickets(totalTickets);
+        if (ticketReleaseRate != null) config.setTicketReleaseRate(ticketReleaseRate);
+        if (customerRetrievalRate != null) config.setCustomRetrievalRate(customerRetrievalRate);
+        if (maxTicketCapacity != null) config.setMaxTicketCapacity(maxTicketCapacity);
+
+        saveJsonConfig(config);
+        logger.info("Configurations updated successfully.");
     }
 
-    private static void updateTotalTickets() {
-        int totalTickets = InputUtils.getIntInput("Enter new Total Tickets: ");
-        saveTicketConfig(totalTickets, null, null, null);
+    private static TicketConfig getOrCreateConfig() {
+        TicketConfig config = readJsonConfig();
+        if (config == null) {
+            config = new TicketConfig(); // Create a new config if none exists
+            logger.info("No existing configuration found. Starting with default values.");
+        }
+        return config;
     }
 
-    private static void updateTicketReleaseRate() {
-        int ticketReleaseRate = InputUtils.getIntInput("Enter new Ticket Release Rate: ");
-        saveTicketConfig(null, ticketReleaseRate, null, null);
-    }
-
-    private static void updateCustomerRetrievalRate() {
-        int customerRetrievalRate = InputUtils.getIntInput("Enter new Customer Retrieval Rate: ");
-        saveTicketConfig(null, null, customerRetrievalRate, null);
-    }
-
-    private static void updateMaxTicketCapacity() {
-        int maxTicketCapacity = InputUtils.getIntInput("Enter new Max Ticket Capacity: ");
-        saveTicketConfig(null, null, null, maxTicketCapacity);
-    }
-
-    private static void saveTicketConfig(Integer totalTickets, Integer ticketReleaseRate, Integer customerRetrievalRate, Integer maxTicketCapacity) {
-        String path = "src/main/resources/application.yml"; // Ensure this path is correct
-        try (FileInputStream fileInputStream = new FileInputStream(path)) {
-            // Load existing YAML data
-            Yaml yaml = new Yaml();
-            Map<String, Object> data = yaml.load(fileInputStream);
-
-            // Get or create 'ticketing' section
-            Map<String, Object> ticketingData = (Map<String, Object>) data.getOrDefault("ticketing", new HashMap<>());
-            data.put("ticketing", ticketingData);
-
-            // Update configurations if values are provided
-            if (totalTickets != null) {
-                ticketingData.put("total-tickets", totalTickets);
-            }
-            if (ticketReleaseRate != null) {
-                ticketingData.put("ticket-release-rate", ticketReleaseRate);
-            }
-            if (customerRetrievalRate != null) {
-                ticketingData.put("customer-retrieval-rate", customerRetrievalRate);
-            }
-            if (maxTicketCapacity != null) {
-                ticketingData.put("max-ticket-capacity", maxTicketCapacity);
-            }
-
-            // Set YAML formatting options
-            DumperOptions options = new DumperOptions();
-            options.setDefaultFlowStyle(DumperOptions.FlowStyle.BLOCK);
-            options.setIndent(2);
-            options.setPrettyFlow(true);
-
-            // Write updated YAML data back to file
-            try (FileWriter fileWriter = new FileWriter(path)) {
-                Yaml yamlWriter = new Yaml(options);
-                yamlWriter.dump(data, fileWriter);
-                System.out.println("Ticketing configuration saved successfully.");
-            }
-
+    private static void saveJsonConfig(TicketConfig config) {
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        try (FileWriter writer = new FileWriter(JSON_FILE_PATH)) {
+            gson.toJson(config, writer);
+            logger.info("Configuration saved successfully in JSON.");
         } catch (IOException e) {
-            System.err.println("Failed to save the configuration: " + e.getMessage());
-            e.printStackTrace();
+            logger.log(Level.SEVERE, e, () -> "Failed to save the JSON configuration: " + e.getMessage());
+        }
+    }
+
+    private static TicketConfig readJsonConfig() {
+        Gson gson = new Gson();
+        try (FileReader reader = new FileReader(JSON_FILE_PATH)) {
+            return gson.fromJson(reader, TicketConfig.class); // Deserialize JSON into TicketConfig object
+        } catch (IOException | JsonSyntaxException e) {
+            logger.log(Level.SEVERE, e, () -> "Failed to read the JSON configuration: " + e.getMessage());
+            return null; // Return null if reading fails
+        }
+    }
+
+    private static void displayCurrentConfiguration() {
+        TicketConfig config = readJsonConfig();
+        if (config == null) {
+            logger.info("No existing configuration found. Starting with default values.");
+        } else {
+            System.out.println("\n--- Current Ticketing Configuration ---");
+            System.out.println("\tTotal Tickets: " + config.getTotalTickets());
+            System.out.println("\tTicket Release Rate: " + config.getTicketReleaseRate());
+            System.out.println("\tCustomer Retrieval Rate: " + config.getCustomRetrievalRate());
+            System.out.println("\tMax Ticket Capacity: " + config.getMaxTicketCapacity());
+            System.out.println("---------------------------------------\n");
         }
     }
 }

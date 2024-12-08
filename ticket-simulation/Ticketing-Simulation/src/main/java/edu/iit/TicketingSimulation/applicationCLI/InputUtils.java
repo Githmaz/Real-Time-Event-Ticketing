@@ -1,4 +1,4 @@
-package edu.iit.ticketingservice.applicationCLI;
+package edu.iit.TicketingSimulation.applicationCLI;
 
 import java.util.Scanner;
 
@@ -53,5 +53,27 @@ public class InputUtils {
         }
     }
 
+    // method to get optional integer input
+    public static Integer getOptionalIntInput(String prompt) {
+        System.out.print(prompt + "(Press Enter to skip) : ");
+        while (true) {
+            String input = scanner.nextLine().trim();
+            if (input.isEmpty()) {
+                return null; // User pressed Enter, return null to indicate skipped
+            }
+            try {
+                return Integer.parseInt(input);
+            } catch (NumberFormatException e) {
+                System.out.println("Please enter a valid integer or press enter to skip.");
+            }
+        }
+    }
+
+    // Method to get optional string input
+    public static String getOptionalStringInput(String prompt) {
+        System.out.print(prompt + "(Press Enter to skip) : ");
+        String input = scanner.nextLine().trim();
+        return input.isEmpty() ? null : input; // Return null if input is empty
+    }
 
 }

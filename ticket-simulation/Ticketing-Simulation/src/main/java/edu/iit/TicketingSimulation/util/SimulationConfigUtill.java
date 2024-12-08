@@ -1,4 +1,4 @@
-package edu.iit.TicketingSimulation.utill;
+package edu.iit.TicketingSimulation.util;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

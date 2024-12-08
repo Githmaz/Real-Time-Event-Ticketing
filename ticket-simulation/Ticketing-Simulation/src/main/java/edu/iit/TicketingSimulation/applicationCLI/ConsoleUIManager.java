@@ -1,8 +1,18 @@
-package edu.iit.ticketingservice.applicationCLI;
-
+package edu.iit.TicketingSimulation.applicationCLI;
+/**
+ * ConsoleUIManager is responsible for managing and displaying user interface components
+ * in the console-based Ticketing Simulation system.
+ * Main Features:
+ * - Display formatted titles in a visually appealing box style.
+ * - Provide navigation menus for the main system and specific configurations.
+ * - Simplify the process of displaying structured information to the user.
+ * This class is utility-focused and only contains static methods. It is not intended to be instantiated.
+ */
 public class ConsoleUIManager {
 
-    protected static void displayTitle(String title) {
+    private ConsoleUIManager() {}
+
+    public static void displayTitle(String title) {
         int boxWidth = 40; // Total width of the box
 
         // Calculate padding to center the title
@@ -17,7 +27,7 @@ public class ConsoleUIManager {
         System.out.println("|" + leftPadding + title + rightPadding + "|");
         System.out.println("+" + "-".repeat(boxWidth) + "+");
     }
-    protected static void displayMainMenu(){
+    public static void displayMainMenu(){
         System.out.println("\nMain Menu");
         System.out.println("\t1) Configure Ticketing");
         System.out.println("\t2) Configure Database");
@@ -27,24 +37,17 @@ public class ConsoleUIManager {
         System.out.println("\t6) Update Admin Credentials");
         System.out.println("\t7) Exit");
     }
-    protected static void displayDatabaseConfigMenu() {
+    public static void displayDatabaseConfigMenu() {
         System.out.println("\nDatabase Configuration Menu");
         System.out.println("\t1) Edit All Configurations");
-        System.out.println("\t2) Update Database URL");
-        System.out.println("\t3) Update Username");
-        System.out.println("\t4) Update Password");
         System.out.println("\t5) Return to Main Menu");
     }
 
 
-    protected static void displayTicketConfigMenu() {
+    public static void displayTicketConfigMenu() {
         System.out.println("\nTicketing Configuration Menu");
         System.out.println("\t1) Edit All Configurations");
-        System.out.println("\t2) Update Total Tickets");
-        System.out.println("\t3) Update Ticket Release Rate");
-        System.out.println("\t4) Update Customer Retrieval Rate");
-        System.out.println("\t5) Update Max Ticket Capacity");
-        System.out.println("\t6) Return to Main Menu");
+        System.out.println("\t2) Return to Main Menu");
     }
 
 

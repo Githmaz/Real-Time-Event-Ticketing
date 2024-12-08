@@ -1,0 +1,64 @@
+2024-12-08 09:39:59 - new Simulation started.
+2024-12-08 09:39:59 - Ticket ID - T-3 added by Vendor ID - V-3
+2024-12-08 09:39:59 - Ticket ID - T-2 added by Vendor ID - V-2
+2024-12-08 09:39:59 - Ticket ID - T-1 added by Vendor ID - V-1
+2024-12-08 09:39:59 - Customer ID - C-1 retrieved Ticket ID - T-3
+2024-12-08 09:39:59 - Customer ID - C-2 retrieved Ticket ID - T-2
+2024-12-08 09:39:59 - Customer ID - C-3 retrieved Ticket ID - T-1
+2024-12-08 09:40:01 - Ticket ID - T-4 added by Vendor ID - V-2
+2024-12-08 09:40:01 - Ticket ID - T-6 added by Vendor ID - V-1
+2024-12-08 09:40:01 - Ticket ID - T-5 added by Vendor ID - V-3
+2024-12-08 09:40:02 - Customer ID - C-1 retrieved Ticket ID - T-4
+2024-12-08 09:40:02 - Customer ID - C-2 retrieved Ticket ID - T-6
+2024-12-08 09:40:02 - Customer ID - C-3 retrieved Ticket ID - T-5
+2024-12-08 09:40:03 - Ticket ID - T-7 added by Vendor ID - V-2
+2024-12-08 09:40:03 - Ticket ID - T-8 added by Vendor ID - V-1
+2024-12-08 09:40:03 - Ticket ID - T-9 added by Vendor ID - V-3
+2024-12-08 10:47:53 - New simulation started.
+2024-12-08 10:47:53 - Ticket ID - T-3 added by Vendor ID - V-2
+2024-12-08 10:47:53 - Customer ID - C-3 retrieved Ticket ID - T-3
+2024-12-08 10:47:53 - Ticket ID - T-2 added by Vendor ID - V-3
+2024-12-08 10:47:53 - Ticket ID - T-1 added by Vendor ID - V-1
+2024-12-08 10:47:53 - Customer ID - C-2 retrieved Ticket ID - T-2
+2024-12-08 10:47:53 - Customer ID - C-1 retrieved Ticket ID - T-1
+2024-12-08 10:47:55 - Ticket ID - T-4 added by Vendor ID - V-3
+2024-12-08 10:47:55 - Ticket ID - T-5 added by Vendor ID - V-1
+2024-12-08 10:47:55 - Ticket ID - T-6 added by Vendor ID - V-2
+2024-12-08 10:47:56 - Customer ID - C-3 retrieved Ticket ID - T-4
+2024-12-08 10:47:56 - Customer ID - C-2 retrieved Ticket ID - T-5
+2024-12-08 10:47:56 - Customer ID - C-1 retrieved Ticket ID - T-6
+2024-12-08 10:47:57 - Ticket ID - T-7 added by Vendor ID - V-3
+2024-12-08 10:47:57 - Ticket ID - T-8 added by Vendor ID - V-1
+2024-12-08 10:47:57 - Ticket ID - T-9 added by Vendor ID - V-2
+2024-12-08 11:11:58 - New simulation started.
+2024-12-08 11:11:58 - Ticket ID - T-1 added by Vendor ID - V-1
+2024-12-08 11:11:58 - Customer ID - C-2 retrieved Ticket ID - T-1
+2024-12-08 11:11:58 - Ticket ID - T-3 added by Vendor ID - V-3
+2024-12-08 11:11:58 - Customer ID - C-1 retrieved Ticket ID - T-3
+2024-12-08 11:11:58 - Ticket ID - T-2 added by Vendor ID - V-2
+2024-12-08 11:11:58 - Customer ID - C-3 retrieved Ticket ID - T-2
+2024-12-08 11:12:00 - Ticket ID - T-4 added by Vendor ID - V-1
+2024-12-08 11:12:00 - Ticket ID - T-6 added by Vendor ID - V-2
+2024-12-08 11:12:00 - Ticket ID - T-5 added by Vendor ID - V-3
+2024-12-08 11:12:01 - Customer ID - C-3 retrieved Ticket ID - T-4
+2024-12-08 11:12:01 - Customer ID - C-1 retrieved Ticket ID - T-6
+2024-12-08 11:12:01 - Customer ID - C-2 retrieved Ticket ID - T-5
+2024-12-08 11:12:03 - Ticket ID - T-7 added by Vendor ID - V-2
+2024-12-08 11:12:03 - Ticket ID - T-8 added by Vendor ID - V-3
+2024-12-08 11:12:03 - Ticket ID - T-9 added by Vendor ID - V-1
+2024-12-08 12:23:52 - New simulation started.
+2024-12-08 12:23:52 - Ticket ID - T-3 added by Vendor ID - V-2
+2024-12-08 12:23:52 - Ticket ID - T-2 added by Vendor ID - V-3
+2024-12-08 12:23:52 - Ticket ID - T-1 added by Vendor ID - V-1
+2024-12-08 12:23:52 - Customer ID - C-3 retrieved Ticket ID - T-3
+2024-12-08 12:23:52 - Customer ID - C-2 retrieved Ticket ID - T-2
+2024-12-08 12:23:52 - Customer ID - C-1 retrieved Ticket ID - T-1
+2024-12-08 12:23:54 - Ticket ID - T-4 added by Vendor ID - V-2
+2024-12-08 12:23:54 - Ticket ID - T-6 added by Vendor ID - V-1
+2024-12-08 12:23:54 - Ticket ID - T-5 added by Vendor ID - V-3
+2024-12-08 12:23:55 - Customer ID - C-3 retrieved Ticket ID - T-4
+2024-12-08 12:23:55 - Customer ID - C-1 retrieved Ticket ID - T-6
+2024-12-08 12:23:55 - Customer ID - C-2 retrieved Ticket ID - T-5
+2024-12-08 12:23:56 - Ticket ID - T-7 added by Vendor ID - V-2
+2024-12-08 12:23:56 - Ticket ID - T-8 added by Vendor ID - V-1
+2024-12-08 12:23:56 - Ticket ID - T-9 added by Vendor ID - V-3

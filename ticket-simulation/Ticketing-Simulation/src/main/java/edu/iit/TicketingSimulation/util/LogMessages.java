@@ -1,4 +1,4 @@
-package edu.iit.TicketingSimulation.utill;
+package edu.iit.TicketingSimulation.util;
 
 public enum LogMessages {
     TICKET_ADDED("Ticket ID - %s added by Vendor ID - %s"),
