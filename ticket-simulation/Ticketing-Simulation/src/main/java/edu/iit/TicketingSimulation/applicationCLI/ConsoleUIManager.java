@@ -39,16 +39,22 @@ public class ConsoleUIManager {
     }
     public static void displayDatabaseConfigMenu() {
         System.out.println("\nDatabase Configuration Menu");
-        System.out.println("\t1) Edit All Configurations");
-        System.out.println("\t5) Return to Main Menu");
+        System.out.println("\t1) Edit  Configurations");
+        System.out.println("\t2) Return to Main Menu");
     }
 
 
     public static void displayTicketConfigMenu() {
         System.out.println("\nTicketing Configuration Menu");
-        System.out.println("\t1) Edit All Configurations");
+        System.out.println("\t1) Edit  Configurations");
         System.out.println("\t2) Return to Main Menu");
     }
-
+    public static void displaySimulationManagerMenu() {
+        System.out.println("\t1) Start New Simulation");
+        System.out.println("\t2) Monitor Simulation Status");
+        System.out.println("\t3) Add Customer or Vendor");
+        System.out.println("\t4) Stop Simulation");
+        System.out.println("\t5) Return to Main Menu");
+    }
 
 }

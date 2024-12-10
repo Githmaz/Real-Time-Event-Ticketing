@@ -14,9 +14,6 @@ public class FileLoggerUtil {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(LOG_FILE_PATH, true))) {
             // Get the current date and time
             String timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-            String logEntry = timestamp + " - " + message;
-            // Print the log entry to the console
-            System.out.println(logEntry);
             // Write the log entry with timestamp
             writer.write(timestamp + " - " + message);
             writer.newLine();

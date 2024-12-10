@@ -1,10 +1,17 @@
-package edu.iit.TicketingSimulation.config;
+package edu.iit.TicketingSimulation.model;
 
 public class TicketConfig {
     private int totalTickets;
     private int ticketReleaseRate;
     private int customRetrievalRate;
     private int maxTicketCapacity;
+
+    public TicketConfig(int totalTickets, int ticketReleaseRate, int customRetrievalRate, int maxTicketCapacity) {
+        this.totalTickets = totalTickets;
+        this.ticketReleaseRate = ticketReleaseRate;
+        this.customRetrievalRate = customRetrievalRate;
+        this.maxTicketCapacity = maxTicketCapacity;
+    }
 
     // Getters and setters
     public int getTotalTickets() {

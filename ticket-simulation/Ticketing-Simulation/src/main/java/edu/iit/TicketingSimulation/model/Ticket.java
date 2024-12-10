@@ -18,6 +18,9 @@ public class Ticket {
         return "T-" + (++idCounter);
     }
 
+    public static void resetIdCounter() {
+        idCounter = 0;
+    }
     public static long getIdCounter() {
         return idCounter;
     }

@@ -75,5 +75,18 @@ public class InputUtils {
         String input = scanner.nextLine().trim();
         return input.isEmpty() ? null : input; // Return null if input is empty
     }
-
+    // Method to get a boolean input using T or F
+    public static boolean getBooleanInput(String prompt) {
+        System.out.print(prompt + " (T/F): ");
+        while (true) {
+            String input = scanner.nextLine().trim().toUpperCase();
+            if (input.equals("T")) {
+                return true;
+            } else if (input.equals("F")) {
+                return false;
+            } else {
+                System.out.println("Please enter 'T' for true or 'F' for false.");
+            }
+        }
+    }
 }

@@ -2,7 +2,7 @@ package edu.iit.TicketingSimulation.util;
 
 import java.util.logging.*;
 
-public class LoggerConfigurator {
+public class LoggerConfiguratorUtil {
 
     // ANSI color codes for console output
     private static final String RESET = "\u001B[0m";

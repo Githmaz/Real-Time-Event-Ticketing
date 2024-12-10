@@ -3,7 +3,7 @@ package edu.iit.TicketingSimulation.applicationCLI;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;
-import edu.iit.TicketingSimulation.config.TicketConfig;
+import edu.iit.TicketingSimulation.model.TicketConfig;
 
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -46,10 +46,10 @@ public class TicketConfigurator {
         TicketConfig config = getOrCreateConfig();
 
         // Use optional input to update only provided fields
-        Integer totalTickets = InputUtils.getOptionalIntInput("Enter new Total Tickets");
-        Integer ticketReleaseRate = InputUtils.getOptionalIntInput("Enter new Ticket Release Rate");
-        Integer customerRetrievalRate = InputUtils.getOptionalIntInput("Enter new Customer Retrieval Rate");
-        Integer maxTicketCapacity = InputUtils.getOptionalIntInput("Enter new Max Ticket Capacity");
+        Integer totalTickets = InputUtils.getOptionalIntInput("Enter new Total Tickets ");
+        Integer ticketReleaseRate = InputUtils.getOptionalIntInput("Enter new Ticket Release Rate ");
+        Integer customerRetrievalRate = InputUtils.getOptionalIntInput("Enter new Customer Retrieval Rate ");
+        Integer maxTicketCapacity = InputUtils.getOptionalIntInput("Enter new Max Ticket Capacity ");
 
         if (totalTickets != null) config.setTotalTickets(totalTickets);
         if (ticketReleaseRate != null) config.setTicketReleaseRate(ticketReleaseRate);
@@ -57,18 +57,14 @@ public class TicketConfigurator {
         if (maxTicketCapacity != null) config.setMaxTicketCapacity(maxTicketCapacity);
 
         saveJsonConfig(config);
-        logger.info("Configurations updated successfully.");
     }
-
     private static TicketConfig getOrCreateConfig() {
         TicketConfig config = readJsonConfig();
         if (config == null) {
-            config = new TicketConfig(); // Create a new config if none exists
-            logger.info("No existing configuration found. Starting with default values.");
+            throw new IllegalStateException("No existing configuration found. Ensure a valid configuration file is present.");
         }
         return config;
     }
-
     private static void saveJsonConfig(TicketConfig config) {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         try (FileWriter writer = new FileWriter(JSON_FILE_PATH)) {

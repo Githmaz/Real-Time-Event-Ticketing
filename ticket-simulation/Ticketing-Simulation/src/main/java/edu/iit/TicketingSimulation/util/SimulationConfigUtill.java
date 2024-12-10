@@ -3,7 +3,7 @@ package edu.iit.TicketingSimulation.util;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;
-import edu.iit.TicketingSimulation.config.TicketConfig;
+import edu.iit.TicketingSimulation.model.TicketConfig;
 
 import java.io.FileReader;
 import java.io.FileWriter;

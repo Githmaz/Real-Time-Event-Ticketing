@@ -1,13 +1,13 @@
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/test2
-    username: root
-    password: Githmaz
+    url: '2'
+    username: '2'
+    password: '2'
   jpa:
     hibernate:
       ddl-auto: update
 ticketing:
-  total-tickets: 22
-  ticket-release-rate: 33
-  customer-retrieval-rate: 44
-  max-ticket-capacity: 23
+  total-tickets: 2
+  ticket-release-rate: 2
+  customer-retrieval-rate: 2
+  max-ticket-capacity: 2

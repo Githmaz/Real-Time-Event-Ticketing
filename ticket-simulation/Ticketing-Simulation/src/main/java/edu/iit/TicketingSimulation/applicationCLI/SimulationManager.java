@@ -1,139 +1,124 @@
 package edu.iit.TicketingSimulation.applicationCLI;
 
-import edu.iit.TicketingSimulation.model.Customer;
-import edu.iit.TicketingSimulation.model.Vendor;
-import edu.iit.TicketingSimulation.simulation.TicketPool;
-import edu.iit.TicketingSimulation.util.FileLoggerUtil;
-import edu.iit.TicketingSimulation.util.SimulationConfigUtill;
-import edu.iit.TicketingSimulation.config.TicketConfig;
+import edu.iit.TicketingSimulation.dto.CustomerRequest;
+import edu.iit.TicketingSimulation.dto.VendorRequest;
+import edu.iit.TicketingSimulation.service.SimulationService;
+import edu.iit.TicketingSimulation.model.TicketConfig;
 
-import java.util.ArrayList;
-import java.util.List;
+
 import java.util.Scanner;
 
+/**
+ * SimulationManager provides an interactive interface for managing simulations.
+ * It delegates core simulation logic to the SimulationService.
+ */
 public class SimulationManager {
 
-    private List<Thread> customerThreads;
-    private List<Thread> vendorThreads;
-    private TicketPool ticketPool;
+    private final SimulationService simulationService = new SimulationService();
 
-    // Custom Initialization: Uses JSON config to initialize the simulation
-    public void initializeSimulationFromConfig() {
-        TicketConfig config = SimulationConfigUtill.readConfig();
-        if (config == null) {
-            System.err.println("Failed to load simulation configuration. Please ensure the JSON file exists and is valid.");
-            return;
-        }
-
-        customerThreads = new ArrayList<>();
-        vendorThreads = new ArrayList<>();
-
-        ticketPool = new TicketPool(config.getMaxTicketCapacity());
-
-        // Create customer threads from config
-        for (int i = 1; i <= config.getTotalTickets(); i++) {
-            Customer customer = new Customer(
-                    "Customer-" + i,
-                    false,
-                    config.getCustomRetrievalRate(),
-                    ticketPool,
-                    2 // Number of tickets per customer (can be part of config if needed)
-            );
-            Thread customerThread = new Thread(customer, "Customer-Thread-" + i);
-            customerThreads.add(customerThread);
-        }
-
-        // Create vendor threads from config
-        for (int i = 1; i <= config.getTicketReleaseRate(); i++) {
-            Vendor vendor = new Vendor(
-                    "Vendor-" + i,
-                    3,
-                    2,
-                    ticketPool,
-                    100.0 // Ticket price (can be part of config if needed)
-            );
-            Thread vendorThread = new Thread(vendor, "Vendor-Thread-" + i);
-            vendorThreads.add(vendorThread);
-        }
-
-        System.out.println("Simulation initialized from configuration file.");
-    }
-
-    // Automatic Initialization: Minimal inputs, uses default values
-    public void initializeSimulation(int customerCount, int vendorCount, int maxTicketCapacity) {
-        customerThreads = new ArrayList<>();
-        vendorThreads = new ArrayList<>();
-
-        if (ticketPool != null) {
-            System.err.println("Simulation already initialized.");
-            return;
-        }
-
-        ticketPool = new TicketPool(maxTicketCapacity);
-
-        // Create customer threads with default values
-        for (int i = 1; i <= customerCount; i++) {
-            Customer customer = new Customer("Customer-" + i, false, 3, ticketPool, 2);
-            Thread customerThread = new Thread(customer, "Customer-Thread-" + i);
-            customerThreads.add(customerThread);
-        }
-
-        // Create vendor threads with default values
-        for (int i = 1; i <= vendorCount; i++) {
-            Vendor vendor = new Vendor("Vendor-" + i, 3, 2, ticketPool, 100.0);
-            Thread vendorThread = new Thread(vendor, "Vendor-Thread-" + i);
-            vendorThreads.add(vendorThread);
-        }
-
-        System.out.println("Simulation initialized with " + customerCount + " customers and " + vendorCount + " vendors.");
-    }
-
-    public void startSimulation() {
-        if (ticketPool == null) {
-            System.err.println("Simulation not initialized. Please initialize before starting.");
-            return;
-        }
-
-        System.out.println("Starting simulation...");
-        FileLoggerUtil.logToFile("New simulation started.");
-
-        // Start all vendor and customer threads
-        vendorThreads.forEach(Thread::start);
-        customerThreads.forEach(Thread::start);
-
-        System.out.println("Simulation started.");
-        new Scanner(System.in).nextLine();
-    }
-
-    public void stopSimulation() {
-        if (ticketPool == null) {
-            System.err.println("No active simulation to stop.");
-            return;
-        }
-
-        System.out.println("Stopping simulation...");
-        vendorThreads.forEach(thread -> {
-            if (thread.isAlive()) {
-                thread.interrupt();
+    /**
+     * Interactive management of simulations.
+     */
+    public void manageSimulation() {
+        while (true) {
+            ConsoleUIManager.displayTitle("Simulation Management");
+            ConsoleUIManager.displaySimulationManagerMenu();
+            int option = InputUtils.getOptionFromMenu(1, 5);
+            switch (option) {
+                case 1:
+                    startSimulation();
+                    break;
+                case 2:
+                    monitorSimulationStatus();
+                    break;
+                case 3:
+                    addCustomerOrVendor();
+                    break;
+                case 4:
+                    stopSimulation();
+                    break;
+                case 5:
+                    System.out.println("Returning to Main Menu...");
+                    return;
+                default:
+                    System.out.println("Invalid option. Please try again.");
             }
-        });
-
-        customerThreads.forEach(thread -> {
-            if (thread.isAlive()) {
-                thread.interrupt();
-            }
-        });
-
-        ticketPool = null; // Reset the ticket pool
-        FileLoggerUtil.logToFile("Simulation stopped.");
-        System.out.println("Simulation stopped.");
+        }
     }
 
-    public void getSimulationStatus() {
-        if (ticketPool == null) {
-            System.out.println("Simulation not running.");
-        } else {
-            System.out.println("Simulation is running with " + customerThreads.size() + " customers and " + vendorThreads.size() + " vendors.");
+    private void startSimulation() {
+        System.out.println("1) Use Default Configuration\n2) Use Custom Configuration");
+        int option = InputUtils.getOptionFromMenu(1, 2);
+
+        try {
+            int customers = InputUtils.getIntInput("Number of customers: ");
+            int vipCustomers = InputUtils.getIntInput("Number of VIP customers: ");
+            int ticketsPerCustomer = InputUtils.getIntInput("Tickets per customer: ");
+            int vendors = InputUtils.getIntInput("Number of vendors: ");
+
+            if (option == 1) {
+                System.out.println("Using default configuration...");
+                simulationService.initializeSimulation(customers, vendors, ticketsPerCustomer, vipCustomers,null);
+            } else {
+                System.out.println("Using custom configuration...");
+                int maxCapacity = InputUtils.getIntInput("Max ticket pool capacity: ");
+                int customRetrievalRate = InputUtils.getIntInput("Customer retrieval rate: ");
+                int ticketReleaseRate = InputUtils.getIntInput("Ticket release rate: ");
+                int totalTickets = InputUtils.getIntInput("Total tickets per vendor: ");
+                simulationService.initializeSimulation(
+                        customers,
+                        vendors,
+                        ticketsPerCustomer,
+                        vipCustomers,
+                        new TicketConfig(totalTickets, ticketReleaseRate, customRetrievalRate, maxCapacity)
+                );
+            }
+
+            System.out.printf(
+                    "Simulation initialized with %d customers (%d VIPs), %d vendors, and %d tickets per customer.%n",
+                    customers, vipCustomers, vendors, ticketsPerCustomer
+            );
+
+            simulationService.startSimulation();
+            System.out.println("Simulation started successfully.");
+        } catch (Exception e) {
+            System.err.println("Error starting simulation: " + e.getMessage());
+        }
+    }
+
+    private void monitorSimulationStatus() {
+        System.out.println("=== Simulation Status ===");
+        System.out.println(simulationService.getSimulationStatus());
+    }
+
+    private void addCustomerOrVendor() {
+        System.out.println("1) Add Customer\n2) Add Vendor");
+        int option = InputUtils.getOptionFromMenu(1, 2);
+
+        try {
+            if (option == 1) {
+                String fullName = InputUtils.getStringInput("Enter customer full name: ");
+                boolean isVIP = InputUtils.getBooleanInput("Is the customer VIP (T/F)? ");
+                int numberOfTickets = InputUtils.getIntInput("Enter number of tickets for the customer: ");
+                simulationService.addCustomer(new CustomerRequest(fullName, isVIP, numberOfTickets));
+                System.out.println("Customer added successfully.");
+            } else {
+                String vendorName = InputUtils.getStringInput("Enter vendor name: ");
+                double ticketPrice = InputUtils.getDoubleInput("Enter ticket price: ");
+                int totalTickets = InputUtils.getIntInput("Enter total tickets for the vendor: ");
+                simulationService.addVendor(new VendorRequest(vendorName, totalTickets, ticketPrice));
+                System.out.println("Vendor added successfully.");
+            }
+        } catch (Exception e) {
+            System.err.println("Error adding customer or vendor: " + e.getMessage());
+        }
+    }
+    private void stopSimulation() {
+        try {
+            simulationService.stopSimulation();
+            System.out.println("Simulation stopped successfully.");
+        } catch (Exception e) {
+            System.err.println("Error stopping simulation: " + e.getMessage());
         }
     }
 }
