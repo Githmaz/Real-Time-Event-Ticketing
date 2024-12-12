@@ -1,0 +1,28 @@
+<div>
+    @if (isSimulationReady && simulationStatus) {
+        <app-simulation-control-panel
+          [simulationStatus]="simulationStatus"
+          (isAddCustomerActiveChange)="handleCustomerToggle($event)"
+          (isAddVendorActiveChange)="handleVendorToggle($event)"
+          (isStartedChange)="handleStartStopToggle($event)">
+        </app-simulation-control-panel>
+
+      <!-- Conditional Vendor Form -->
+      @if(isStarted && isAddCustomerActive){
+        <app-add-customer-form></app-add-customer-form>
+      }
+      @if (isStarted && isAddVendorActive) {
+      <app-add-vendor-form ></app-add-vendor-form>
+      }
+        <app-real-time-logs></app-real-time-logs>
+      }@else{
+    <app-not-found-banner 
+        [errorCode]="'404'" 
+        [title]="'Simulation Not Ready'" 
+        [message]="'The simulation is not initialized or ready to start. Please initialize the simulation and try again.'">
+      </app-not-found-banner>
+    }
+
+  
+  </div>
+  

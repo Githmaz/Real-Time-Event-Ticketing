@@ -1,0 +1,4 @@
+2024-12-12 11:48:12 - Simulation initialized with 2 customers and 2 vendors.
+2024-12-12 11:48:12 - New simulation started.
+2024-12-12 11:48:12 - Vendor ID - V-1 added Ticket ID - T-1
+2024-12-12 11:48:12 - Vendor ID - V-2 added Ticket ID - T-2
