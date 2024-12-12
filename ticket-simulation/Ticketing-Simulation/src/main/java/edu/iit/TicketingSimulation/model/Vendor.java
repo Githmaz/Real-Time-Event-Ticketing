@@ -1,7 +1,5 @@
 package edu.iit.TicketingSimulation.model;
 
-import edu.iit.TicketingSimulation.simulation.TicketPool;
-
 public class Vendor extends Users implements Runnable {
     private static int idCounter = 0;
     private final String vendorId;

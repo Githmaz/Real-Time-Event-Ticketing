@@ -3,10 +3,10 @@ package edu.iit.TicketingSimulation.applicationCLI;
 import edu.iit.TicketingSimulation.dto.CustomerRequest;
 import edu.iit.TicketingSimulation.dto.VendorRequest;
 import edu.iit.TicketingSimulation.service.SimulationService;
-import edu.iit.TicketingSimulation.model.TicketConfig;
+import edu.iit.TicketingSimulation.service.impl.SimulationServiceImpl;
+import edu.iit.TicketingSimulation.dto.SimulationConfig;
 
-
-import java.util.Scanner;
+import java.util.logging.Logger;
 
 /**
  * SimulationManager provides an interactive interface for managing simulations.
@@ -14,8 +14,8 @@ import java.util.Scanner;
  */
 public class SimulationManager {
 
-    private final SimulationService simulationService = new SimulationService();
-
+    private final SimulationService simulationService = new SimulationServiceImpl();
+    private static final Logger logger = Logger.getLogger(SimulationManager.class.getName());
     /**
      * Interactive management of simulations.
      */
@@ -38,10 +38,9 @@ public class SimulationManager {
                     stopSimulation();
                     break;
                 case 5:
-                    System.out.println("Returning to Main Menu...");
                     return;
                 default:
-                    System.out.println("Invalid option. Please try again.");
+                    logger.warning("Invalid option. Please try again.");
             }
         }
     }
@@ -51,26 +50,26 @@ public class SimulationManager {
         int option = InputUtils.getOptionFromMenu(1, 2);
 
         try {
-            int customers = InputUtils.getIntInput("Number of customers: ");
-            int vipCustomers = InputUtils.getIntInput("Number of VIP customers: ");
-            int ticketsPerCustomer = InputUtils.getIntInput("Tickets per customer: ");
-            int vendors = InputUtils.getIntInput("Number of vendors: ");
+            int customers = InputUtils.getPositiveIntInput("Number of customers: ");
+            int vipCustomers = InputUtils.getPositiveIntInput("Number of VIP customers: ");
+            int ticketsPerCustomer = InputUtils.getPositiveIntInput("Tickets per customer: ");
+            int vendors = InputUtils.getPositiveIntInput("Number of vendors: ");
 
             if (option == 1) {
                 System.out.println("Using default configuration...");
                 simulationService.initializeSimulation(customers, vendors, ticketsPerCustomer, vipCustomers,null);
             } else {
                 System.out.println("Using custom configuration...");
-                int maxCapacity = InputUtils.getIntInput("Max ticket pool capacity: ");
-                int customRetrievalRate = InputUtils.getIntInput("Customer retrieval rate: ");
-                int ticketReleaseRate = InputUtils.getIntInput("Ticket release rate: ");
-                int totalTickets = InputUtils.getIntInput("Total tickets per vendor: ");
+                int maxCapacity = InputUtils.getPositiveIntInput("Max ticket pool capacity: ");
+                int customRetrievalRate = InputUtils.getPositiveIntInput("Customer retrieval rate: ");
+                int ticketReleaseRate = InputUtils.getPositiveIntInput("Ticket release rate: ");
+                int totalTickets = InputUtils.getPositiveIntInput("Total tickets per vendor: ");
                 simulationService.initializeSimulation(
                         customers,
                         vendors,
                         ticketsPerCustomer,
                         vipCustomers,
-                        new TicketConfig(totalTickets, ticketReleaseRate, customRetrievalRate, maxCapacity)
+                        new SimulationConfig(totalTickets, ticketReleaseRate, customRetrievalRate, maxCapacity)
                 );
             }
 
@@ -80,9 +79,9 @@ public class SimulationManager {
             );
 
             simulationService.startSimulation();
-            System.out.println("Simulation started successfully.");
+            logger.info("Simulation started successfully.");
         } catch (Exception e) {
-            System.err.println("Error starting simulation: " + e.getMessage());
+            logger.warning("Error starting simulation: " + e.getMessage());
         }
     }
 
@@ -99,26 +98,26 @@ public class SimulationManager {
             if (option == 1) {
                 String fullName = InputUtils.getStringInput("Enter customer full name: ");
                 boolean isVIP = InputUtils.getBooleanInput("Is the customer VIP (T/F)? ");
-                int numberOfTickets = InputUtils.getIntInput("Enter number of tickets for the customer: ");
+                int numberOfTickets = InputUtils.getPositiveIntInput("Enter number of tickets for the customer: ");
                 simulationService.addCustomer(new CustomerRequest(fullName, isVIP, numberOfTickets));
-                System.out.println("Customer added successfully.");
+                logger.info("Customer added successfully.");
             } else {
                 String vendorName = InputUtils.getStringInput("Enter vendor name: ");
-                double ticketPrice = InputUtils.getDoubleInput("Enter ticket price: ");
-                int totalTickets = InputUtils.getIntInput("Enter total tickets for the vendor: ");
+                double ticketPrice = InputUtils.getPositiveDoubleInput("Enter ticket price: ");
+                int totalTickets = InputUtils.getPositiveIntInput("Enter total tickets for the vendor: ");
                 simulationService.addVendor(new VendorRequest(vendorName, totalTickets, ticketPrice));
-                System.out.println("Vendor added successfully.");
+                logger.info("Vendor added successfully.");
             }
         } catch (Exception e) {
-            System.err.println("Error adding customer or vendor: " + e.getMessage());
+            logger.warning("Error adding customer or vendor: " + e.getMessage());
         }
     }
     private void stopSimulation() {
         try {
             simulationService.stopSimulation();
-            System.out.println("Simulation stopped successfully.");
+            logger.info("Simulation stopped successfully.");
         } catch (Exception e) {
-            System.err.println("Error stopping simulation: " + e.getMessage());
+            logger.warning("Simulation stopped ");
         }
     }
 }

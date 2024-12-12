@@ -1,35 +1,34 @@
 package edu.iit.TicketingSimulation.dto;
 
 public class CustomerRequest {
-    private String fullName; // Full name of the customer
-    private boolean isVIP;   // Indicates if the customer is a VIP
+    private String userName; // Full name of the customer
+    private boolean isVip;   // Indicates if the customer is a VIP
     private int numberOfTickets; // Number of tickets the customer wants to purchase
 
     public CustomerRequest() {
     }
 
     public CustomerRequest(String fullName, boolean isVIP, int numberOfTickets) {
-        this.fullName = fullName;
-        this.isVIP = isVIP;
+        this.userName = fullName;
+        this.isVip = isVIP;
         this.numberOfTickets = numberOfTickets;
     }
 
-    public String getFullName() {
-        return fullName;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
-    public boolean isVIP() {
-        return isVIP;
+    public boolean getIsVip() {
+        return isVip;
     }
 
     public void setVIP(boolean VIP) {
-        isVIP = VIP;
+        isVip = VIP;
     }
-
 
     public int getNumberOfTickets() {
         return numberOfTickets;

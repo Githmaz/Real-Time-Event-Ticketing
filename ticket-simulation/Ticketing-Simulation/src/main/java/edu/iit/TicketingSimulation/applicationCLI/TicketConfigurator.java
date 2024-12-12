@@ -1,14 +1,10 @@
 package edu.iit.TicketingSimulation.applicationCLI;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonSyntaxException;
-import edu.iit.TicketingSimulation.model.TicketConfig;
 
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.logging.Level;
+import edu.iit.TicketingSimulation.dto.SimulationConfig;
+import edu.iit.TicketingSimulation.util.SimulationConfigUtill;
+
+
 import java.util.logging.Logger;
 
 /**
@@ -34,59 +30,39 @@ public class TicketConfigurator {
                     updateConfigurations();
                     break;
                 case 2:
-                    logger.info("Returning to Main Menu...");
                     return;
                 default:
-                    logger.warning("Invalid option selected.");
             }
         }
     }
 
     private static void updateConfigurations() {
-        TicketConfig config = getOrCreateConfig();
+        SimulationConfig config = getOrCreateConfig();
 
         // Use optional input to update only provided fields
-        Integer totalTickets = InputUtils.getOptionalIntInput("Enter new Total Tickets ");
-        Integer ticketReleaseRate = InputUtils.getOptionalIntInput("Enter new Ticket Release Rate ");
-        Integer customerRetrievalRate = InputUtils.getOptionalIntInput("Enter new Customer Retrieval Rate ");
-        Integer maxTicketCapacity = InputUtils.getOptionalIntInput("Enter new Max Ticket Capacity ");
+        Integer totalTickets = InputUtils.getOptionalPositiveIntInput("Enter new Total Tickets ");
+        Integer ticketReleaseRate = InputUtils.getOptionalPositiveIntInput("Enter new Ticket Release Rate ");
+        Integer customerRetrievalRate = InputUtils.getOptionalPositiveIntInput("Enter new Customer Retrieval Rate ");
+        Integer maxTicketCapacity = InputUtils.getOptionalPositiveIntInput("Enter new Max Ticket Capacity ");
 
         if (totalTickets != null) config.setTotalTickets(totalTickets);
         if (ticketReleaseRate != null) config.setTicketReleaseRate(ticketReleaseRate);
         if (customerRetrievalRate != null) config.setCustomRetrievalRate(customerRetrievalRate);
         if (maxTicketCapacity != null) config.setMaxTicketCapacity(maxTicketCapacity);
 
-        saveJsonConfig(config);
+        SimulationConfigUtill.saveConfig(config);
     }
-    private static TicketConfig getOrCreateConfig() {
-        TicketConfig config = readJsonConfig();
+    private static SimulationConfig getOrCreateConfig() {
+        SimulationConfig config = SimulationConfigUtill.readConfig();
         if (config == null) {
             throw new IllegalStateException("No existing configuration found. Ensure a valid configuration file is present.");
         }
         return config;
     }
-    private static void saveJsonConfig(TicketConfig config) {
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        try (FileWriter writer = new FileWriter(JSON_FILE_PATH)) {
-            gson.toJson(config, writer);
-            logger.info("Configuration saved successfully in JSON.");
-        } catch (IOException e) {
-            logger.log(Level.SEVERE, e, () -> "Failed to save the JSON configuration: " + e.getMessage());
-        }
-    }
 
-    private static TicketConfig readJsonConfig() {
-        Gson gson = new Gson();
-        try (FileReader reader = new FileReader(JSON_FILE_PATH)) {
-            return gson.fromJson(reader, TicketConfig.class); // Deserialize JSON into TicketConfig object
-        } catch (IOException | JsonSyntaxException e) {
-            logger.log(Level.SEVERE, e, () -> "Failed to read the JSON configuration: " + e.getMessage());
-            return null; // Return null if reading fails
-        }
-    }
 
     private static void displayCurrentConfiguration() {
-        TicketConfig config = readJsonConfig();
+        SimulationConfig config = SimulationConfigUtill.readConfig();
         if (config == null) {
             logger.info("No existing configuration found. Starting with default values.");
         } else {

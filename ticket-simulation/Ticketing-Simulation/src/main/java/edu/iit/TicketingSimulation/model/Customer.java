@@ -1,7 +1,5 @@
 package edu.iit.TicketingSimulation.model;
 
-import edu.iit.TicketingSimulation.simulation.TicketPool;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -9,15 +7,15 @@ import java.util.List;
 public class Customer extends Users implements Runnable {
     private static long idCounter = 0;
     private final String customerId;
-    private boolean isVIP;
+    private boolean isVip;
     private int numberOfTickets;
     private int customerRetrievalRate;
     private final List<Ticket> purchasedTickets = Collections.synchronizedList(new ArrayList<>());
 
-    public Customer(String customerName, boolean isVIP, int customerRetrievalRate, TicketPool ticketPool, int numberOfTickets) {
+    public Customer(String customerName, boolean isVip, int customerRetrievalRate, TicketPool ticketPool, int numberOfTickets) {
         super(customerName, ticketPool);
         this.customerId = generateId();
-        this.isVIP = isVIP;
+        this.isVip = isVip;
         this.customerRetrievalRate = customerRetrievalRate;
         this.numberOfTickets = numberOfTickets;
     }
@@ -38,12 +36,20 @@ public class Customer extends Users implements Runnable {
         return this.customerId;
     }
 
-    public boolean isVIP() {
-        return this.isVIP;
+    public static long getIdCounter() {
+        return idCounter;
     }
 
-    public void setVIP(boolean isVIP) {
-        this.isVIP = isVIP;
+    public boolean isVip() {
+        return isVip;
+    }
+
+    public void setVip(boolean vip) {
+        isVip = vip;
+    }
+
+    public List<Ticket> getPurchasedTickets() {
+        return purchasedTickets;
     }
 
     public int getNumberOfTickets() {

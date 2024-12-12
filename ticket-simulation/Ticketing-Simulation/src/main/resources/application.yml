@@ -1,13 +1,8 @@
 spring:
   datasource:
-    url: '2'
-    username: '2'
-    password: '2'
+    url:
+    username:
+    password:
   jpa:
     hibernate:
       ddl-auto: update
-ticketing:
-  total-tickets: 2
-  ticket-release-rate: 2
-  customer-retrieval-rate: 2
-  max-ticket-capacity: 2

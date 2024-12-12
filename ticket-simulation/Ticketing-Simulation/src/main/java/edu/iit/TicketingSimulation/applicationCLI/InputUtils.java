@@ -9,7 +9,7 @@ public class InputUtils {
     // Method to get an integer option within a range
     public static int getOptionFromMenu(int minOption, int maxOption) {
         while (true) {
-            int option = getIntInput("\nPlease select an option -> ");
+            int option = getPositiveIntInput("\nPlease select an option -> ");
             if (option >= minOption && option <= maxOption) {
                 return option;
             } else {
@@ -29,10 +29,10 @@ public class InputUtils {
         return input;
     }
 
-    // Method to get a valid double input
-    public static double getDoubleInput(String prompt) {
-        System.out.print(prompt);
+    // Method to get a valid double Positive input
+    public static double getPositiveDoubleInput(String prompt) {
         while (true) {
+            System.out.print(prompt);
             try {
                 return Double.parseDouble(scanner.nextLine().trim());
             } catch (NumberFormatException e) {
@@ -41,28 +41,38 @@ public class InputUtils {
         }
     }
 
-    // Method to get a valid integer input
-    public static int getIntInput(String prompt) {
-        System.out.print(prompt);
+    // Method to get a valid Positive integer input
+    public static int getPositiveIntInput(String prompt) {
         while (true) {
+            System.out.print(prompt);
             try {
-                return Integer.parseInt(scanner.nextLine().trim());
+                int value = Integer.parseInt(scanner.nextLine().trim());
+                if(value < 0){
+                    System.out.println("Please enter a Positive Value ");
+                    continue;
+                }
+                return value;
             } catch (NumberFormatException e) {
                 System.out.println("Please enter a valid integer.");
             }
         }
     }
 
-    // method to get optional integer input
-    public static Integer getOptionalIntInput(String prompt) {
-        System.out.print(prompt + "(Press Enter to skip) : ");
+    // method to get optional Positive integer input
+    public static Integer getOptionalPositiveIntInput(String prompt) {
         while (true) {
+            System.out.print(prompt + "(Press Enter to skip) : ");
             String input = scanner.nextLine().trim();
             if (input.isEmpty()) {
                 return null; // User pressed Enter, return null to indicate skipped
             }
             try {
-                return Integer.parseInt(input);
+                 int value =  Integer.parseInt(input);
+                 if(value < 0){
+                     System.out.println("Please enter a Positive Value .");
+                     continue;
+                 }
+                 return value;
             } catch (NumberFormatException e) {
                 System.out.println("Please enter a valid integer or press enter to skip.");
             }

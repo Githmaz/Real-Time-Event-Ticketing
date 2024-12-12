@@ -34,28 +34,27 @@ public class LoggerConfiguratorUtil {
 
     // Method to configure a specific logger with the custom formatter
     public static void configureLogger(Logger logger, Level level) {
-        // Remove default handlers to avoid duplicate outputs
         logger.setUseParentHandlers(false);
 
-        // Create and configure a new console handler with the custom formatter
+
         ConsoleHandler handler = new ConsoleHandler();
         handler.setFormatter(new ColoredLogFormatter());
         handler.setLevel(level);
 
-        logger.addHandler(handler); // Add the handler to the logger
-        logger.setLevel(level); // Set the logging level
+        logger.addHandler(handler);
+        logger.setLevel(level);
     }
 
     // Method to configure the global logger (root logger) with the custom formatter
     public static void configureGlobalLogger() {
         LogManager logManager = LogManager.getLogManager();
-        logManager.reset(); // Reset all existing log configurations
+        logManager.reset();
 
-        Logger rootLogger = Logger.getLogger(""); // Root logger
+        Logger rootLogger = Logger.getLogger("");
         rootLogger.setLevel(Level.ALL);
 
         ConsoleHandler consoleHandler = new ConsoleHandler();
         consoleHandler.setFormatter(new ColoredLogFormatter());
-        rootLogger.addHandler(consoleHandler); // Add the handler to the root logger
+        rootLogger.addHandler(consoleHandler);
     }
 }

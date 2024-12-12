@@ -1,8 +1,8 @@
 package edu.iit.TicketingSimulation.model;
 
-import edu.iit.TicketingSimulation.simulation.TicketPool;
+import java.io.Serializable;
 
-public class Users {
+public class Users{
     protected  String userName;
     protected final TicketPool ticketPool; // Shared between Customers and Vendors
 
@@ -22,4 +22,5 @@ public class Users {
     public TicketPool getTicketPool() {
         return ticketPool;
     }
+
 }

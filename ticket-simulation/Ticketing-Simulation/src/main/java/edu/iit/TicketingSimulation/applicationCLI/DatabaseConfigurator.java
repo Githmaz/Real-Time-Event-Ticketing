@@ -1,6 +1,6 @@
 package edu.iit.TicketingSimulation.applicationCLI;
 
-import edu.iit.TicketingSimulation.service.DatabaseService;
+import edu.iit.TicketingSimulation.service.impl.DatabaseServiceImpl;
 
 import java.util.logging.Logger;
 
@@ -11,7 +11,7 @@ import java.util.logging.Logger;
 public class DatabaseConfigurator {
 
     private static final Logger logger = Logger.getLogger(DatabaseConfigurator.class.getName());
-    private static final DatabaseService databaseService = new DatabaseService();
+    private static final DatabaseServiceImpl databaseService = new DatabaseServiceImpl();
 
     public static void configureDatabase() {
         while (true) {

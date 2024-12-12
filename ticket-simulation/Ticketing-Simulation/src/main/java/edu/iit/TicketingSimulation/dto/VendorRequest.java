@@ -1,7 +1,7 @@
 package edu.iit.TicketingSimulation.dto;
 
 public class VendorRequest {
-    private String vendorName;   // Name of the vendor
+    private String userName;   // Name of the vendor
     private int totalTickets;    // Total number of tickets the vendor will provide
     private double ticketPrice;  // Price of each ticket
 
@@ -9,17 +9,18 @@ public class VendorRequest {
     }
 
     public VendorRequest(String vendorName, int totalTickets, double ticketPrice) {
-        this.vendorName = vendorName;
+        this.userName = vendorName;
         this.totalTickets = totalTickets;
         this.ticketPrice = ticketPrice;
     }
 
-    public String getVendorName() {
-        return vendorName;
+
+    public String getUserName() {
+        return userName;
     }
 
-    public void setVendorName(String vendorName) {
-        this.vendorName = vendorName;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public int getTotalTickets() {

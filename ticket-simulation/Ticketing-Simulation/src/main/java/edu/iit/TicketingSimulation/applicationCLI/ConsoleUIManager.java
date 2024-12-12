@@ -29,13 +29,10 @@ public class ConsoleUIManager {
     }
     public static void displayMainMenu(){
         System.out.println("\nMain Menu");
-        System.out.println("\t1) Configure Ticketing");
+        System.out.println("\t1) Configure Simulation");
         System.out.println("\t2) Configure Database");
-        System.out.println("\t3) Start System");
-        System.out.println("\t4) Monitor System");
-        System.out.println("\t5) Stop System");
-        System.out.println("\t6) Update Admin Credentials");
-        System.out.println("\t7) Exit");
+        System.out.println("\t3) Simulation System");
+        System.out.println("\t4) Exit");
     }
     public static void displayDatabaseConfigMenu() {
         System.out.println("\nDatabase Configuration Menu");

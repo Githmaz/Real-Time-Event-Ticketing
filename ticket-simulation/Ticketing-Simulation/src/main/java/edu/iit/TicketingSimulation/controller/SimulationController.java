@@ -1,14 +1,7 @@
 package edu.iit.TicketingSimulation.controller;
 
-import edu.iit.TicketingSimulation.dto.CustomerRequest;
-import edu.iit.TicketingSimulation.dto.SimulationStartRequest;
-import edu.iit.TicketingSimulation.dto.VendorRequest;
-import edu.iit.TicketingSimulation.model.ApiResponse;
-import edu.iit.TicketingSimulation.model.Customer;
-import edu.iit.TicketingSimulation.model.TicketConfig;
-import edu.iit.TicketingSimulation.model.Vendor;
+import edu.iit.TicketingSimulation.dto.*;
 import edu.iit.TicketingSimulation.service.SimulationService;
-import edu.iit.TicketingSimulation.util.LoggingServer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/simulation")
 public class SimulationController {
@@ -26,7 +20,7 @@ public class SimulationController {
     /**
      * Starts a new simulation with a given number of customers, vendors, and configuration.
      */
-    @PostMapping("/start")
+    @PostMapping("/initialize")
     public ResponseEntity<ApiResponse<String>> startSimulation(@RequestBody SimulationStartRequest request) {
         try {
             simulationService.initializeSimulation(
@@ -36,13 +30,42 @@ public class SimulationController {
                     request.getVipCustomerCount(),
                     null
             );
-            simulationService.startSimulation();
             return ResponseEntity.ok(new ApiResponse<>(true, "Simulation started successfully.", null));
         } catch (Exception e) {
             return new ResponseEntity<>(new ApiResponse<>(false, e.getMessage(), null), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
+    /**
+     * Initializes the simulation with provided customer and vendor data.
+     *
+     * @return ResponseEntity<ApiResponse<String>> indicating success or failure.
+     */
+    @PostMapping("/custom/initialize")
+    public ResponseEntity<ApiResponse<String>> initializeSimulationWithRequests(
+            @RequestBody SimulationRequest simulationRequest) {
+        try {
+            List<CustomerRequest> customerRequests = simulationRequest.getCustomers();
+            List<VendorRequest> vendorRequests = simulationRequest.getVendors();
+            simulationService.initializeSimulationWithRequests(customerRequests, vendorRequests);
+            return ResponseEntity.ok(new ApiResponse<>(true, "Simulation initialized successfully with provided requests.", null));
+        } catch (IllegalStateException e) {
+            return new ResponseEntity<>(new ApiResponse<>(false, e.getMessage(), null), HttpStatus.BAD_REQUEST);
+        } catch (Exception e) {
+            return new ResponseEntity<>(new ApiResponse<>(false, "An error occurred while initializing the simulation.", null), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    /**
+     * Starts the simulation directly without initialization.
+     */
+    @PostMapping("/start")
+    public ResponseEntity<ApiResponse<String>> startSimulationDirectly() {
+        try {
+            simulationService.startSimulation();
+            return ResponseEntity.ok(new ApiResponse<>(true, "Simulation started successfully without initialization.", null));
+        } catch (Exception e) {
+            return new ResponseEntity<>(new ApiResponse<>(false, e.getMessage(), null), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
     /**
      * Stops the ongoing simulation.
      */
@@ -52,7 +75,7 @@ public class SimulationController {
             simulationService.stopSimulation();
             return ResponseEntity.ok(new ApiResponse<>(true, "Simulation stopped successfully.", null));
         } catch (Exception e) {
-            return new ResponseEntity<>(new ApiResponse<>(false, e.getMessage(), null), HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(new ApiResponse<>(true, e.getMessage(), null), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -74,6 +97,7 @@ public class SimulationController {
      */
     @PostMapping("/add/vendor")
     public ResponseEntity<ApiResponse<String>> addVendor(@RequestBody VendorRequest vendorRequest) {
+        System.out.println(vendorRequest.getTicketPrice());
         try {
             simulationService.addVendor(vendorRequest);
             return ResponseEntity.ok(new ApiResponse<>(true, "Vendor added successfully.", null));
@@ -94,30 +118,41 @@ public class SimulationController {
             return new ResponseEntity<>(new ApiResponse<>(false, e.getMessage(), null), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
     /**
-     * Fetches the list of all customers in the simulation.
+     * Retrieves the simulation configuration for the frontend.
      */
-    @GetMapping("/customers")
-    public ResponseEntity<ApiResponse<List<Customer>>> getAllCustomers() {
+    @GetMapping("/config")
+    public ResponseEntity<ApiResponse<SimulationConfig>> getSimulationConfig() {
         try {
-            List<Customer> customers = simulationService.getAllCustomers();
-            return ResponseEntity.ok(new ApiResponse<>(true, "Customers fetched successfully.", customers));
+            SimulationConfig config = simulationService.getSimulationConfig();
+            return ResponseEntity.ok(new ApiResponse<>(true, "Simulation configuration fetched successfully.", config));
         } catch (Exception e) {
             return new ResponseEntity<>(new ApiResponse<>(false, e.getMessage(), null), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
     /**
-     * Fetches the list of all vendors in the simulation.
+     * Saves a new simulation configuration.
      */
-    @GetMapping("/vendors")
-    public ResponseEntity<ApiResponse<List<Vendor>>> getAllVendors() {
+    @PostMapping("/config")
+    public ResponseEntity<ApiResponse<String>> saveSimulationConfig(@RequestBody SimulationConfig simulationConfig) {
         try {
-            List<Vendor> vendors = simulationService.getAllVendors();
-            return ResponseEntity.ok(new ApiResponse<>(true, "Vendors fetched successfully.", vendors));
+            simulationService.saveSimulationConfig(simulationConfig);
+            return ResponseEntity.ok(new ApiResponse<>(true, "Simulation configuration saved successfully.", null));
         } catch (Exception e) {
             return new ResponseEntity<>(new ApiResponse<>(false, e.getMessage(), null), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
+    /**
+     * Checks if the simulation is ready to start.
+     */
+    @GetMapping("/ready")
+    public ResponseEntity<ApiResponse<SimulationInitData>> isSimulationReady() {
+        try {
+            SimulationInitData simulationInitData =  simulationService.checkSimulationReady(); // Throws an exception if not ready
+            return ResponseEntity.ok(new ApiResponse<>(true, "Simulation is ready to start.", simulationInitData));
+        } catch (IllegalStateException e) {
+            return new ResponseEntity<>(new ApiResponse<>(false, e.getMessage(), null), HttpStatus.BAD_REQUEST);
+        }
+    }
 }
