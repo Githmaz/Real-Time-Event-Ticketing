@@ -1,0 +1,108 @@
+<section class="bg-gray-100 dark:bg-gray-900 mt-3">
+    <div class="flex flex-col items-center justify-center px-6 mx-auto sm:max-w-md lg:max-w-lg">
+      <div class="w-full bg-gray-100 dark:bg-gray-800 rounded-lg shadow dark:border dark:border-gray-700">
+        <div class="p-6 space-y-4 sm:p-8">
+          <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 dark:text-white">
+            Initialize Simulation
+          </h1>
+          <form class="space-y-4" (ngSubmit)="onSubmit()" #simulationForm="ngForm">
+            <!-- Customer Count -->
+            <div>
+              <label for="customerCount" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                Customer Count
+              </label>
+              <input
+                type="number"
+                id="customerCount"
+                [(ngModel)]="simulation.customerCount"
+                (ngModelChange)="updateCustomerCount($event)"
+                name="customerCount"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+                placeholder="Enter customer count"
+                required
+                min="0"
+              />
+            </div>
+  
+            <!-- Vendor Count -->
+            <div>
+              <label for="vendorCount" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                Vendor Count
+              </label>
+              <input
+                type="number"
+                id="vendorCount"
+                [(ngModel)]="simulation.vendorCount"
+                (ngModelChange)="updateVendorCount($event)"
+                name="vendorCount"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+                placeholder="Enter vendor count"
+                min="0"
+                required
+              />
+            </div>
+  
+            <!-- Conditionally Rendered Fields -->
+            @if (isAutoGenerate) {
+              <!-- Tickets Per Customer -->
+              <div>
+                <label for="ticketsPerCustomer" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                  Tickets Per Customer
+                </label>
+                <input
+                  type="number"
+                  id="ticketsPerCustomer"
+                  [(ngModel)]="simulation.ticketsPerCustomer"
+                  name="ticketsPerCustomer"
+                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+                  placeholder="Enter tickets per customer"
+                  required
+                  min="1"
+                />
+              </div>
+  
+              <!-- VIP Customer Count -->
+              <div>
+                <label for="vipCustomerCount" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                  VIP Customer Count
+                </label>
+                <input
+                  type="number"
+                  id="vipCustomerCount"
+                  [(ngModel)]="simulation.vipCustomerCount"
+                  name="vipCustomerCount"
+                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+                  placeholder="Enter VIP customer count"
+                  required
+                  min="0"
+                />
+              </div>
+            }
+  
+            <!-- Auto-generation Toggle -->
+            <div class="flex items-center">
+              <input
+                type="checkbox"
+                id="autoGenerate"
+                [(ngModel)]="isAutoGenerate"
+                (ngModelChange)="toggleAutoGenerate($event)"
+                name="autoGenerate"
+                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:bg-gray-700 dark:border-gray-600"
+              />
+              <label for="autoGenerate" class="ml-2 text-sm font-medium text-gray-900 dark:text-white">
+                Enable auto-generation for customers and vendors
+              </label>
+            </div>
+  
+            <!-- Submit Button -->
+            <button
+              type="submit"
+              class="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            >
+              Start Simulation
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
