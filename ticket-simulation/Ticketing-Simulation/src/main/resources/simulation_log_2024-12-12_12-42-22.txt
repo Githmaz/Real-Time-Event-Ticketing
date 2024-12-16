@@ -1,0 +1,17 @@
+2024-12-12 12:42:22 - Simulation initialized with 3 customers and 5 vendors.
+2024-12-12 12:42:22 - New simulation started.
+2024-12-12 12:42:22 - Vendor ID - V-2 added Ticket ID - T-2
+2024-12-12 12:42:22 - Vendor ID - V-1 added Ticket ID - T-1
+2024-12-12 12:42:22 - Customer ID - C-1 retrieved Ticket ID - T-2
+2024-12-12 12:42:22 - Customer ID - C-3 retrieved Ticket ID - T-1
+2024-12-12 12:42:22 - Vendor ID - V-3 added Ticket ID - T-3
+2024-12-12 12:42:22 - Vendor ID - V-4 added Ticket ID - T-4
+2024-12-12 12:42:22 - Customer ID - C-2 retrieved Ticket ID - T-3
+2024-12-12 12:42:22 - Vendor ID - V-5 added Ticket ID - T-5
+2024-12-12 12:43:07 - Customer ID - C-4 retrieved Ticket ID - T-4
+2024-12-12 12:43:07 - Vendor ID - V-1 added Ticket ID - T-6
+2024-12-12 12:43:07 - Added Customer: C-4 | VIP: true | Tickets: 3
+2024-12-12 12:43:10 - Customer ID - C-4 retrieved Ticket ID - T-5
+2024-12-12 12:43:10 - Vendor ID - V-1 added Ticket ID - T-11
+2024-12-12 12:43:13 - Customer ID - C-4 retrieved Ticket ID - T-6
+2024-12-12 12:43:13 - Vendor ID - V-2 added Ticket ID - T-7

@@ -1,0 +1,1 @@
+2024-12-12 12:46:45 - Simulation initialized with 3 customers and 3 vendors.
