@@ -1,4 +1,0 @@
-2024-12-12 11:50:12 - Simulation initialized with 3 customers and 3 vendors.
-2024-12-12 11:50:12 - New simulation started.
-2024-12-12 11:50:12 - Vendor ID - V-1 added Ticket ID - T-1
-2024-12-12 11:50:12 - Vendor ID - V-3 added Ticket ID - T-2
