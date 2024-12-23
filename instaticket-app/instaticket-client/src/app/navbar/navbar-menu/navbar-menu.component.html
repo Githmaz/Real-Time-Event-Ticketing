@@ -1,0 +1,43 @@
+<div class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-user">
+  <ul class="flex flex-col md:space-x-8 rtl:space-x-reverse md:flex-row">
+    <li>
+      <a
+        class="py-2 px-3 text-gray-900 hover:text-blue-700 dark:text-white dark:hover:text-blue-500 transition-colors duration-200"
+        routerLink="/dashboard"
+        [ngClass]="{
+          'text-blue-700 dark:text-blue-500': activeMenu === 'home',
+          'text-gray-900 hover:text-blue-700 dark:text-white dark:hover:text-blue-500': activeMenu !== 'home'
+        }"
+        (click)="setActiveMenu('home')"
+      >
+        Home
+      </a>
+    </li>
+    <li>
+      <a
+        class="py-2 px-3 text-gray-900 hover:text-blue-700 dark:text-white dark:hover:text-blue-500 transition-colors duration-200"
+        routerLink="/booked-tickets"
+        [ngClass]="{
+          'text-blue-700 dark:text-blue-500': activeMenu === 'booked-tickets',
+          'text-gray-900 hover:text-blue-700 dark:text-white dark:hover:text-blue-500': activeMenu !== 'booked-tickets'
+        }"
+        (click)="setActiveMenu('booked-tickets')"
+      >
+        Booked-Tickets
+      </a>
+    </li>
+    <li>
+      <a
+        class="py-2 px-3 text-gray-900 hover:text-blue-700 dark:text-white dark:hover:text-blue-500 transition-colors duration-200"
+        routerLink="/settings"
+        [ngClass]="{
+          'text-blue-700 dark:text-blue-500': activeMenu === 'settings',
+          'text-gray-900 hover:text-blue-700 dark:text-white dark:hover:text-blue-500': activeMenu !== 'settings'
+        }"
+        (click)="setActiveMenu('settings')"
+      >
+        Settings
+      </a>
+    </li>
+  </ul>
+</div>
