@@ -32,6 +32,7 @@ export class NavbarUserComponent {
         this.isLogIn = this.isUserLogIn();
       },
     });
+    this.isDarkMode = this.darkModeService.getDarkModeStatus();
   }
 
   toggleDarkMode(event: Event): void {
