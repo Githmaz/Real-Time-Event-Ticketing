@@ -10,9 +10,11 @@ import { TokenService } from '../../services/token.service';
   standalone: true,
   imports: [RouterModule],
   templateUrl: './navbar-user.component.html',
-  styleUrl: './navbar-user.component.css'
+  styleUrls: ['./navbar-user.component.css'],
 })
 export class NavbarUserComponent {
+
+
   profilePreview :string = 'assets/img/defaultProfileImg.jpg';
   user: User | null = null; 
   isDarkMode:boolean = false;
@@ -25,6 +27,15 @@ export class NavbarUserComponent {
     private readonly router: Router
   ) {}
 
+
+  toggleDropdown(): void {
+    const dropdown = document.getElementById('user-dropdown');
+    if (dropdown) {
+      dropdown.classList.toggle('hidden');
+      console.log('Dropdown state:', dropdown.classList.contains('hidden') ? 'Hidden' : 'Visible');
+    }
+  }
+  
   ngOnInit(): void {
     this.userStateService.user$.subscribe({
       next: (user) => {

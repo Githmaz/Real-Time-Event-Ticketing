@@ -7,8 +7,10 @@ import { catchError } from 'rxjs/operators';
   providedIn: 'root',
 })
 export class ApiService {
-  private readonly baseUrl = 'http://localhost:8080'; // Replace with actual backend base URL
+  private readonly baseUrlLocal = 'http://localhost:8080';
+  private readonly baseUrl = ' http://192.168.1.4:8080';
 
+ 
   constructor(private readonly http: HttpClient) {}
 
   get<T>(endpoint: string, params?: HttpParams, headers?: HttpHeaders): Observable<T> {
