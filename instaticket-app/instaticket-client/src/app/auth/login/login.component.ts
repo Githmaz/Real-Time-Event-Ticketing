@@ -3,6 +3,7 @@ import { AuthService } from '../services/auth-service.service';
 import { FormsModule } from '@angular/forms';
 import { TokenService } from '../../services/token.service';
 import { Router, RouterModule } from '@angular/router';
+import { AlertService } from '../../services/alert-service/alert.service';
 
 @Component({
   selector: 'app-login',
@@ -17,8 +18,11 @@ export class LoginComponent {
   constructor(
     private authService: AuthService,
     private tokenService: TokenService,
-    private router: Router 
+    private router: Router,
+    private alertService: AlertService 
   ) {}
+
+
   onSubmit() {
     this.authService.login(this.credentials).subscribe({
       next: (token) => {
@@ -26,7 +30,7 @@ export class LoginComponent {
         this.router.navigate(['/dashboard']);
       },
       error: (err) => {
-        console.error('Login failed:', err.message);
+        this.alertService.showAlert('error', 'Invalid username or password. Please try again.', 5000);
       }
     });
   }

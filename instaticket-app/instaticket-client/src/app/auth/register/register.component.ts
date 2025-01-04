@@ -1,36 +1,44 @@
-import { Component } from '@angular/core';
+import { Component, NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import { User } from '../../models/user.model';
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [RouterModule], 
+  imports: [RouterModule,FormsModule], 
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent {
   profilePreview !: string ; 
   uploadedFile: File | null = null;
+
+    user: User = {
+      userId: '',
+      username: '',
+      password: '',
+      email: '',
+      name: '',
+      userRole: 'GUEST', 
+    }
+
   constructor(){
     this.setDefalutProfileImage()
   }
 
-
-
-  // Handle file selection and update the preview
   onFileSelected(event: any): void {
-    const file = event.target.files[0]; // Get the selected file    
+    const file = event.target.files[0];     
     if (file) {
-      this.uploadedFile = file; // Store the file for future use (e.g., form submission)
-      const reader = new FileReader(); // Create a FileReader to read the file
+      this.uploadedFile = file; 
+      const reader = new FileReader(); 
       reader.onload = () => {
-        this.profilePreview = reader.result as string; // Set the preview to the base64 result
+        this.profilePreview = reader.result as string; 
       };
-      reader.readAsDataURL(file); // Read the file as a DataURL
+      reader.readAsDataURL(file); 
     }
   }
 
-  // Trigger the hidden file input
   triggerFileUpload(input: HTMLInputElement): void {
     input.click();
   }
@@ -40,4 +48,9 @@ export class RegisterComponent {
     this.uploadedFile = null;
   }
 
+  onSubmit(): void {
+      console.log('User object ready:', this.user);
+  }
+
+ 
 }

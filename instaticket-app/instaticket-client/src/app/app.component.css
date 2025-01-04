@@ -11,3 +11,17 @@ app-navbar {
   .content-wrapper {
     padding-top: 60px; /* Adjust this to match the navbar's height */
   }
+
+app-alert-message {
+  transform: translateX(-50%);
+}
+
+app-alert-message.active {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+app-alert-message.hidden {
+  opacity: 0;
+  transform: translateX(-50%) translateY(-10px);
+}
