@@ -16,10 +16,10 @@ export class LoginComponent {
   credentials = { username: '', password: '' };
 
   constructor(
-    private authService: AuthService,
-    private tokenService: TokenService,
-    private router: Router,
-    private alertService: AlertService 
+    private readonly authService: AuthService,
+    private readonly tokenService: TokenService,
+    private readonly router: Router,
+    private readonly alertService: AlertService 
   ) {}
 
 
@@ -27,6 +27,7 @@ export class LoginComponent {
     this.authService.login(this.credentials).subscribe({
       next: (token) => {
         this.tokenService.saveToken(token);
+        this.alertService.showAlert('success', 'Login successful! Redirecting to dashboard...', 3000);
         this.router.navigate(['/dashboard']);
       },
       error: (err) => {

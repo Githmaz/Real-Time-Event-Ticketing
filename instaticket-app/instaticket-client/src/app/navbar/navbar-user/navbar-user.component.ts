@@ -4,6 +4,7 @@ import { UserStateService } from '../../services/user-state/user-state.service';
 import { User } from '../../models/user.model';
 import { Router, RouterModule } from '@angular/router';
 import { TokenService } from '../../services/token.service';
+import { AlertService } from '../../services/alert-service/alert.service';
 
 @Component({
   selector: 'app-navbar-user',
@@ -24,7 +25,8 @@ export class NavbarUserComponent {
     private readonly darkModeService: DarkModeService,
     private readonly userStateService: UserStateService,
     private readonly tokenService: TokenService,
-    private readonly router: Router
+    private readonly router: Router,
+    private readonly alertService: AlertService,
   ) {}
 
 
@@ -54,7 +56,10 @@ export class NavbarUserComponent {
 
   logout():void{
     this.tokenService.clearToken();
-    window.location.reload();
+    this.alertService.showAlert('success', 'Logout successful! See you soon!', 3000); 
+    setTimeout(() => {
+      window.location.reload(); 
+    }, 3000);
   }
   isUserLogIn():boolean{
     return this.tokenService.getToken() != null;
