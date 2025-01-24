@@ -25,13 +25,15 @@ public class UserController {
 
     // Single endpoint to handle registration based on user role
     @PostMapping("/register")
-    public ResponseEntity<ApiResponse<Users>> registerUser(@Valid @RequestBody UserReq userReq) {
-        System.out.println("fk me");
+    public ResponseEntity<ApiResponse<Users>> registerUser( @RequestBody UserReq userReq) {
         logger.info("Registering new user with username: {} and role: {}", userReq.getUser().getUsername(), userReq.getUser().getUserRole());
         Users registeredUserDto = userService.registerUser(userReq.getUser());
         logger.info("User created successfully with user ID: {}", registeredUserDto.getUserId());
         return new ResponseEntity<>(new ApiResponse<>(true, "User registered successfully", registeredUserDto), HttpStatus.CREATED);
     }
+
+
+
 
     // Check if the email is available
     @GetMapping("/check-email")

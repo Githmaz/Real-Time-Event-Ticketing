@@ -34,7 +34,6 @@ export class NavbarUserComponent {
     const dropdown = document.getElementById('user-dropdown');
     if (dropdown) {
       dropdown.classList.toggle('hidden');
-      console.log('Dropdown state:', dropdown.classList.contains('hidden') ? 'Hidden' : 'Visible');
     }
   }
   
@@ -56,10 +55,8 @@ export class NavbarUserComponent {
 
   logout():void{
     this.tokenService.clearToken();
+    window.location.reload(); 
     this.alertService.showAlert('success', 'Logout successful! See you soon!', 3000); 
-    setTimeout(() => {
-      window.location.reload(); 
-    }, 3000);
   }
   isUserLogIn():boolean{
     return this.tokenService.getToken() != null;

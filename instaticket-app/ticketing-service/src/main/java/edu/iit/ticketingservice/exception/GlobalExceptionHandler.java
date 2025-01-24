@@ -23,9 +23,9 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(BusinessException.class)
     public ResponseEntity<Map<String, Object>> handleBusinessException(BusinessException ex) {
        return ResponseEntity.status(HttpStatus.CONFLICT).body(Map.of(
-               "message", "Validation failed",
+               "message", ex.getMessage(),
                 "success", false,
-                "error", ex.getMessage()
+                "error", "Business Exception"
         ));
     }
 
@@ -39,9 +39,9 @@ public class GlobalExceptionHandler {
                 ));
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of(
-                "message", "Validation failed",
+                "message", errors,
                 "success", false,
-                "errors", errors
+                "errors", "Validation errors"
         ));
     }
 

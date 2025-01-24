@@ -1,13 +1,9 @@
 import { Component, NgModule } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { User } from '../../models/user.model';
+import { Payload, User } from '../../models/user.model';
 import { AlertService } from '../../services/alert-service/alert.service';
 import { AuthService } from '../services/auth-service.service';
-
-interface Payload {
-  user: User;
-}
 
 @Component({
   selector: 'app-register',
@@ -33,7 +29,8 @@ export class RegisterComponent {
 
   constructor( 
     private readonly authService: AuthService,
-    private readonly alertService: AlertService 
+    private readonly alertService: AlertService,
+    private readonly  router: Router,
     ){
     this.setDefalutProfileImage()
   }
@@ -128,27 +125,19 @@ export class RegisterComponent {
   }
 
   async onSubmit(): Promise<void> {
-
-    const x: Payload = {
-      user: {
-        userId : "",
-        username: "jodoe",
-        password: "SecureP@ssw0rd",
-        email: "jonwdoe@example.com",
-        name: "John Doe",
-        userRole: 'CUSTOMER'
-      }
+    const payload: Payload = {
+      user: this.user
     };
-    
     if (this.checkValidation()) {
       try {
-        const isRegistered = await this.authService.register(x).toPromise();
+        const isRegistered = await this.authService.register(payload).toPromise();
         if (isRegistered) {
-          this.alertService.showAlert('success', 'Registration successful!', 5000);
+        this.alertService.showAlert('success', 'Registration successful!', 8000);
+        this.router.navigate(['/login']);
         }
       } catch (error) {
         console.error('Error during registration:', error);
-        this.alertService.showAlert('error', 'Registration failed. Please try again.', 5000);
+        this.alertService.showAlert('error', error+"", 8000);
       }
     }
   }

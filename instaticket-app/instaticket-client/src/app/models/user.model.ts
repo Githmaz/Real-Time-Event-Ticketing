@@ -8,3 +8,7 @@ export interface User {
   name: string;
   userRole: UserRole;
 }
+
+export interface Payload {
+  user: User; 
+}

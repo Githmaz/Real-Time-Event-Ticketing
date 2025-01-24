@@ -8,16 +8,6 @@ interface Payload {
   user: User;
 }
 
-type UserPayload = {
-  user: {
-    username: string;
-    password: string;
-    email: string;
-    name: string;
-    userRole: string;
-  };
-};
-
 
 @Injectable({
   providedIn: 'root',
@@ -75,13 +65,11 @@ checkUsername(username: string): Observable<boolean> {
   );
 }
 
-  // Register method
-  register(user: Payload): Observable<boolean> {
-
-    console.log('User object:',  user );
+// Register method
+register(user: Payload): Observable<boolean> {
     return this.apiService.post<{ success: boolean; message: string; data:User }>(
       this.registerEndpoint,
-      {user} 
+      user
     ).pipe(
       map((response) => {
         if (response.success) {

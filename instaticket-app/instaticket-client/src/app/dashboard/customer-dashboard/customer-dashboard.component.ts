@@ -6,24 +6,23 @@ import { DashboardService } from '../service/dashboard.service';
 import { CardGridComponent } from '../components/card-grid/card-grid.component';
 import { Events } from '../../models/event.model';
 import { NotFoundBannerComponent } from "../../shared/components/not-found-banner/not-found-banner.component";
-import { AlertMessageComponent } from "../../shared/components/alert-message/alert-message.component";
 import { UserStateService } from '../../services/user-state/user-state.service';
 import { TokenService } from '../../services/token.service';
 
 @Component({
   selector: 'app-customer-dashboard',
   standalone: true,
-  imports: [CardGridComponent, BannerComponent, SearchBarComponent, NotFoundBannerComponent, AlertMessageComponent],
+  imports: [CardGridComponent, BannerComponent, SearchBarComponent, NotFoundBannerComponent],
   templateUrl: './customer-dashboard.component.html',
   styleUrls: ['./customer-dashboard.component.css']
 })
 export class CustomerDashboardComponent {
   dashboardData: CustomerDashboardData | null = null; 
-  filteredEvents: Events[] = []; // For displaying filtered events
+  filteredEvents: Events[] = [];
   loading: boolean = true;
   error: string | null = null; 
 
-  constructor(private dashboardService: DashboardService,private userStateService: UserStateService,private tokenService:TokenService) {}
+  constructor(private readonly dashboardService: DashboardService,private readonly userStateService: UserStateService,private readonly tokenService:TokenService) {}
 
   ngOnInit() {
     this.loadDashboardData();
