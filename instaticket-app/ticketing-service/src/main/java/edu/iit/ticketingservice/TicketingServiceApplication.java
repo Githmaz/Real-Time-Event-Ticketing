@@ -17,10 +17,7 @@ public class TicketingServiceApplication {
         context = SpringApplication.run(TicketingServiceApplication.class);
 
     }
-
     public static void stopApplication() {
         context.close();
     }
-
-
 }

@@ -1,7 +1,7 @@
 package edu.iit.ticketingservice.controllers;
 
 import edu.iit.ticketingservice.dto.ApiResponse;
-import edu.iit.ticketingservice.dto.users.Customer;
+import edu.iit.ticketingservice.dto.users.UserReq;
 import edu.iit.ticketingservice.dto.users.Users;
 import edu.iit.ticketingservice.service.UserService;
 import edu.iit.ticketingservice.service.impl.UserServiceImpl;
@@ -13,7 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-
+@CrossOrigin
 @RestController
 @RequestMapping("/user")
 public class UserController {
@@ -25,13 +25,36 @@ public class UserController {
 
     // Single endpoint to handle registration based on user role
     @PostMapping("/register")
-    public ResponseEntity<ApiResponse<Users>> registerUser(@Valid @RequestBody Users user) {
-        logger.info("Registering new user with username: {} and role: {}", user.getUsername(), user.getUserRole());
-        Users registeredUserDto = userService.registerUser(user);
+    public ResponseEntity<ApiResponse<Users>> registerUser( @RequestBody UserReq userReq) {
+        logger.info("Registering new user with username: {} and role: {}", userReq.getUser().getUsername(), userReq.getUser().getUserRole());
+        Users registeredUserDto = userService.registerUser(userReq.getUser());
         logger.info("User created successfully with user ID: {}", registeredUserDto.getUserId());
         return new ResponseEntity<>(new ApiResponse<>(true, "User registered successfully", registeredUserDto), HttpStatus.CREATED);
     }
 
 
+
+
+    // Check if the email is available
+    @GetMapping("/check-email")
+    public ResponseEntity<ApiResponse<Boolean>> checkEmailAvailability(@RequestParam String email) {
+        boolean isAvailable = userService.checkUserEmail(email);
+        if (isAvailable) {
+            return new ResponseEntity<>(new ApiResponse<>(true, "Email is available", true), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(new ApiResponse<>(true, "Email is already in use", false), HttpStatus.OK);
+        }
+    }
+
+    // Check if the username is available
+    @GetMapping("/check-username")
+    public ResponseEntity<ApiResponse<Boolean>> checkUsernameAvailability(@RequestParam String username) {
+        boolean isAvailable = userService.checkUsername(username);
+        if (isAvailable) {
+            return new ResponseEntity<>(new ApiResponse<>(true, "Username is available", true), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(new ApiResponse<>(true, "Username is already in use", false), HttpStatus.OK);
+        }
+    }
 
 }

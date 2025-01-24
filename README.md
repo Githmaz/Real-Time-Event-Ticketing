@@ -14,7 +14,6 @@ The Ticketing System Project is a comprehensive solution for managing ticketing 
 ![Swagger Badge](https://img.shields.io/badge/Swagger-85EA2D?style=for-the-badge&logo=swagger&logoColor=black)
 ![MySQL Badge](https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white)
 
-## Project Breakdown
 
 ### Simulation Module
 - **Event Setup**: Create and configure event parameters.

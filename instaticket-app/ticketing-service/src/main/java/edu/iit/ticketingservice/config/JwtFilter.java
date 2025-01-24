@@ -1,8 +1,5 @@
 package edu.iit.ticketingservice.config;
 
-import edu.iit.ticketingservice.exception.ExpiredJwtTokenException;
-import edu.iit.ticketingservice.exception.InvalidJwtSignatureException;
-import edu.iit.ticketingservice.exception.InvalidJwtTokenException;
 import edu.iit.ticketingservice.service.impl.UserDetailsServiceImpl;
 import edu.iit.ticketingservice.util.JwtUtil;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -24,11 +21,11 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
-import java.security.SignatureException;
 
 @Component
 public class JwtFilter extends OncePerRequestFilter {
     private static final Logger logger = LoggerFactory.getLogger(JwtFilter.class);
+
     @Autowired
     private JwtUtil jwtUtil;
 
