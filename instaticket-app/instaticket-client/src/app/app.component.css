@@ -1,0 +1,27 @@
+/* Add this to your global styles.css or app.component.css */
+app-navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000; /* Ensures it is above other elements */
+  }
+  
+  /* Add padding to the content to prevent overlap */
+  .content-wrapper {
+    padding-top: 60px; /* Adjust this to match the navbar's height */
+  }
+
+app-alert-message {
+  transform: translateX(-50%);
+}
+
+app-alert-message.active {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+app-alert-message.hidden {
+  opacity: 0;
+  transform: translateX(-50%) translateY(-10px);
+}

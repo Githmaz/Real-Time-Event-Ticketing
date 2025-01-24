@@ -1,0 +1,16 @@
+<app-navbar></app-navbar>
+
+<!-- Global Alert -->
+<div id="alert-container">
+  @if(hasAlert){
+    <app-alert-message
+    [type]="alertType"
+    [message]="alertMessage"
+  ></app-alert-message>
+  }
+</div>
+
+<div class="content-wrapper">
+  <router-outlet></router-outlet>
+</div>
+
