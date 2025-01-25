@@ -1,0 +1,36 @@
+<div class="bg-white dark:bg-gray-800 rounded-2xl pt-3 pb-5 cursor-pointer hover:-translate-y-2 transition-all relative shadow-md">
+    <!-- Image -->
+    <div class="w-[100%] overflow-hidden mx-auto aspect-w-16 aspect-h-8">
+      <img 
+        [src]="ticketPackage.image" 
+        [alt]="'Package: ' + ticketPackage.title" 
+        class="h-full w-full object-contain rounded-t-2xl" 
+      />
+    </div>
+  
+    <!-- Details -->
+    <div class="mt-4 px-4">
+      <!-- Package Title -->
+      <h6 class="text-lg font-extrabold text-gray-800 dark:text-gray-200 truncate">
+        {{ ticketPackage.title }}
+      </h6>
+  
+      <!-- Available Tickets -->
+      <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">
+        Tickets: {{ ticketPackage.availableTickets }}/{{ ticketPackage.totalTickets }}
+      </p>
+  
+      <!-- Price -->
+      <div class="mt-4 flex items-center justify-between">
+        <span class="text-xl font-bold text-gray-900 dark:text-white">
+          ${{ ticketPackage.price }}
+        </span>
+        <button 
+          class="text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-500 dark:hover:bg-blue-600 dark:focus:ring-blue-700"
+        >
+          Buy Now
+        </button>
+      </div>
+    </div>
+  </div>
+  
