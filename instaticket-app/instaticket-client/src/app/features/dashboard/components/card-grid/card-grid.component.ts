@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { CardComponent } from "../card/card.component";
-import { Events } from '../../../models/event.model';
+import { Events } from '../../../../models/event.model';
 
 @Component({
   selector: 'app-card-grid',

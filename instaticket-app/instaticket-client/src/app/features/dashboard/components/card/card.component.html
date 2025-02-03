@@ -1,4 +1,4 @@
-<div class="bg-white dark:bg-gray-800 rounded-2xl pt-3 pb-5  cursor-pointer hover:-translate-y-2 transition-all relative">
+<div class="bg-white dark:bg-gray-800 rounded-2xl pt-3 pb-5  cursor-pointer hover:-translate-y-2 transition-all relative" (click)="navigateToEvent()">
   <div class="w-[100%]  overflow-hidden mx-auto  aspect-w-16 aspect-h-8">
     <img [src]="event.eventImage" [alt]="'Product ' + event.eventName" class="h-full w-full object-contain" />
   </div>

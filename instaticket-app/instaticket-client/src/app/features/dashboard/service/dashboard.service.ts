@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { ApiService } from '../../services/api-service/api.service';
+import { ApiService } from '../../../services/api-service/api.service';
 import { CustomerDashboardData } from '../models/customer-dashboard-data.model';
-import { ApiResponse } from '../../models/api-response.model';
+import { ApiResponse } from '../../../models/api-response.model';
 
 @Injectable({
   providedIn: 'root',
@@ -11,7 +11,7 @@ import { ApiResponse } from '../../models/api-response.model';
 export class DashboardService {
   private readonly baseUrl = '/dashboard';
 
-  constructor(private apiService: ApiService) {}
+  constructor(private readonly apiService: ApiService) {}
 
   // Fetch customer dashboard data
   getCustomerDashboardData(): Observable<CustomerDashboardData> {

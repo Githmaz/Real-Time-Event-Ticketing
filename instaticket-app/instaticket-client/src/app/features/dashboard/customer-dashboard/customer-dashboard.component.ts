@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
-import { BannerComponent } from "../../shared/components/banner/banner.component";
-import { SearchBarComponent } from '../../shared/components/search-bar/search-bar.component';
+import { BannerComponent } from "../../../shared/components/banner/banner.component";
+import { SearchBarComponent } from '../../../shared/components/search-bar/search-bar.component';
 import { CustomerDashboardData } from '../models/customer-dashboard-data.model';
 import { DashboardService } from '../service/dashboard.service';
 import { CardGridComponent } from '../components/card-grid/card-grid.component';
-import { Events } from '../../models/event.model';
-import { NotFoundBannerComponent } from "../../shared/components/not-found-banner/not-found-banner.component";
-import { UserStateService } from '../../services/user-state/user-state.service';
-import { TokenService } from '../../services/token.service';
+import { Events } from '../../../models/event.model';
+import { NotFoundBannerComponent } from "../../../shared/components/not-found-banner/not-found-banner.component";
+import { UserStateService } from '../../../services/user-state/user-state.service';
+import { TokenService } from '../../../services/token.service';
 
 @Component({
   selector: 'app-customer-dashboard',
@@ -56,4 +56,5 @@ export class CustomerDashboardComponent {
       event.eventName.toLowerCase().startsWith(query.toLowerCase())
     ) || [];
   }
+  
 }
