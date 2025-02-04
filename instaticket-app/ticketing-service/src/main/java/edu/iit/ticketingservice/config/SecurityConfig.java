@@ -44,7 +44,8 @@ public class SecurityConfig {
                                 "/auth/login",
                                 "/dashboard/customer",
                                 "/user/check-email",
-                                "/user/check-username")
+                                "/user/check-username",
+                                "/event/{id}")
                         .permitAll()
                         .anyRequest().authenticated())
                 .httpBasic(Customizer.withDefaults())
