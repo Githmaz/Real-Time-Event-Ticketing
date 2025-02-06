@@ -2,6 +2,7 @@ package edu.iit.ticketingservice.controllers;
 
 import edu.iit.ticketingservice.dto.ApiResponse;
 import edu.iit.ticketingservice.dto.event.Event;
+import edu.iit.ticketingservice.dto.event.EventResponse;
 import edu.iit.ticketingservice.service.EventService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,16 +29,15 @@ public class EventController {
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
-
     // Get an event by ID
     @GetMapping("/{id}")
-    public ResponseEntity<ApiResponse<Event>> getEventByEventId(@PathVariable("id") String eventId) {
-        Event event = eventService.getEventByEventId(eventId);
+    public ResponseEntity<ApiResponse<EventResponse>> getEventByEventId(@PathVariable("id") String eventId) {
+        EventResponse event = eventService.getEventByEventId(eventId);
         if (event != null) {
-            ApiResponse<Event> response = new ApiResponse<>(true, "Event found", event);
+            ApiResponse<EventResponse> response = new ApiResponse<>(true, "Event found", event);
             return new ResponseEntity<>(response, HttpStatus.OK);
         } else {
-            ApiResponse<Event> response = new ApiResponse<>(false, "Event not found");
+            ApiResponse<EventResponse> response = new ApiResponse<>(false, "Event not found");
             return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
         }
     }
