@@ -1,0 +1,28 @@
+<section class="bg-white py-8 antialiased dark:bg-gray-900 md:py-16">
+
+
+  <div class="mx-auto max-w-screen-xl px-4 2xl:px-0">
+    <h2
+      class="text-2xl font-semibold text-gray-900 dark:text-white sm:text-3xl"
+    >
+      Shopping Cart
+    </h2>
+    <div class="mt-8 grid gap-6 lg:grid-cols-2">
+      <!-- CART ITEMS -->
+      <app-item-cart
+      [cartItems]="cartItems"
+      (increaseQuantity)="increaseQuantity($event)"
+      (decreaseQuantity)="decreaseQuantity($event)"
+      (removeFromCart)="removeFromCart($event)"
+    ></app-item-cart>
+
+  <app-payment-form 
+  [subtotal]="subtotal" 
+  [discount]="discount" 
+  [tax]="tax" 
+  [total]="total"
+></app-payment-form>
+   
+    </div>
+  </div>
+</section>

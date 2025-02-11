@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-payment-form',
@@ -8,5 +8,8 @@ import { Component } from '@angular/core';
   styleUrl: './payment-form.component.css'
 })
 export class PaymentFormComponent {
-
+  @Input() subtotal: number = 0;
+  @Input() discount: number = 0;
+  @Input() tax: number = 0;
+  @Input() total: number = 0;
 }
