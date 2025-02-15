@@ -45,6 +45,7 @@ public class SecurityConfig {
                                 "/dashboard/customer",
                                 "/user/check-email",
                                 "/user/check-username",
+                                "/taxRate",
                                 "/event/{id}")
                         .permitAll()
                         .anyRequest().authenticated())

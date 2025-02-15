@@ -11,8 +11,6 @@ server:
   address: 0.0.0.0
   port: 8080
 
-ticketing:
-  total-tickets: 22
-  ticket-release-rate: 33
-  customer-retrieval-rate: 44
-  max-ticket-capacity: 23
+app:
+  tax:
+    percentage: 10.0
