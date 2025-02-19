@@ -1,22 +1,4 @@
-# Ticketing System Project
-
-## Overview
-The Ticketing System Project is a comprehensive solution for managing ticketing processes, divided into:
-- **InstaTicket**: A real-time ticketing app designed for live event management and seamless ticket booking.
-- **Simulation Module**: A completed module simulating ticketing workflows in a controlled environment.
-
-## Technologies Used
-![Angular Badge](https://img.shields.io/badge/Angular-DD0031?style=for-the-badge&logo=angular&logoColor=white)
-![Tailwind CSS Badge](https://img.shields.io/badge/Tailwind_CSS-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)
-![Java Badge](https://img.shields.io/badge/Java-FFA500?style=for-the-badge&logo=java&logoColor=white)
-![Spring Boot Badge](https://img.shields.io/badge/Spring_Boot-6DB33F?style=for-the-badge&logo=spring&logoColor=white)
-![Spring Security Badge](https://img.shields.io/badge/Spring_Security-6DB33F?style=for-the-badge&logo=spring&logoColor=white)
-![Swagger Badge](https://img.shields.io/badge/Swagger-85EA2D?style=for-the-badge&logo=swagger&logoColor=black)
-![MySQL Badge](https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white)
-
-## Project Breakdown
-
-# (1) InstaTicket - Real-Time Ticketing System
+# InstaTicket - Real-Time Ticketing System
 
 ## 🚀 Project Overview
 InstaTicket is a real-time ticketing platform designed to streamline event management and ticket purchasing. It allows customers to browse events, purchase tickets, and manage bookings efficiently. Vendors can create and manage events, while the system ensures seamless transactions with secure authentication.
@@ -121,8 +103,3 @@ API documentation will be added soon. Stay tuned!
 ## 📜 License
 This project is free to use and open for modification and distribution without restrictions.
 
-# (2)Simulation Module
-- **Event Setup**: Create and configure event parameters.
-- **Ticket Management**: Simulate workflows for ticket booking.
-- **Multithreading**: Implements the **Producer-Consumer Design Pattern** for efficient process simulation.
-- **Testing Environment**: Analyze ticketing scenarios dynamically under various conditions.
