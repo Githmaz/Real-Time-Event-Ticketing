@@ -23,12 +23,14 @@ InstaTicket is a real-time ticketing platform designed to streamline event manag
 
 ## 🎯 Features
 - **User Authentication:** Secure login and registration using JWT tokens and Spring Security for enhanced protection.
+- **Role-Based Access:** Control (RBAC): Ensure proper permissions for admins, vendors, and customers.
 - **Dashboard:** A personalized dashboard for customers to track their bookings.
 - **Mobile & Web Support:** Fully responsive UI with Tailwind CSS.
 - **Event Management:** Vendors can create, edit, and delete events.
 - **Ticket Booking:** Customers can browse events and purchase tickets.
 - **Shopping Cart:** Users can manage ticket selections before finalizing purchases.
 - **Lazy Loading Events:** Optimized loading of event listings for better performance.
+- **Dark Mode Support:** UI theme toggle for better accessibility.
 
 ## 🛠 Tech Stack
 | Technology | Purpose |
@@ -89,7 +91,6 @@ Below are some snapshots of InstaTicket in action:
 1. Clone the repository:
    ```sh
    git clone https://github.com/your-repo/InstaTicket.git
-   cd InstaTicket/backend
    ```
 2. Set up the MySQL database:
    - Create a database: `instaticket_db`
