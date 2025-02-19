@@ -1,0 +1,133 @@
+<!-- PAYMENT DETAILS -->
+<div
+class="w-full p-6 border border-gray-200 bg-white rounded-lg shadow-md dark:border-gray-700 dark:bg-gray-800"
+>
+<h2 class="text-xl font-semibold text-gray-900 dark:text-white">
+  Payment Details
+</h2>
+
+<div class="grid gap-4 mt-4">
+  <!-- Cardholder Name -->
+  <div>
+    <label class="block text-base text-gray-800 dark:text-gray-300 mb-2"
+      >Card Holder Name</label
+    >
+    <input
+      type="text"
+      placeholder="John Doe"
+      class="px-4 py-2.5 bg-white dark:bg-gray-900 text-gray-900 dark:text-white w-full text-sm border border-gray-300 rounded-md focus:border-blue-500 outline-none"
+    />
+  </div>
+
+  <!-- Card Number -->
+  <div>
+    <label class="block text-base text-gray-800 dark:text-gray-300 mb-2"
+      >Card Number</label
+    >
+    <input
+      type="number"
+      placeholder="xxxx xxxx xxxx"
+      class="px-4 py-2.5 bg-white dark:bg-gray-900 text-gray-900 dark:text-white w-full text-sm border border-gray-300 rounded-md focus:border-blue-500 outline-none"
+    />
+  </div>
+
+  <!-- Expiry Date & CVV -->
+  <div class="grid grid-cols-2 gap-4">
+    <div>
+      <label
+        class="block text-base text-gray-800 dark:text-gray-300 mb-2"
+        >Expiry Date</label
+      >
+      <input
+        type="text"
+        placeholder="MM/YY"
+        class="px-4 py-2.5 bg-white dark:bg-gray-900 text-gray-900 dark:text-white w-full text-sm border border-gray-300 rounded-md focus:border-blue-500 outline-none"
+      />
+    </div>
+
+    <div>
+      <label
+        class="block text-base text-gray-800 dark:text-gray-300 mb-2"
+        >CVV</label
+      >
+      <input
+        type="number"
+        placeholder="XXX"
+        class="px-4 py-2.5 bg-white dark:bg-gray-900 text-gray-900 dark:text-white w-full text-sm border border-gray-300 rounded-md focus:border-blue-500 outline-none"
+      />
+    </div>
+  </div>
+</div>
+
+<!-- Summary -->
+<ul class="text-gray-800 dark:text-gray-300 mt-4 space-y-2">
+  <li class="flex justify-between text-base">
+    Subtotal <span class="font-bold">${{ subtotal }}</span>
+  </li>
+  <li class="flex justify-between text-sm">
+    Discount <span class="font-bold text-green-600 ">- ${{discount}}</span>
+  </li>
+  <li class="flex justify-between text-sm">
+    Tax <span class="font-bold  text-red-600"> + ${{tax}}</span>
+  </li>
+  <hr class="border-gray-300 dark:border-gray-700" />
+  <li class="flex justify-between text-2xl font-bold">
+    Total <span>${{ total }}</span>
+  </li>
+</ul>
+<!-- Payment Method Buttons -->
+<!-- Payment Method Buttons -->
+<!-- Payment Method Buttons -->
+<!-- Payment Method Buttons -->
+<!-- Payment Method Buttons -->
+<div class="mt-4 flex justify-center gap-4">
+  <button
+    type="button"
+    class="w-24 h-12 bg-white border border-gray-300 rounded-md shadow-[0_4px_6px_rgba(0,0,0,0.1)] hover:shadow-[0_6px_8px_rgba(0,0,0,0.15)] active:shadow-[0_2px_4px_rgba(0,0,0,0.2)] active:translate-y-[2px] dark:bg-gray-900 dark:border-gray-700 overflow-hidden"
+  >
+    <img
+      src="assets/img/paypal.webp"
+      alt="PayPal"
+      class="w-full h-full object-cover"
+    />
+  </button>
+
+  <button
+    type="button"
+    class="w-24 h-12 bg-white border border-gray-300 rounded-md shadow-[0_4px_6px_rgba(0,0,0,0.1)] hover:shadow-[0_6px_8px_rgba(0,0,0,0.15)] active:shadow-[0_2px_4px_rgba(0,0,0,0.2)] active:translate-y-[2px] dark:bg-gray-900 dark:border-gray-700 overflow-hidden"
+  >
+    <img
+      src="assets/img/Apple-Pay-Logo.png"
+      alt="Apple Pay"
+      class="w-full h-full object-cover"
+    />
+  </button>
+
+  <button
+    type="button"
+    class="w-24 h-12 bg-white border border-gray-300 rounded-md shadow-[0_4px_6px_rgba(0,0,0,0.1)] hover:shadow-[0_6px_8px_rgba(0,0,0,0.15)] active:shadow-[0_2px_4px_rgba(0,0,0,0.2)] active:translate-y-[2px] dark:bg-gray-900 dark:border-gray-700 overflow-hidden"
+  >
+    <img
+      src="assets/img/google.jpg"
+      alt="Google Pay"
+      class="w-full h-full object-cover"
+    />
+  </button>
+</div>
+
+<!-- Buttons -->
+<button
+  type="button"
+  class="mt-6 w-full px-5 py-3 font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-lg"
+>
+  Make Payment
+</button>
+
+<div class="mt-4 text-center">
+  <button
+    class="text-sm text-gray-600 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-500"
+  >
+    Continue Shopping
+  </button>
+</div>
+</div>

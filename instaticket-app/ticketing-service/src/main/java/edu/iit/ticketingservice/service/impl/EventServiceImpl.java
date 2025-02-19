@@ -3,6 +3,7 @@ package edu.iit.ticketingservice.service.impl;
 import edu.iit.ticketingservice.dao.EventEntity;
 import edu.iit.ticketingservice.dao.VendorEntity;
 import edu.iit.ticketingservice.dto.event.Event;
+import edu.iit.ticketingservice.dto.event.EventResponse;
 import edu.iit.ticketingservice.dto.users.Vendor;
 import edu.iit.ticketingservice.repository.EventRepository;
 import edu.iit.ticketingservice.repository.VendorRepository;
@@ -42,9 +43,9 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    public Event getEventByEventId(String eventId) {
+    public EventResponse getEventByEventId(String eventId) {
         Optional<EventEntity> eventEntity = eventRepository.findByEventId(eventId);
-        return eventEntity.map(this::convertToDto).orElse(null);
+        return eventEntity.map(this::convertToDtoRes).orElse(null);
     }
 
 
@@ -84,6 +85,22 @@ public class EventServiceImpl implements EventService {
         return eventEntity;
     }
 
+    private EventResponse convertToDtoRes(EventEntity eventEntity) {
+        EventResponse event = new EventResponse();
+        event.setId(eventEntity.getId());
+        event.setEventId(eventEntity.getEventId());
+        event.setEventName(eventEntity.getEventName());
+        event.setEventCreatedDate(eventEntity.getEventCreatedDate());
+        event.setEventDateTime(eventEntity.getEventDateTime());
+        event.setVendorId(eventEntity.getVendor().getUserId());
+        event.setVendorName(eventEntity.getVendor().getName());
+        event.setLocation(eventEntity.getLocation());
+        event.setTicketPackages(eventEntity.getTicketPackages());
+        return event;
+    }
+
+
+
     private Event convertToDto(EventEntity eventEntity) {
         Event event = new Event();
         event.setId(eventEntity.getId());
@@ -96,4 +113,6 @@ public class EventServiceImpl implements EventService {
         event.setTicketPackages(eventEntity.getTicketPackages());
         return event;
     }
+
+
 }

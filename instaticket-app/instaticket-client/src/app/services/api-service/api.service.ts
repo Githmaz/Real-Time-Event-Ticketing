@@ -7,8 +7,8 @@ import { catchError } from 'rxjs/operators';
   providedIn: 'root',
 })
 export class ApiService {
-  private readonly baseUrl = 'http://localhost:8080';
-  private readonly baseUrll = ' http://192.168.1.4:8080';
+  // private readonly baseUrl = 'http://localhost:8080';
+  private readonly baseUrl = 'http://192.168.1.5:8080';
 
  
   constructor(private readonly http: HttpClient) {}

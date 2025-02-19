@@ -14,12 +14,12 @@ import org.springframework.context.annotation.Configuration;
  *
  * Default Plans:
  * - Standard: Basic access, free of charge.
- * - Pro: Priority access with discounts, $9.99.
- * - Premium: Comprehensive access with VIP features, $19.99.
+ * - Pro: Priority access with discounts, $9.99 (10% discount).
+ * - Premium: Comprehensive access with VIP features, $19.99 (15% discount).
  *
  * Dependencies:
  * - `CustomerPlanRepository` for database operations.
- * - `CustomerPlan` entity for representing subscription plans.
+ * - `CustomerPlanEntity` entity for representing subscription plans.
  */
 
 @Configuration
@@ -34,17 +34,16 @@ public class DataInitializer {
     @Bean
     public CommandLineRunner loadDefaultPlans() {
         return args -> {
-            if (customerPlanRepository.count() == 0) { // Fix logic here to check if table is empty
-                savePlan("Standard", "Basic access to events and tickets", 0.00);
-                savePlan("Pro", "Priority access with discounts", 9.99);
-                savePlan("Premium", "All features with VIP access", 19.99);
+            if (customerPlanRepository.count() == 0) { // Check if table is empty
+                savePlan("Standard", "Basic access to events and tickets", 0.00, 0.0);
+                savePlan("Pro", "Priority access with discounts", 9.99, 5.0);
+                savePlan("Premium", "All features with VIP access", 19.99, 10.0);
             }
         };
     }
 
-    private void savePlan(String name, String description, double price) {
-        // Create and set planId before saving
-        CustomerPlanEntity plan = new CustomerPlanEntity(name, description, price);
+    private void savePlan(String name, String description, double price, double discountPercentage) {
+        CustomerPlanEntity plan = new CustomerPlanEntity(name, description, price, discountPercentage);
         plan.setPlanId(generatePlanId(customerPlanRepository.count() + 1));
         customerPlanRepository.save(plan);
     }

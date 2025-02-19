@@ -63,7 +63,6 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public Customer getAuthenticatedCustomer() {
         String customerId = userService.getAuthenticatedUserId();
-
         CustomerEntity customerEntity = customerRepository.findByUserId(customerId)
                 .orElseThrow(() -> new BusinessException(ErrorType.CUSTOMER_NOT_FOUND));
 
