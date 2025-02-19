@@ -30,7 +30,6 @@ public class DashboardController {
     public ResponseEntity<ApiResponse<CustomerDashboardData>> getCustomerDashboardData() {
         logger.info("Fetching data for the customer dashboard");
         CustomerDashboardData customerData = dashboardService.getCustomerDashboardData();
-        List x = customerData.getEventList();
         ApiResponse<CustomerDashboardData> response = new ApiResponse<>(true, "Customer dashboard data retrieved successfully", customerData);
         return ResponseEntity.ok(response);
     }

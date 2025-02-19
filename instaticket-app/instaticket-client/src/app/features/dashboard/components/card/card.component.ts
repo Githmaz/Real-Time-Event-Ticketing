@@ -10,16 +10,12 @@ import { Router } from '@angular/router';
   templateUrl: './card.component.html',
   styleUrl: './card.component.css'
 })
-export class CardComponent implements OnInit {
+export class CardComponent  {
   @Input() event!: Events;
   
   constructor(private readonly router: Router) {}
 
-  ngOnInit() {
-    if (!this.event.eventImage) {
-      this.event.eventImage = "assets/img/default-event-img.jpg";
-    }
-  }
+ 
 
   navigateToEvent() {
     this.router.navigate(['/event', this.event.eventId]); 

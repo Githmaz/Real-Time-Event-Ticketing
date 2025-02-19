@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { CardComponent } from "../card/card.component";
 import { Events } from '../../../../models/event.model';
 
@@ -11,5 +11,4 @@ import { Events } from '../../../../models/event.model';
 })
 export class CardGridComponent {
   @Input() events!: Events[];
- 
 }

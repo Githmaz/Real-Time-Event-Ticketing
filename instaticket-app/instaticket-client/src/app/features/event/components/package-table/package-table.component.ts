@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { TicketPackage } from '../../../../models/ticket-package';
 import { CommonModule } from '@angular/common';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-package-table',
@@ -12,8 +13,10 @@ import { CommonModule } from '@angular/common';
 export class PackageTableComponent {
  @Input({ required: true }) ticketPackage!: TicketPackage[];
 
+  constructor(private readonly router:Router ,private  readonly route: ActivatedRoute){}
+
  bookTicket(packageId: string): void {
-  console.log(`Booking ticket for package: ${packageId}`);
+  this.router.navigate([`package`, packageId], { relativeTo: this.route });
   }
 
   getTicketColor(availableTickets: number): string {

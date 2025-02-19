@@ -1,4 +1,3 @@
-import { Customer } from "../../../models/customer.model";
 import { Events } from "../../../models/event.model";
 import { User } from "../../../models/user.model";
 

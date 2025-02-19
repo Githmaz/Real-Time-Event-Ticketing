@@ -11,5 +11,7 @@ import { DatePipe } from '@angular/common';
 })
 export class EventBannerComponent {
   @Input({ required: true }) event!: Events;
+
+
 }
 
