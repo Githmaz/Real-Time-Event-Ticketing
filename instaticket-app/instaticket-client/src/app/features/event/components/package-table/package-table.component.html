@@ -1,0 +1,35 @@
+<div class="relative overflow-x-auto shadow-md sm:rounded-lg max-w-[80%] mx-auto">
+    <table class="w-full text-sm text-center text-gray-500 dark:text-gray-400">
+        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <tr>
+                <th scope="col" class="px-6 py-3 text-center">Package ID</th>
+                <th scope="col" class="px-6 py-3 text-center">Type</th>
+                <th scope="col" class="px-6 py-3 text-center">Price ($)</th>
+                <th scope="col" class="px-6 py-3 text-center">Available Tickets</th>
+                <th scope="col" class="px-6 py-3 text-center">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (package of ticketPackage; track package.packageId) {
+                <tr class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
+                    <td class="px-6 py-3 font-medium text-gray-900 dark:text-white text-center">{{ package.packageId }}</td>
+                    <td class="px-6 py-3 text-center">{{ package.packageType }}</td>
+                    <td class="px-6 py-3 text-center">${{ package.price }}</td>
+                    
+                    <!-- Conditional Coloring for Available Tickets -->
+                    <td class="px-6 py-3 text-center"
+                        [ngClass]="getTicketColor(package.availableTickets)">
+                        {{ package.availableTickets }}
+                    </td>
+
+                    <td class="px-6 py-3 text-center">
+                        <button class="px-6 py-2 bg-blue-600 text-white text-xs font-semibold rounded-lg hover:bg-blue-700 transition"
+                            (click)="bookTicket(package.packageId)">
+                            Book
+                        </button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

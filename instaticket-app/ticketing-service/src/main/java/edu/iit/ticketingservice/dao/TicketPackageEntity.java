@@ -31,9 +31,6 @@ public class TicketPackageEntity {
     private int availableTickets; // Tracks available tickets, updated with bookings
 
     @ManyToOne
-    private VendorEntity vendor;  // Vendor offering this ticket package
-
-    @ManyToOne
     @JsonBackReference
     private EventEntity event;// Event this package is associated with
 
@@ -86,14 +83,6 @@ public class TicketPackageEntity {
 
     public void setPrice(double price) {
         this.price = price;
-    }
-
-    public VendorEntity getVendor() {
-        return vendor;
-    }
-
-    public void setVendor(VendorEntity vendor) {
-        this.vendor = vendor;
     }
 
     public EventEntity getEvent() {

@@ -1,0 +1,24 @@
+<div class="bg-white dark:bg-gray-800 rounded-2xl  pb-5 cursor-pointer shadow-[0_10px_25px_rgba(0,0,0,0.2)] hover:shadow-[0_15px_30px_rgba(0,0,0,0.3)] hover:-translate-y-3 hover:scale-[1.03] transition-all duration-300 relative" (click)="navigateToEvent()">
+  <div class="w-[100%] aspect-[16/9]  overflow-hidden mx-auto aspect-w-16 aspect-h-8 rounded-t-2xl">
+    <img [src]="event.eventImage ? event.eventImage : 'assets/img/default-event-img.jpg'"
+    [alt]="'Product ' + event.eventName"
+    class="h-full w-full object-cover rounded-t-2xl" />
+  </div>
+
+  <div class="mt-4 px-5 flex justify-between items-center">
+    <!-- Left Side -->
+    <div>
+      <h6 class="text-lg font-extrabold text-gray-800 dark:text-gray-200">{{ event.eventName }}</h6>
+      <p class="text-gray-600 dark:text-gray-400 text-sm mt-1">{{ event.location }}</p>
+      <p class="text-gray-600 dark:text-gray-400 text-sm">Creator: {{ event.vendorName }}</p>
+    </div>
+  
+    <!-- Right Side (Date & Time Stacked) -->
+    <div class="text-right">
+      <p class="text-gray-600 dark:text-gray-400 text-sm mt-8">{{ event.eventDateTime | date: 'MMM d, yyyy' }}</p>
+      <p class="text-gray-600 dark:text-gray-400 text-sm mt-1">{{ event.eventDateTime | date: 'hh:mm a' }}</p>
+    </div>
+  </div>
+  
+  
+</div>

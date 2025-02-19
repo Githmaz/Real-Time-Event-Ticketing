@@ -1,6 +1,7 @@
 package edu.iit.ticketingservice.dao;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.JoinColumnOrFormula;
 
 @Entity
 @Table(name = "customer_plan")
@@ -22,6 +23,9 @@ public class CustomerPlanEntity {
     @Column(nullable = false)
     private double price;
 
+    @Column(nullable = false)
+    private double discountPercentage;
+
     public CustomerPlanEntity(String planName, String description, double price) {
         this.planName = planName;
         this.description = description;
@@ -29,7 +33,22 @@ public class CustomerPlanEntity {
 
     }
 
+    public CustomerPlanEntity(String planName, String description, double price, double discountPercentage) {
+        this.planName = planName;
+        this.description = description;
+        this.price = price;
+        this.discountPercentage = discountPercentage;
+    }
+
     public CustomerPlanEntity() {
+    }
+
+    public double getDiscountPercentage() {
+        return discountPercentage;
+    }
+
+    public void setDiscountPercentage(double discountPercentage) {
+        this.discountPercentage = discountPercentage;
     }
 
     public Long getId() {
