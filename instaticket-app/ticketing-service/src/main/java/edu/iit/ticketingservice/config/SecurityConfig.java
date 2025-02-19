@@ -46,7 +46,8 @@ public class SecurityConfig {
                                 "/user/check-email",
                                 "/user/check-username",
                                 "/taxRate",
-                                "/event/{id}")
+                                "/event/{id}",
+                                "/event/ticket/cart")
                         .permitAll()
                         .anyRequest().authenticated())
                 .httpBasic(Customizer.withDefaults())

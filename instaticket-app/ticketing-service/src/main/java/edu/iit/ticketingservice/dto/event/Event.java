@@ -1,6 +1,7 @@
 package edu.iit.ticketingservice.dto.event;
 
 import edu.iit.ticketingservice.dao.TicketPackageEntity;
+import edu.iit.ticketingservice.dto.users.Vendor;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
@@ -24,6 +25,15 @@ public class Event {
     private String location; // Event location
 
     private String vendorId; // Vendor offering this event
+    private Vendor vendor;
+
+    public Vendor getVendor() {
+        return vendor;
+    }
+
+    public void setVendor(Vendor vendor) {
+        this.vendor = vendor;
+    }
 
     private List<TicketPackageEntity> ticketPackages; // List of ticket packages for this event
 

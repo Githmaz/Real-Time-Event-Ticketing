@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @CrossOrigin
 @RequestMapping("/dashboard")
@@ -28,6 +30,7 @@ public class DashboardController {
     public ResponseEntity<ApiResponse<CustomerDashboardData>> getCustomerDashboardData() {
         logger.info("Fetching data for the customer dashboard");
         CustomerDashboardData customerData = dashboardService.getCustomerDashboardData();
+        List x = customerData.getEventList();
         ApiResponse<CustomerDashboardData> response = new ApiResponse<>(true, "Customer dashboard data retrieved successfully", customerData);
         return ResponseEntity.ok(response);
     }

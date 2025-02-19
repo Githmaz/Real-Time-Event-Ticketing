@@ -61,17 +61,17 @@ class="w-full p-6 border border-gray-200 bg-white rounded-lg shadow-md dark:bord
 
 <!-- Summary -->
 <ul class="text-gray-800 dark:text-gray-300 mt-4 space-y-2">
-  <li class="flex justify-between text-sm">
+  <li class="flex justify-between text-base">
     Subtotal <span class="font-bold">${{ subtotal }}</span>
   </li>
   <li class="flex justify-between text-sm">
-    Discount <span class="font-bold">$0.00</span>
+    Discount <span class="font-bold text-green-600 ">- ${{discount}}</span>
   </li>
   <li class="flex justify-between text-sm">
-    Tax <span class="font-bold">$4.00</span>
+    Tax <span class="font-bold  text-red-600"> + ${{tax}}</span>
   </li>
   <hr class="border-gray-300 dark:border-gray-700" />
-  <li class="flex justify-between text-lg font-bold">
+  <li class="flex justify-between text-2xl font-bold">
     Total <span>${{ total }}</span>
   </li>
 </ul>
@@ -86,7 +86,7 @@ class="w-full p-6 border border-gray-200 bg-white rounded-lg shadow-md dark:bord
     class="w-24 h-12 bg-white border border-gray-300 rounded-md shadow-[0_4px_6px_rgba(0,0,0,0.1)] hover:shadow-[0_6px_8px_rgba(0,0,0,0.15)] active:shadow-[0_2px_4px_rgba(0,0,0,0.2)] active:translate-y-[2px] dark:bg-gray-900 dark:border-gray-700 overflow-hidden"
   >
     <img
-      src="assets/img/xx.webp"
+      src="assets/img/paypal.webp"
       alt="PayPal"
       class="w-full h-full object-cover"
     />
@@ -108,7 +108,7 @@ class="w-full p-6 border border-gray-200 bg-white rounded-lg shadow-md dark:bord
     class="w-24 h-12 bg-white border border-gray-300 rounded-md shadow-[0_4px_6px_rgba(0,0,0,0.1)] hover:shadow-[0_6px_8px_rgba(0,0,0,0.15)] active:shadow-[0_2px_4px_rgba(0,0,0,0.2)] active:translate-y-[2px] dark:bg-gray-900 dark:border-gray-700 overflow-hidden"
   >
     <img
-      src="assets/img/xxx.jpg"
+      src="assets/img/google.jpg"
       alt="Google Pay"
       class="w-full h-full object-cover"
     />

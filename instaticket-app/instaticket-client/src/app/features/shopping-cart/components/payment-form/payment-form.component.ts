@@ -12,4 +12,7 @@ export class PaymentFormComponent {
   @Input() discount: number = 0;
   @Input() tax: number = 0;
   @Input() total: number = 0;
+
+
+  
 }

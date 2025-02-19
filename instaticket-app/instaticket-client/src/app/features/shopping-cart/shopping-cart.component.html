@@ -18,8 +18,8 @@
 
   <app-payment-form 
   [subtotal]="subtotal" 
-  [discount]="discount" 
-  [tax]="tax" 
+  [discount]="this.discountAmount" 
+  [tax]="this.taxAmount" 
   [total]="total"
 ></app-payment-form>
    
