@@ -90,7 +90,7 @@ Below are some snapshots of InstaTicket in action:
 ### Backend (Spring Boot)
 1. Clone the repository:
    ```sh
-   git clone https://github.com/your-repo/InstaTicket.git
+   git clone https://github.com/Githmaz/Real-Time-Event-Ticketing.git
    ```
 2. Set up the MySQL database:
    - Create a database: `instaticket_db`
